@@ -1,4 +1,8 @@
-import type { QueryResolvers, MutationResolvers } from 'types/graphql'
+import type {
+  QueryResolvers,
+  MutationResolvers,
+  SharedLinkRelationResolvers,
+} from 'types/graphql'
 
 import { db } from 'src/lib/db'
 
@@ -36,4 +40,10 @@ export const deleteSharedLink: MutationResolvers['deleteSharedLink'] = ({
   return db.sharedLink.delete({
     where: { id },
   })
+}
+
+export const SharedLink: SharedLinkRelationResolvers = {
+  submittedBy: (_obj, { root }) => {
+    return db.sharedLink.findUnique({ where: { id: root?.id } }).submittedBy()
+  },
 }

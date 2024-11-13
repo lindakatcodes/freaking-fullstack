@@ -5,16 +5,30 @@ export const standard = defineScenario<Prisma.SharedLinkCreateArgs>({
   sharedLink: {
     one: {
       data: {
-        updatedAt: '2024-10-31T16:45:40.381Z',
+        updatedAt: '2024-11-13T21:58:18.650Z',
         title: 'String',
         url: 'String',
+        submittedBy: {
+          create: {
+            email: 'String793099',
+            hashedPassword: 'String',
+            salt: 'String',
+          },
+        },
       },
     },
     two: {
       data: {
-        updatedAt: '2024-10-31T16:45:40.382Z',
+        updatedAt: '2024-11-13T21:58:18.650Z',
         title: 'String',
         url: 'String',
+        submittedBy: {
+          create: {
+            email: 'String5005398',
+            hashedPassword: 'String',
+            salt: 'String',
+          },
+        },
       },
     },
   },

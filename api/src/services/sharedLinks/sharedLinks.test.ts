@@ -31,18 +31,20 @@ describe('sharedLinks', () => {
     }
   )
 
-  scenario('creates a sharedLink', async () => {
+  scenario('creates a sharedLink', async (scenario: StandardScenario) => {
     const result = await createSharedLink({
       input: {
-        updatedAt: '2024-10-31T16:45:40.271Z',
+        updatedAt: '2024-11-13T21:58:18.619Z',
         title: 'String',
         url: 'String',
+        submittedById: scenario.sharedLink.two.submittedById,
       },
     })
 
-    expect(result.updatedAt).toEqual(new Date('2024-10-31T16:45:40.271Z'))
+    expect(result.updatedAt).toEqual(new Date('2024-11-13T21:58:18.619Z'))
     expect(result.title).toEqual('String')
     expect(result.url).toEqual('String')
+    expect(result.submittedById).toEqual(scenario.sharedLink.two.submittedById)
   })
 
   scenario('updates a sharedLink', async (scenario: StandardScenario) => {
@@ -51,10 +53,10 @@ describe('sharedLinks', () => {
     })) as SharedLink
     const result = await updateSharedLink({
       id: original.id,
-      input: { updatedAt: '2024-11-01T16:45:40.271Z' },
+      input: { updatedAt: '2024-11-14T21:58:18.619Z' },
     })
 
-    expect(result.updatedAt).toEqual(new Date('2024-11-01T16:45:40.271Z'))
+    expect(result.updatedAt).toEqual(new Date('2024-11-14T21:58:18.619Z'))
   })
 
   scenario('deletes a sharedLink', async (scenario: StandardScenario) => {
