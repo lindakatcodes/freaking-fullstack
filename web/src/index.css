@@ -4,7 +4,7 @@
 
 @layer utilities {
   .text-outline {
-    -webkit-text-stroke: 0.5px theme('colors.yellow');
+    -webkit-text-stroke: 0.0001em theme('colors.yellow');
   }
 }
 

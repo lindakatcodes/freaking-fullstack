@@ -4,16 +4,16 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
   content: ['src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    colors: {
-      black: '#25292F',
-      yellow: '#FAFD5D',
-      gray: '#42474F',
-      blue: '#62C2BC',
-    },
     fontFamily: {
       display: ['Krona One', 'serif'],
     },
     extend: {
+      colors: {
+        black: '#25292F',
+        yellow: '#FAFD5D',
+        gray: '#42474F',
+        blue: '#62C2BC',
+      },
       fontFamily: {
         serif: ['Bebas Neue', ...defaultTheme.fontFamily.serif],
       },
