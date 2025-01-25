@@ -1,18 +1,16 @@
-// Pass props to your component by passing an `args` object to your story
-//
-// ```tsx
-// export const Primary: Story = {
-//  args: {
-//    propName: propValue
-//  }
-// }
-// ```
-//
-// See https://storybook.js.org/docs/7/writing-stories/args
-
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { AuthProvider } from '../../auth'
+
 import Navigation from './Navigation'
+
+const LoggedInDecorator = (Story) => {
+  return (
+    <AuthProvider>
+      <Story />
+    </AuthProvider>
+  )
+}
 
 const meta: Meta<typeof Navigation> = {
   component: Navigation,
@@ -23,4 +21,8 @@ export default meta
 
 type Story = StoryObj<typeof Navigation>
 
-export const Primary: Story = {}
+export const AuthenticatedNav: Story = {
+  decorators: [LoggedInDecorator],
+}
+
+export const UnauthenticatedNav: Story = {}
