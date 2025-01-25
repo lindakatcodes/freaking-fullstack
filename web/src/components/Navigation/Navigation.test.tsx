@@ -1,14 +1,25 @@
-import { render } from '@redwoodjs/testing/web'
+import { render, screen } from '@redwoodjs/testing/web'
 
 import Navigation from './Navigation'
 
-//   Improve this test with help from the Redwood Testing Doc:
-//    https://redwoodjs.com/docs/testing#testing-components
-
 describe('Navigation', () => {
   it('renders successfully', () => {
-    expect(() => {
-      render(<Navigation />)
-    }).not.toThrow()
+    const { container } = render(<Navigation />)
+    expect(container).toBeInTheDocument()
+  })
+
+  it('shows a user links to sign up or log in if not authenticated', () => {
+    render(<Navigation />)
+    expect(screen.getByText('Sign Up')).toBeInTheDocument()
+    expect(screen.getByText('Login')).toBeInTheDocument()
+  })
+
+  it('shows a user the authenticated nav bar when logged in', () => {
+    mockCurrentUser({ id: 1 })
+
+    render(<Navigation />)
+    expect(screen.getByText('My Profile')).toBeInTheDocument()
+    expect(screen.getByText('Links Shared')).toBeInTheDocument()
+    expect(screen.getByText('Logout')).toBeInTheDocument()
   })
 })
