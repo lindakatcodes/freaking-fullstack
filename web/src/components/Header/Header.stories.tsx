@@ -5,6 +5,8 @@ import { AuthProvider } from '../../auth'
 import Header from './Header'
 
 const LoggedInDecorator = (Story) => {
+  mockCurrentUser({ id: 1 })
+
   return (
     <AuthProvider>
       <Story />
