@@ -1,14 +1,23 @@
-import { render } from '@redwoodjs/testing/web'
+import { render, screen } from '@redwoodjs/testing/web'
 
 import Header from './Header'
 
-//   Improve this test with help from the Redwood Testing Doc:
-//    https://redwoodjs.com/docs/testing#testing-components
-
 describe('Header', () => {
   it('renders successfully', () => {
-    expect(() => {
-      render(<Header />)
-    }).not.toThrow()
+    const { container } = render(<Header />)
+    expect(container).toBeInTheDocument()
+  })
+
+  it('displays navigation', () => {
+    render(<Header />)
+    expect(screen.getByRole('navigation')).toBeInTheDocument()
+  })
+
+  it('displays the site title and subtitle', () => {
+    render(<Header />)
+    expect(screen.getByText('Brazilian Nut')).toBeInTheDocument()
+    expect(
+      screen.getByText('Where the best news rises to the top')
+    ).toBeInTheDocument()
   })
 })
