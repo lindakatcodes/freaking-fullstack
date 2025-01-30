@@ -11,9 +11,10 @@ const Routes = () => {
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
       <Set wrap={MainLayout}>
-        <Route path="/" page={FeedPage} name="feed" />
-        <Route notfound page={NotFoundPage} />
+        <Route path="/" page={HomePage} name="home" />
+        <Route path="/submit-link" page={SubmitLinkPage} name="submitLink" />
       </Set>
+      <Route notfound page={NotFoundPage} />
     </Router>
   )
 }
