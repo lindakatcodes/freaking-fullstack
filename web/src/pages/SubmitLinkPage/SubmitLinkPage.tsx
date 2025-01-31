@@ -1,28 +1,74 @@
-import { FieldError, Form, Label, Submit, UrlField } from '@redwoodjs/forms'
-import { Metadata } from '@redwoodjs/web'
+import {
+  FieldError,
+  Form,
+  FormError,
+  Label,
+  Submit,
+  TextField,
+  UrlField,
+} from '@redwoodjs/forms'
+import { navigate, routes } from '@redwoodjs/router'
+import { Metadata, useMutation } from '@redwoodjs/web'
+import { toast, Toaster } from '@redwoodjs/web/toast'
+
+import { useAuth } from 'src/auth'
+
+const CREATE_SHARED_LINK = gql`
+  mutation CreateSharedLinkMutation($input: CreateSharedLinkInput!) {
+    createSharedLink(input: $input) {
+      id
+    }
+  }
+`
 
 const SubmitLinkPage = () => {
-  // copied from https://regexr.com/39nr7 then modified so http is always required
+  // copied from https://regexr.com/39nr7 then modified so http is always required, since that's what the html spec requires
   const urlRegex =
     /http(s)?:\/\/[(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi
 
+  const [create, { loading, error }] = useMutation(CREATE_SHARED_LINK, {
+    onCompleted: () => {
+      toast.success('Thank you for your submission!')
+      navigate(routes.home())
+    },
+  })
+  const { currentUser } = useAuth()
+
   const onSubmit = (data) => {
-    console.log(data)
+    const newSharedLink = {
+      ...data,
+      submittedById: currentUser.id,
+    }
+    create({ variables: { input: newSharedLink } })
   }
 
   return (
-    <main className="h-full w-full bg-yellow">
+    <div>
       <Metadata
         title="SubmitLink"
         description="Submit a link for the main feed"
       />
+      <Toaster />
       <h1>Submit a link</h1>
-      <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }}>
-        <Label name="link" className="">
-          Link
+      <Form onSubmit={onSubmit} config={{ mode: 'onBlur' }} error="error">
+        <FormError error={error} wrapperClassName="form-error" />
+        <Label name="title" className="">
+          Title
+        </Label>
+        <TextField
+          name="title"
+          className=""
+          errorClassName=""
+          validation={{
+            required: true,
+          }}
+        />
+        <FieldError name="title" className="" />
+        <Label name="url" className="">
+          Url
         </Label>
         <UrlField
-          name="link"
+          name="url"
           className=""
           errorClassName=""
           validation={{
@@ -33,10 +79,10 @@ const SubmitLinkPage = () => {
             },
           }}
         />
-        <FieldError name="link" className="" />
-        <Submit>Submit</Submit>
+        <FieldError name="url" className="" />
+        <Submit disabled={loading}>Submit</Submit>
       </Form>
-    </main>
+    </div>
   )
 }
 

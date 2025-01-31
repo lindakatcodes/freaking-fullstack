@@ -40,6 +40,7 @@ const LoginPage = () => {
       toast.error(response.error)
     } else {
       toast.success('Welcome back!')
+      navigate(routes.home())
     }
   }
 
