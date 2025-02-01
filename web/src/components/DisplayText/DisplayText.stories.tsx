@@ -23,4 +23,10 @@ export default meta
 
 type Story = StoryObj<typeof DisplayText>
 
-export const Primary: Story = {}
+export const Primary: Story = {
+  args: {
+    solidText: 'submit',
+    outlineText: 'a link',
+    outlineColor: 'blue',
+  },
+}
