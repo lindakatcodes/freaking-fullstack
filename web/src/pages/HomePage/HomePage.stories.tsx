@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import FeedPage from './FeedPage'
+import FeedPage from './HomePage'
 
 const meta: Meta<typeof FeedPage> = {
   component: FeedPage,

@@ -1,14 +1,14 @@
 import { render } from '@redwoodjs/testing/web'
 
-import FeedPage from './FeedPage'
+import DisplayText from './DisplayText'
 
 //   Improve this test with help from the Redwood Testing Doc:
-//   https://redwoodjs.com/docs/testing#testing-pages-layouts
+//    https://redwoodjs.com/docs/testing#testing-components
 
-describe('FeedPage', () => {
+describe('DisplayText', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<FeedPage />)
+      render(<DisplayText />)
     }).not.toThrow()
   })
 })

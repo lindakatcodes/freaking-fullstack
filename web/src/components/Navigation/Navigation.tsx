@@ -10,14 +10,17 @@ const Navigation = () => {
       {isAuthenticated ? (
         <div className="grid w-full grid-flow-col grid-cols-6 items-center">
           <div className="col-span-4 flex">
-            <Link to={routes.feed()} className="mx-4 font-bold text-white">
+            <Link to={routes.home()} className="mx-4 font-bold text-white">
               Links Shared
             </Link>
-            <Link to={routes.feed()} className="mx-4 font-bold text-white">
+            <Link to={routes.home()} className="mx-4 font-bold text-white">
               Comments
             </Link>
-            <Link to={routes.feed()} className="mx-4 font-bold text-white">
-              Favorites
+            <Link
+              to={routes.submitLink()}
+              className="mx-4 font-bold text-white"
+            >
+              Submit Link
             </Link>
           </div>
           <div className="col-span-2 flex justify-end">
@@ -29,7 +32,7 @@ const Navigation = () => {
               Logout
             </button>
             <Link
-              to={routes.feed()}
+              to={routes.home()}
               className="mx-4 bg-blue px-4 py-1 font-bold"
             >
               My Profile
