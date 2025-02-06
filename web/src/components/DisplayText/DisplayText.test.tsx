@@ -1,4 +1,4 @@
-import { render } from '@redwoodjs/testing/web'
+import { render, screen } from '@redwoodjs/testing/web'
 
 import DisplayText from './DisplayText'
 
@@ -8,7 +8,24 @@ import DisplayText from './DisplayText'
 describe('DisplayText', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<DisplayText />)
+      render(
+        <DisplayText
+          solidText="submit"
+          outlineText="a link"
+          outlineColor="black"
+        />
+      )
     }).not.toThrow()
+  })
+
+  it('shows the correct outline color', () => {
+    render(
+      <DisplayText
+        solidText="submit"
+        outlineText="a link"
+        outlineColor="blue"
+      />
+    )
+    expect(screen.getByText('a link')).toHaveClass('text-stroke-color-blue')
   })
 })
