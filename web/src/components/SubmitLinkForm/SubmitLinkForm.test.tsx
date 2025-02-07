@@ -45,8 +45,8 @@ describe('SubmitLinkForm', () => {
       <SubmitLinkForm onSubmit={onSubmit} loading={loading} error={error} />
     )
 
-    const titleField = screen.getByRole('input', { name: /title/i })
-    const urlField = screen.getByRole('input', { name: 'url' })
+    const titleField = screen.getByRole('textbox', { name: 'Title' })
+    const urlField = screen.getByRole('textbox', { name: 'Url' })
     const submitButton = screen.getByRole('button', { name: 'Submit' })
 
     await waitFor(() => userEvent.type(titleField, title))

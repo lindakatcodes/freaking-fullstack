@@ -23,4 +23,9 @@ export default meta
 
 type Story = StoryObj<typeof SubmitLinkForm>
 
-export const Primary: Story = {}
+export const Primary: Story = {
+  args: {
+    loading: false,
+    error: null,
+  },
+}

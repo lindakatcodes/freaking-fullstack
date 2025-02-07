@@ -44,8 +44,8 @@ const SubmitLinkForm = ({ onSubmit, loading, error }: SubmitLinkFormProps) => {
       </Label>
       <TextField
         name="title"
-        className="mb-8 p-1"
-        errorClassName="border-red-600 border-2 mb-1 p-1"
+        className="mb-8 rounded-md border border-black p-1"
+        errorClassName="border-red-600 border mb-1 p-1 rounded-md"
         validation={{
           required: true,
         }}
@@ -57,8 +57,8 @@ const SubmitLinkForm = ({ onSubmit, loading, error }: SubmitLinkFormProps) => {
       </Label>
       <UrlField
         name="url"
-        className="mb-9 p-1"
-        errorClassName="border-red-600 border-2 mb-1 p-1"
+        className="mb-9 rounded-md border border-black p-1"
+        errorClassName="border-red-600 border mb-1 p-1 rounded-md"
         validation={{
           required: true,
           pattern: {
