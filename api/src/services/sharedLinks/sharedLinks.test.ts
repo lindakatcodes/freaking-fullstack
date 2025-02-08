@@ -35,13 +35,13 @@ describe('sharedLinks', () => {
     const result = await createSharedLink({
       input: {
         title: 'String',
-        url: 'String',
+        url: 'https://example.com',
         submittedById: scenario.sharedLink.two.submittedById,
       },
     })
 
     expect(result.title).toEqual('String')
-    expect(result.url).toEqual('String')
+    expect(result.url).toEqual('https://example.com')
     expect(result.submittedById).toEqual(scenario.sharedLink.two.submittedById)
   })
 
