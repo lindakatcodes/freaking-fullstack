@@ -1,6 +1,6 @@
 import { render } from '@redwoodjs/testing/web'
 
-import FeedPage from './FeedPage'
+import FeedPage from './HomePage'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //   https://redwoodjs.com/docs/testing#testing-pages-layouts

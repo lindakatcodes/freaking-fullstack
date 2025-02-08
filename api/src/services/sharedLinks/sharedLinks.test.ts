@@ -34,16 +34,14 @@ describe('sharedLinks', () => {
   scenario('creates a sharedLink', async (scenario: StandardScenario) => {
     const result = await createSharedLink({
       input: {
-        updatedAt: '2024-11-13T21:58:18.619Z',
         title: 'String',
-        url: 'String',
+        url: 'https://example.com',
         submittedById: scenario.sharedLink.two.submittedById,
       },
     })
 
-    expect(result.updatedAt).toEqual(new Date('2024-11-13T21:58:18.619Z'))
     expect(result.title).toEqual('String')
-    expect(result.url).toEqual('String')
+    expect(result.url).toEqual('https://example.com')
     expect(result.submittedById).toEqual(scenario.sharedLink.two.submittedById)
   })
 
@@ -53,10 +51,10 @@ describe('sharedLinks', () => {
     })) as SharedLink
     const result = await updateSharedLink({
       id: original.id,
-      input: { updatedAt: '2024-11-14T21:58:18.619Z' },
+      input: { title: 'now a different string' },
     })
 
-    expect(result.updatedAt).toEqual(new Date('2024-11-14T21:58:18.619Z'))
+    expect(result.title).toEqual('now a different string')
   })
 
   scenario('deletes a sharedLink', async (scenario: StandardScenario) => {
