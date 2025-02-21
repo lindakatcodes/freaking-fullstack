@@ -10,8 +10,8 @@ export const schema = gql`
   }
 
   type Query {
-    sharedLinks: [SharedLink!]! @requireAuth
-    sharedLink(id: String!): SharedLink @requireAuth
+    sharedLinks: [SharedLink!]! @skipAuth
+    sharedLink(id: String!): SharedLink @skipAuth
   }
 
   input CreateSharedLinkInput {
