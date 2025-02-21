@@ -5,13 +5,20 @@ import SharedLink from './SharedLink'
 const meta: Meta<typeof SharedLink> = {
   component: SharedLink,
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <div className="bg-yellow">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta
 
 type Story = StoryObj<typeof SharedLink>
 
-export const Default: Story = {
+export const DefaultValues: Story = {
   args: {
     title: 'Story test link',
     username: 'test user 1',
@@ -20,9 +27,9 @@ export const Default: Story = {
 }
 
 // story with points and comments
-export const PointsComments: Story = {
+export const CustomValues: Story = {
   args: {
-    title: 'Story test link',
+    title: 'Story test link that is extra long so it covers two lines',
     username: 'test user 1',
     link: 'https://bnn.co/subpage?q=test',
     points: 1234,
@@ -31,7 +38,3 @@ export const PointsComments: Story = {
 }
 
 // upvoted story
-
-// visited styles
-
-// hover styles? see what the best practice for this is
