@@ -1,4 +1,5 @@
 import { render } from '@redwoodjs/testing/web'
+import { screen } from '@redwoodjs/testing/web'
 
 import { Loading, Empty, Failure, Success } from './SharedLinksCell'
 import { standard } from './SharedLinksCell.mock'
@@ -31,12 +32,24 @@ describe('SharedLinksCell', () => {
   // When you're ready to test the actual output of your component render
   // you could test that, for example, certain text is present:
   //
-  // 1. import { screen } from '@redwoodjs/testing/web'
+  // 1.
   // 2. Add test: expect(screen.getByText('Hello, world')).toBeInTheDocument()
 
   it('renders Success successfully', async () => {
     expect(() => {
       render(<Success sharedLinks={standard().sharedLinks} />)
     }).not.toThrow()
+  })
+
+  it('shows expected data when successful', async () => {
+    render(<Success sharedLinks={standard().sharedLinks} />)
+    const title = screen.getByText(standard().sharedLinks[0].title)
+    expect(title).toBeInTheDocument()
+    const hasUserName = screen.getByText(
+      standard().sharedLinks[0].submittedBy.nickname
+    )
+    expect(hasUserName).toBeInTheDocument()
+    const noUserName = screen.getByText('user1')
+    expect(noUserName).toBeInTheDocument()
   })
 })
