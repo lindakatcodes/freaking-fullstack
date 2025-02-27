@@ -4,8 +4,8 @@ const Header = () => {
   return (
     <>
       <Navigation />
-      <div className="pointer-events-none relative bg-black">
-        <h1 className="text-nowrap pt-4 text-center font-serif text-[clamp(3.5rem,12vw,11rem)] font-bold leading-[0.875] tracking-wider text-yellow">
+      <div className="pointer-events-none relative w-full bg-black">
+        <h1 className="whitespace-nowrap pt-4 text-center font-serif text-[11vw] font-bold leading-[0.875] tracking-wider text-yellow md:text-[10vw]">
           Brazilian Nut{' '}
           <span className="text-stroke-width text-stroke-color-yellow text-transparent">
             News
