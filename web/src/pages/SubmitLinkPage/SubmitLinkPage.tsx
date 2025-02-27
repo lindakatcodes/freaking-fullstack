@@ -43,6 +43,7 @@ const SubmitLinkPage = () => {
         <div className="basis-7/12">
           <DisplayText
             solidText="submit"
+            solidTextColor="black"
             outlineText="a link"
             outlineColor="black"
           />
