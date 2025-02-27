@@ -8,9 +8,11 @@ const meta: Meta<typeof FeedPage> = {
   component: FeedPage,
   decorators: [
     (Story) => (
-      <MainLayout>
-        <Story />
-      </MainLayout>
+      <div className="relative">
+        <MainLayout>
+          <Story />
+        </MainLayout>
+      </div>
     ),
   ],
 }
