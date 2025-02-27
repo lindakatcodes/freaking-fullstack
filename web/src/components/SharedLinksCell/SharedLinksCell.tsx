@@ -53,7 +53,7 @@ export const Success = ({
           link.submittedBy.email.slice(0, link.submittedBy.email.indexOf('@'))
         return (
           <SharedLink
-            key={link.id}
+            key={link.title}
             title={link.title}
             link={link.url}
             username={userName}

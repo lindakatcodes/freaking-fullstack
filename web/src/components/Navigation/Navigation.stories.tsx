@@ -4,22 +4,35 @@ import { AuthProvider } from '../../auth'
 
 import Navigation from './Navigation'
 
+const meta: Meta<typeof Navigation> = {
+  component: Navigation,
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      story: {
+        height: '50px',
+      },
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="relative">
+        <Story />
+      </div>
+    ),
+  ],
+}
+
+export default meta
+
 const LoggedInDecorator = (Story) => {
   mockCurrentUser({ id: 1 })
-
   return (
     <AuthProvider>
       <Story />
     </AuthProvider>
   )
 }
-
-const meta: Meta<typeof Navigation> = {
-  component: Navigation,
-  tags: ['autodocs'],
-}
-
-export default meta
 
 type Story = StoryObj<typeof Navigation>
 

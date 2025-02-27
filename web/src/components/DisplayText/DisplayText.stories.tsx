@@ -1,15 +1,3 @@
-// Pass props to your component by passing an `args` object to your story
-//
-// ```tsx
-// export const Primary: Story = {
-//  args: {
-//    propName: propValue
-//  }
-// }
-// ```
-//
-// See https://storybook.js.org/docs/7/writing-stories/args
-
 import type { Meta, StoryObj } from '@storybook/react'
 
 import DisplayText from './DisplayText'
@@ -23,10 +11,34 @@ export default meta
 
 type Story = StoryObj<typeof DisplayText>
 
-export const Primary: Story = {
+export const BlackOutline: Story = {
   args: {
     solidText: 'submit',
     outlineText: 'a link',
+    solidTextColor: 'black',
+    outlineColor: 'black',
+  },
+  decorators: [
+    (Story) => (
+      <div className="bg-yellow  p-3">
+        <Story />
+      </div>
+    ),
+  ],
+}
+
+export const BlueOutline: Story = {
+  args: {
+    solidText: 'forgot',
+    outlineText: 'password',
+    solidTextColor: 'white',
     outlineColor: 'blue',
   },
+  decorators: [
+    (Story) => (
+      <div className="bg-black p-3">
+        <Story />
+      </div>
+    ),
+  ],
 }
