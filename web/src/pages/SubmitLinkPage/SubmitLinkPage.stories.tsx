@@ -8,9 +8,11 @@ const meta: Meta<typeof SubmitLinkPage> = {
   component: SubmitLinkPage,
   decorators: [
     (Story) => (
-      <MainLayout>
-        <Story />
-      </MainLayout>
+      <div className="relative">
+        <MainLayout>
+          <Story />
+        </MainLayout>
+      </div>
     ),
   ],
 }

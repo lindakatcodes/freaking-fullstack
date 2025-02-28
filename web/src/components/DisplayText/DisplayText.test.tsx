@@ -2,15 +2,13 @@ import { render, screen } from '@redwoodjs/testing/web'
 
 import DisplayText from './DisplayText'
 
-//   Improve this test with help from the Redwood Testing Doc:
-//    https://redwoodjs.com/docs/testing#testing-components
-
 describe('DisplayText', () => {
   it('renders successfully', () => {
     expect(() => {
       render(
         <DisplayText
           solidText="submit"
+          solidTextColor="black"
           outlineText="a link"
           outlineColor="black"
         />
@@ -21,11 +19,13 @@ describe('DisplayText', () => {
   it('shows the correct outline color', () => {
     render(
       <DisplayText
-        solidText="submit"
-        outlineText="a link"
+        solidText="forgot"
+        solidTextColor="white"
+        outlineText="password"
         outlineColor="blue"
       />
     )
-    expect(screen.getByText('a link')).toHaveClass('text-stroke-color-blue')
+    expect(screen.getByText('password')).toHaveClass('text-stroke-color-blue')
+    expect(screen.getByText('forgot')).toHaveClass('text-white')
   })
 })
