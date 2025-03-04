@@ -11,32 +11,14 @@ export default meta
 
 type Story = StoryObj<typeof DisplayText>
 
-export const BlackOutline: Story = {
-  args: {
-    solidText: 'submit',
-    outlineText: 'a link',
-    solidTextColor: 'black',
-    outlineColor: 'black',
-  },
-  decorators: [
-    (Story) => (
-      <div className="bg-yellow  p-3">
-        <Story />
-      </div>
-    ),
-  ],
-}
-
-export const BlueOutline: Story = {
+export const Primary: Story = {
   args: {
     solidText: 'forgot',
     outlineText: 'password',
-    solidTextColor: 'white',
-    outlineColor: 'blue',
   },
   decorators: [
     (Story) => (
-      <div className="bg-black p-3">
+      <div className="bg-black  p-3">
         <Story />
       </div>
     ),

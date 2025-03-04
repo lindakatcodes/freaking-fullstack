@@ -15,7 +15,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
   }, [])
 
   return (
-    <main className="h-dvh w-dvw bg-black">
+    <main className="h-dvh w-dvw">
       <Header />
       {children}
     </main>
