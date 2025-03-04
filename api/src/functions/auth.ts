@@ -103,9 +103,7 @@ export const handler = async (
   }
 
   interface UserAttributes {
-    firstName?: string
-    lastName?: string
-    nickname?: string
+    displayName?: string
   }
 
   const signupOptions: DbAuthHandlerOptions<
@@ -133,9 +131,7 @@ export const handler = async (
           email: username,
           hashedPassword: hashedPassword,
           salt: salt,
-          firstName: userAttributes?.firstName,
-          lastName: userAttributes?.lastName,
-          nickname: userAttributes?.nickname,
+          displayName: userAttributes?.displayName,
         },
       })
     },
@@ -178,7 +174,7 @@ export const handler = async (
     // client when invoking a handler that returns a user (like forgotPassword
     // and signup). This list should be as small as possible to be sure not to
     // leak any sensitive information to the client.
-    allowedUserFields: ['id', 'email'],
+    allowedUserFields: ['id', 'email', 'displayName'],
 
     // Specifies attributes on the cookie that dbAuth sets in order to remember
     // who is logged in. See https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#restrict_access_to_cookies

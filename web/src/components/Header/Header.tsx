@@ -1,9 +1,6 @@
-import Navigation from '../Navigation/Navigation'
-
 const Header = () => {
   return (
     <>
-      <Navigation />
       <div className="pointer-events-none relative w-full bg-black">
         <h1 className="whitespace-nowrap pt-4 text-center font-serif text-[11vw] font-bold leading-[0.875] tracking-wider text-yellow md:text-[10vw]">
           Brazilian Nut{' '}

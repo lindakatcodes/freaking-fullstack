@@ -8,12 +8,12 @@ const DisplayText = ({
   return (
     <div className="pl-4">
       <p
-        className={`font-serif text-[25vw] font-bold uppercase leading-none tracking-wide text-white`}
+        className={`inline-block w-min font-serif text-[30vw] font-bold uppercase leading-none tracking-wide text-white xl:text-[22vw] 2xl:text-[19vw]`}
       >
         {solidText}
       </p>
       <p
-        className={`text-outline-blue font-serif text-[25vw] font-bold uppercase leading-none tracking-wide text-black`}
+        className={`text-outline-blue inline-block w-min font-serif text-[30vw] font-bold uppercase leading-none tracking-wide text-black xl:text-[22vw] 2xl:text-[19vw]`}
       >
         {outlineText}
       </p>

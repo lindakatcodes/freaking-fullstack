@@ -7,6 +7,7 @@ import {
   PasswordField,
   FieldError,
   Submit,
+  EmailField,
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
@@ -25,15 +26,16 @@ const SignupPage = () => {
   }, [isAuthenticated])
 
   // focus on username box on page load
-  const usernameRef = useRef<HTMLInputElement>(null)
+  const firstFieldRef = useRef<HTMLInputElement>(null)
   useEffect(() => {
-    usernameRef.current?.focus()
+    firstFieldRef.current?.focus()
   }, [])
 
   const onSubmit = async (data: Record<string, string>) => {
     const response = await signUp({
-      username: data.username,
+      username: data.email,
       password: data.password,
+      displayName: data.displayName,
     })
 
     if (response.message) {
@@ -55,38 +57,56 @@ const SignupPage = () => {
         <div className="basis-7/12">
           <DisplayText solidText="sign" outlineText="up" />
         </div>
+
         <div className="mt-8 basis-5/12">
           <Form
             onSubmit={onSubmit}
-            config={{ mode: 'onBlur' }}
             error="error"
             className="flex flex-col gap-6 px-2"
           >
             <div className="flex flex-col gap-2">
-              <Label name="username" className="text-xl font-bold text-yellow">
-                Username
+              <Label
+                name="display-name"
+                className="text-xl font-bold text-yellow"
+              >
+                Display name (optional)
               </Label>
               <TextField
-                name="username"
+                name="display-name"
                 className="h-[2.5rem] rounded-md border-2 border-white p-1"
                 errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
-                ref={usernameRef}
+                ref={firstFieldRef}
+              />
+              <FieldError
+                name="display-name"
+                className="text-lg font-bold text-red-600"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Label name="email" className="text-xl font-bold text-yellow">
+                Email ^
+              </Label>
+              <EmailField
+                name="email"
+                className="h-[2.5rem] rounded-md border-2 border-white p-1"
+                errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
                 validation={{
                   required: {
                     value: true,
-                    message: 'Username is required',
+                    message: 'Email is required',
                   },
                 }}
               />
               <FieldError
-                name="username"
+                name="email"
                 className="text-lg font-bold text-red-600"
               />
             </div>
 
             <div className="flex flex-col gap-2">
               <Label name="password" className="text-xl font-bold text-yellow">
-                Password
+                Password ^
               </Label>
               <PasswordField
                 name="password"
