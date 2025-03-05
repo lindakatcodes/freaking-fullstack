@@ -38,16 +38,14 @@ const SubmitLinkPage = () => {
       />
       <Toaster />
 
-      <div className="mx-auto flex w-11/12 max-w-6xl">
-        <div className="basis-7/12">
-          <div className="flex w-full flex-wrap gap-2 leading-none">
-            <p className="font-serif text-[min(20vw,14rem)] font-bold uppercase tracking-wide text-black">
-              submit
-            </p>
-            <p className="text-outline-black font-serif text-[min(20vw,14rem)] font-bold uppercase tracking-wide text-yellow">
-              a link
-            </p>
-          </div>
+      <div className="mx-auto flex w-11/12">
+        <div className="@container basis-7/12">
+          <p className="font-serif text-[20cqw] font-bold uppercase leading-none tracking-wide text-black">
+            submit
+          </p>
+          <p className="text-outline-black font-serif text-[20cqw] font-bold uppercase leading-none tracking-wide text-yellow">
+            a link
+          </p>
         </div>
 
         <SubmitLinkForm onSubmit={onSubmit} error={error} loading={loading} />
