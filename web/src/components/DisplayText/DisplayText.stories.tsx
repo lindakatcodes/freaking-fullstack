@@ -5,6 +5,13 @@ import DisplayText from './DisplayText'
 const meta: Meta<typeof DisplayText> = {
   component: DisplayText,
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <div className="bg-black p-3">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta
@@ -13,14 +20,7 @@ type Story = StoryObj<typeof DisplayText>
 
 export const Primary: Story = {
   args: {
-    solidText: 'forgot',
-    outlineText: 'password',
+    solidText: 'hello',
+    outlineText: 'world',
   },
-  decorators: [
-    (Story) => (
-      <div className="bg-black p-3">
-        <Story />
-      </div>
-    ),
-  ],
 }
