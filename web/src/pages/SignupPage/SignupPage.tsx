@@ -32,6 +32,7 @@ const SignupPage = () => {
   }, [])
 
   const onSubmit = async (data: Record<string, string>) => {
+    console.log('client side: ', data)
     const response = await signUp({
       username: data.email,
       password: data.password,
@@ -66,26 +67,26 @@ const SignupPage = () => {
           >
             <div className="flex flex-col gap-2">
               <Label
-                name="display-name"
+                name="displayName"
                 className="text-xl font-bold text-yellow"
               >
                 Display name (optional)
               </Label>
               <TextField
-                name="display-name"
+                name="displayName"
                 className="h-[2.5rem] rounded-md border-2 border-white p-1"
                 errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
                 ref={firstFieldRef}
               />
               <FieldError
-                name="display-name"
+                name="displayName"
                 className="text-lg font-bold text-red-600"
               />
             </div>
 
             <div className="flex flex-col gap-2">
               <Label name="email" className="text-xl font-bold text-yellow">
-                Email ^
+                Email (required)
               </Label>
               <EmailField
                 name="email"
@@ -106,7 +107,7 @@ const SignupPage = () => {
 
             <div className="flex flex-col gap-2">
               <Label name="password" className="text-xl font-bold text-yellow">
-                Password ^
+                Password (required)
               </Label>
               <PasswordField
                 name="password"

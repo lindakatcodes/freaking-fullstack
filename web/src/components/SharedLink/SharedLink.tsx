@@ -6,7 +6,7 @@ import UpvoteArrow from '../icons/UpvoteArrow/UpvoteArrow'
 interface SharedLinkProps {
   title: string
   points?: number
-  username: string
+  displayName: string
   commentCount?: number
   link: string
   voteUp?: () => void
@@ -15,7 +15,7 @@ interface SharedLinkProps {
 const SharedLink = ({
   title,
   points = 0,
-  username,
+  displayName,
   commentCount = 0,
   link,
   voteUp = () => {},
@@ -25,7 +25,7 @@ const SharedLink = ({
     console.log('vote up!')
   }
 
-  // title and arrow go to link; username goes to user profile; comments goes to link comment page; link text shows domain only and shows all links shared from that domain (maybe skip this and just show the domain and go to the link)
+  // title and arrow go to link; displayName goes to user profile; comments goes to link comment page; link text shows domain only and shows all links shared from that domain (maybe skip this and just show the domain and go to the link)
 
   return (
     <div className="group flex items-start gap-5 border-b-2 border-black px-2 py-3 hover:bg-black hover:text-yellow">
@@ -50,7 +50,7 @@ const SharedLink = ({
           <p>
             submitted by{' '}
             <Link to="#" className="font-bold underline">
-              {username}
+              {displayName}
             </Link>
           </p>
           <p> • </p>
