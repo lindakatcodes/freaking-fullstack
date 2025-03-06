@@ -18,19 +18,6 @@ const meta: Meta<typeof Header> = {
 
 export default meta
 
-const LoggedInDecorator = (Story) => {
-  mockCurrentUser({ id: 1 })
-  return (
-    <AuthProvider>
-      <Story />
-    </AuthProvider>
-  )
-}
-
 type Story = StoryObj<typeof Header>
 
-export const LoggedIn: Story = {
-  decorators: [LoggedInDecorator],
-}
-
-export const LoggedOut: Story = {}
+export const Primary: Story = {}

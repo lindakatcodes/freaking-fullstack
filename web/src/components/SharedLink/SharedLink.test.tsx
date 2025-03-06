@@ -8,7 +8,7 @@ describe('Link', () => {
       render(
         <SharedLink
           title={'Freaking Fullstack'}
-          username={'Linda'}
+          displayName={'Linda'}
           link={'https://freakingfullstack.com'}
         />
       )
@@ -21,7 +21,7 @@ describe('Link', () => {
       <SharedLink
         title={title}
         points={0}
-        username={'Linda'}
+        displayName={'Linda'}
         commentCount={0}
         link={'https://freakingfullstack.com'}
       />
@@ -34,7 +34,7 @@ describe('Link', () => {
     render(
       <SharedLink
         title={'Freaking Fullstack'}
-        username={'Linda'}
+        displayName={'Linda'}
         commentCount={0}
         link={'https://freakingfullstack.com'}
       />
@@ -43,18 +43,18 @@ describe('Link', () => {
     expect(points).toHaveTextContent('0')
   })
 
-  it('has a username for the person that submitted the link', () => {
+  it('has a display name for the person that submitted the link', () => {
     render(
       <SharedLink
         title={'Freaking Fullstack'}
         points={0}
-        username={'Linda'}
+        displayName={'Linda'}
         commentCount={0}
         link={'https://freakingfullstack.com'}
       />
     )
-    const username = screen.getByText('Linda')
-    expect(username).toBeInTheDocument()
+    const displayName = screen.getByText('Linda')
+    expect(displayName).toBeInTheDocument()
   })
 
   it('links to the original url from the title', () => {
@@ -62,7 +62,7 @@ describe('Link', () => {
       <SharedLink
         title={'Freaking Fullstack'}
         points={0}
-        username={'Linda'}
+        displayName={'Linda'}
         commentCount={0}
         link={'https://freakingfullstack.com'}
       />
@@ -76,7 +76,7 @@ describe('Link', () => {
       <SharedLink
         title={'Freaking Fullstack'}
         points={0}
-        username={'Linda'}
+        displayName={'Linda'}
         commentCount={123}
         link={'https://freakingfullstack.com'}
       />
@@ -95,7 +95,7 @@ describe('Link', () => {
     render(
       <SharedLink
         title={'Freaking Fullstack'}
-        username={'Linda'}
+        displayName={'Linda'}
         link={'https://freakingfullstack.com'}
       />
     )
