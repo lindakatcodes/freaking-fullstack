@@ -46,7 +46,7 @@ describe('SharedLinksCell', () => {
     const title = screen.getByText(standard().sharedLinks[0].title)
     expect(title).toBeInTheDocument()
     const hasUserName = screen.getByText(
-      standard().sharedLinks[0].submittedBy.nickname
+      standard().sharedLinks[0].submittedBy.displayName
     )
     expect(hasUserName).toBeInTheDocument()
     const noUserName = screen.getByText('user1')

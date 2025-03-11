@@ -7,7 +7,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
       title: 'Post 1',
       url: 'https://example.com',
       submittedBy: {
-        email: 'user1@test.co',
+        email: 'user0@test.co',
         displayName: 'Linda',
       },
     },
@@ -17,7 +17,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
       title: 'Post 2',
       url: 'https://redwoodjs.com',
       submittedBy: {
-        email: 'user1email@test.co',
+        email: 'user1@test.co',
         displayName: null,
       },
     },
