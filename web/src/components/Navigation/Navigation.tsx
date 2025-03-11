@@ -17,6 +17,12 @@ const Navigation = () => {
               Comments
             </Link>
             <Link
+              to={routes.editProfile()}
+              className="mx-4 font-bold text-white"
+            >
+              Edit Profile
+            </Link>
+            <Link
               to={routes.submitLink()}
               className="mx-4 font-bold text-white"
             >

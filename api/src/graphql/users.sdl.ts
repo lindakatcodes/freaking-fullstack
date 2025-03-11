@@ -10,6 +10,9 @@ export const schema = gql`
     youtube: String
     linkedin: String
     github: String
+    twitch: String
+    bluesky: String
+    website: String
     sharedLinks: [SharedLink]!
   }
 
@@ -28,6 +31,9 @@ export const schema = gql`
     youtube: String
     linkedin: String
     github: String
+    twitch: String
+    bluesky: String
+    website: String
   }
 
   input UpdateUserInput {
@@ -40,6 +46,9 @@ export const schema = gql`
     youtube: String
     linkedin: String
     github: String
+    twitch: String
+    bluesky: String
+    website: String
   }
 
   type Mutation {

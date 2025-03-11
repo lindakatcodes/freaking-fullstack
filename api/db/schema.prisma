@@ -25,7 +25,10 @@ model User {
   youtube             String?
   linkedin            String?
   github              String?
-  sharedLinks               SharedLink[]
+  twitch              String?
+  bluesky             String?
+  website             String?
+  sharedLinks         SharedLink[]
   // linkVotes           LinkUserVote[]
   // comments            Comment[]
   // commentVotes        CommentUserVote[]
