@@ -1,15 +1,14 @@
 import { useEffect } from 'react'
 
 import Header from 'src/components/Header/Header'
-import Navigation from 'src/components/Navigation/Navigation'
 
-type MainLayoutProps = {
+type AuthLayoutProps = {
   children?: React.ReactNode
 }
 
-const MainLayout = ({ children }: MainLayoutProps) => {
+const AuthLayout = ({ children }: AuthLayoutProps) => {
   useEffect(() => {
-    document.body.className = 'bg-yellow'
+    document.body.className = 'bg-black'
     return () => {
       document.body.className = ''
     }
@@ -17,11 +16,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   return (
     <main className="h-dvh w-dvw">
-      <Navigation />
       <Header />
       {children}
     </main>
   )
 }
 
-export default MainLayout
+export default AuthLayout

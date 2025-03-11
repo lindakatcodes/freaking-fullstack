@@ -18,7 +18,7 @@ export const QUERY: TypedDocumentNode<
       url
       submittedBy {
         email
-        nickname
+        displayName
       }
     }
   }
@@ -48,15 +48,15 @@ export const Success = ({
   return (
     <ul>
       {sharedLinks.map((link) => {
-        const userName =
-          link.submittedBy.nickname ??
+        const displayName =
+          link.submittedBy.displayName ??
           link.submittedBy.email.slice(0, link.submittedBy.email.indexOf('@'))
         return (
           <SharedLink
             key={link.title}
             title={link.title}
             link={link.url}
-            username={userName}
+            displayName={displayName}
           />
         )
       })}

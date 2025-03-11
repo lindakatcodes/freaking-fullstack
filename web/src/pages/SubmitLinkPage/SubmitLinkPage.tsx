@@ -3,7 +3,6 @@ import { Metadata, useMutation } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
-import DisplayText from 'src/components/DisplayText/DisplayText'
 import SubmitLinkForm from 'src/components/SubmitLinkForm/SubmitLinkForm'
 
 const CREATE_SHARED_LINK = gql`
@@ -39,14 +38,14 @@ const SubmitLinkPage = () => {
       />
       <Toaster />
 
-      <div className="mx-auto flex w-11/12 max-w-6xl">
-        <div className="basis-7/12">
-          <DisplayText
-            solidText="submit"
-            solidTextColor="black"
-            outlineText="a link"
-            outlineColor="black"
-          />
+      <div className="mx-auto flex w-11/12">
+        <div className="@container basis-7/12">
+          <p className="font-serif text-[20cqw] font-bold uppercase leading-none tracking-wide text-black">
+            submit
+          </p>
+          <p className="text-outline-black font-serif text-[20cqw] font-bold uppercase leading-none tracking-wide text-yellow">
+            a link
+          </p>
         </div>
 
         <SubmitLinkForm onSubmit={onSubmit} error={error} loading={loading} />

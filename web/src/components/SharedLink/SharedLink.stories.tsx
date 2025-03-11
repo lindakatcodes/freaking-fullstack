@@ -21,7 +21,7 @@ type Story = StoryObj<typeof SharedLink>
 export const DefaultValues: Story = {
   args: {
     title: 'Story test link',
-    username: 'test user 1',
+    displayName: 'user1',
     link: 'https://bnn.co/subpage?q=test',
   },
 }
@@ -30,7 +30,7 @@ export const DefaultValues: Story = {
 export const CustomValues: Story = {
   args: {
     title: 'Story test link that is extra long so it covers two lines',
-    username: 'test user 1',
+    displayName: 'LindaKat',
     link: 'https://bnn.co/subpage?q=test',
     points: 1234,
     commentCount: 6,

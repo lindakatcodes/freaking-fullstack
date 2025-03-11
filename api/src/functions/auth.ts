@@ -28,12 +28,12 @@ export const handler = async (
     // so don't include anything you wouldn't want prying eyes to see. The
     // `user` here has been sanitized to only include the fields listed in
     // `allowedUserFields` so it should be safe to return as-is.
-    handler: (user, _resetToken) => {
+    handler: (user, resetToken) => {
       // TODO: Send user an email/message with a link to reset their password,
       // including the `resetToken`. The URL should look something like:
       // `http://localhost:8910/reset-password?resetToken=${resetToken}`
 
-      return user
+      return { user, resetToken }
     },
 
     // How long the resetToken is valid for, in seconds (default is 24 hours)
@@ -103,9 +103,7 @@ export const handler = async (
   }
 
   interface UserAttributes {
-    firstName?: string
-    lastName?: string
-    nickname?: string
+    displayName?: string
   }
 
   const signupOptions: DbAuthHandlerOptions<
@@ -127,15 +125,26 @@ export const handler = async (
     //
     // If this returns anything else, it will be returned by the
     // `signUp()` function in the form of: `{ message: 'String here' }`.
-    handler: ({ username, hashedPassword, salt, userAttributes }) => {
+    handler: async ({ username, hashedPassword, salt, userAttributes }) => {
+      if (userAttributes?.displayName) {
+        // Check if displayName already exists
+        const existingDisplayName = await db.user.findFirst({
+          where: { displayName: userAttributes.displayName },
+        })
+
+        if (existingDisplayName) {
+          throw new Error(
+            'Display name is already taken, please try another name.'
+          )
+        }
+      }
+
       return db.user.create({
         data: {
           email: username,
           hashedPassword: hashedPassword,
           salt: salt,
-          firstName: userAttributes?.firstName,
-          lastName: userAttributes?.lastName,
-          nickname: userAttributes?.nickname,
+          displayName: userAttributes?.displayName,
         },
       })
     },
@@ -150,7 +159,7 @@ export const handler = async (
     errors: {
       // `field` will be either "username" or "password"
       fieldMissing: '${field} is required',
-      usernameTaken: 'Username `${username}` already in use',
+      usernameTaken: 'The email `${username}` is already in use.',
     },
   }
 
@@ -178,7 +187,7 @@ export const handler = async (
     // client when invoking a handler that returns a user (like forgotPassword
     // and signup). This list should be as small as possible to be sure not to
     // leak any sensitive information to the client.
-    allowedUserFields: ['id', 'email'],
+    allowedUserFields: ['id', 'email', 'displayName'],
 
     // Specifies attributes on the cookie that dbAuth sets in order to remember
     // who is logged in. See https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#restrict_access_to_cookies

@@ -7,12 +7,14 @@ import {
   PasswordField,
   FieldError,
   Submit,
+  EmailField,
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import DisplayText from 'src/components/DisplayText/DisplayText'
 
 const SignupPage = () => {
   const { isAuthenticated, signUp } = useAuth()
@@ -24,15 +26,17 @@ const SignupPage = () => {
   }, [isAuthenticated])
 
   // focus on username box on page load
-  const usernameRef = useRef<HTMLInputElement>(null)
+  const firstFieldRef = useRef<HTMLInputElement>(null)
   useEffect(() => {
-    usernameRef.current?.focus()
+    firstFieldRef.current?.focus()
   }, [])
 
   const onSubmit = async (data: Record<string, string>) => {
+    console.log('client side: ', data)
     const response = await signUp({
-      username: data.username,
+      username: data.email,
       password: data.password,
+      displayName: data.displayName,
     })
 
     if (response.message) {
@@ -48,77 +52,97 @@ const SignupPage = () => {
   return (
     <>
       <Metadata title="Signup" />
+      <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
 
-      <main className="rw-main">
-        <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
-        <div className="rw-scaffold rw-login-container">
-          <div className="rw-segment">
-            <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">Signup</h2>
-            </header>
+      <div className="mx-auto flex w-10/12">
+        <div className="basis-7/12">
+          <DisplayText solidText="sign" outlineText="up" />
+        </div>
 
-            <div className="rw-segment-main">
-              <div className="rw-form-wrapper">
-                <Form onSubmit={onSubmit} className="rw-form-wrapper">
-                  <Label
-                    name="username"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Username
-                  </Label>
-                  <TextField
-                    name="username"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
-                    ref={usernameRef}
-                    validation={{
-                      required: {
-                        value: true,
-                        message: 'Username is required',
-                      },
-                    }}
-                  />
-                  <FieldError name="username" className="rw-field-error" />
-
-                  <Label
-                    name="password"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Password
-                  </Label>
-                  <PasswordField
-                    name="password"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
-                    autoComplete="current-password"
-                    validation={{
-                      required: {
-                        value: true,
-                        message: 'Password is required',
-                      },
-                    }}
-                  />
-                  <FieldError name="password" className="rw-field-error" />
-
-                  <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">
-                      Sign Up
-                    </Submit>
-                  </div>
-                </Form>
-              </div>
+        <div className="mt-8 basis-5/12">
+          <Form
+            onSubmit={onSubmit}
+            error="error"
+            className="flex flex-col gap-6 px-2"
+          >
+            <div className="flex flex-col gap-2">
+              <Label
+                name="displayName"
+                className="text-xl font-bold text-yellow"
+              >
+                Display name (optional)
+              </Label>
+              <TextField
+                name="displayName"
+                className="h-[2.5rem] rounded-md border-2 border-white p-1"
+                errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
+                ref={firstFieldRef}
+              />
+              <FieldError
+                name="displayName"
+                className="text-lg font-bold text-red-600"
+              />
             </div>
-          </div>
-          <div className="rw-login-link">
+
+            <div className="flex flex-col gap-2">
+              <Label name="email" className="text-xl font-bold text-yellow">
+                Email (required)
+              </Label>
+              <EmailField
+                name="email"
+                className="h-[2.5rem] rounded-md border-2 border-white p-1"
+                errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
+                validation={{
+                  required: {
+                    value: true,
+                    message: 'Email is required',
+                  },
+                }}
+              />
+              <FieldError
+                name="email"
+                className="text-lg font-bold text-red-600"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Label name="password" className="text-xl font-bold text-yellow">
+                Password (required)
+              </Label>
+              <PasswordField
+                name="password"
+                className="h-[2.5rem] rounded-md border-2 border-white p-1"
+                errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
+                autoComplete="current-password"
+                validation={{
+                  required: {
+                    value: true,
+                    message: 'Password is required',
+                  },
+                }}
+              />
+              <FieldError
+                name="password"
+                className="text-lg font-bold text-red-600"
+              />
+            </div>
+
+            <Submit className="my-6 bg-yellow py-4 text-2xl font-bold text-black">
+              Sign Up
+            </Submit>
+          </Form>
+
+          <div className="text-center text-lg text-white">
             <span>Already have an account?</span>{' '}
-            <Link to={routes.login()} className="rw-link">
+            <Link
+              to={routes.login()}
+              className="text-yellow underline decoration-yellow decoration-2"
+            >
               Log in!
             </Link>
           </div>
         </div>
-      </main>
+      </div>
     </>
   )
 }

@@ -1,12 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { AuthProvider } from '../../auth'
+import AuthLayout from './AuthLayout'
 
-import Header from './Header'
-
-const meta: Meta<typeof Header> = {
-  component: Header,
-  tags: ['autodocs'],
+const meta: Meta<typeof AuthLayout> = {
+  component: AuthLayout,
   decorators: [
     (Story) => (
       <div className="relative">
@@ -18,6 +15,6 @@ const meta: Meta<typeof Header> = {
 
 export default meta
 
-type Story = StoryObj<typeof Header>
+type Story = StoryObj<typeof AuthLayout>
 
 export const Primary: Story = {}

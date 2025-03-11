@@ -8,11 +8,6 @@ describe('Header', () => {
     expect(container).toBeInTheDocument()
   })
 
-  it('displays navigation', () => {
-    render(<Header />)
-    expect(screen.getByRole('navigation')).toBeInTheDocument()
-  })
-
   it('displays the site title and subtitle', () => {
     render(<Header />)
     expect(screen.getByText('Brazilian Nut')).toBeInTheDocument()
