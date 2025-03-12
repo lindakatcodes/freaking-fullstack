@@ -1,7 +1,14 @@
 // Define your own mock data here:
 export const standard = (/* vars, { ctx, req } */) => ({
-  editUserProfile: {
-    __typename: 'editUserProfile' as const,
-    id: 42,
+  user: {
+    __typename: 'User',
+    id: 4,
+    displayName: 'LindaKat',
+    youtube: null,
+    linkedin: null,
+    github: null,
+    twitch: null,
+    bluesky: null,
+    website: 'https://lindakat.com',
   },
 })

@@ -37,7 +37,11 @@ const UPDATE_USER = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => (
+  <div className="text-center text-xl font-bold text-white">
+    Fetching your current user data...
+  </div>
+)
 
 export const Success = ({
   user,
