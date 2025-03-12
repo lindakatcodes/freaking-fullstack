@@ -49,7 +49,7 @@ export const Success = ({
     <ul>
       {sharedLinks.map((link) => {
         const displayName =
-          link.submittedBy.displayName ??
+          link.submittedBy.displayName ||
           link.submittedBy.email.slice(0, link.submittedBy.email.indexOf('@'))
         return (
           <SharedLink
