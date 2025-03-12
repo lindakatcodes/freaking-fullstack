@@ -8,6 +8,7 @@ import EditProfilePage from './EditProfilePage'
 describe('EditProfilePage', () => {
   it('renders successfully', () => {
     expect(() => {
+      mockCurrentUser({ id: 1 })
       render(<EditProfilePage />)
     }).not.toThrow()
   })
