@@ -32,10 +32,12 @@ const SignupPage = () => {
   }, [])
 
   const onSubmit = async (data: Record<string, string>) => {
+    // this has to be set to null if they don't pick a display name, otherwise the unique constraint won't pass
+    const displayName = data.displayName !== '' ? data.displayName : null
     const response = await signUp({
       username: data.email,
       password: data.password,
-      displayName: data.displayName,
+      displayName,
     })
 
     if (response.message) {
