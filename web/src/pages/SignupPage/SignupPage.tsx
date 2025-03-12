@@ -32,7 +32,6 @@ const SignupPage = () => {
   }, [])
 
   const onSubmit = async (data: Record<string, string>) => {
-    console.log('client side: ', data)
     const response = await signUp({
       username: data.email,
       password: data.password,
