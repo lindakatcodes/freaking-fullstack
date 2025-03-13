@@ -29,8 +29,8 @@ model User {
   bluesky             String?
   website             String?
   sharedLinks         SharedLink[]
+  comments            Comment[]
   // linkVotes           LinkUserVote[]
-  // comments            Comment[]
   // commentVotes        CommentUserVote[]
 }
 
@@ -42,6 +42,16 @@ model SharedLink {
   url           String
   submittedBy   User     @relation(fields: [submittedById], references: [id])
   submittedById Int
-  // comments      Comment[]
+  comments      Comment[]
   // linkUserVotes LinkUserVote[]
+}
+
+model Comment {
+  id            String   @id @default(uuid())
+  createdAt     DateTime @default(now())
+  body          String
+  authorId      Int
+  author        User @relation(fields: [authorId], references: [id])
+  linkId        String
+  link          SharedLink @relation(fields: [linkId], references: [id])
 }

@@ -12,10 +12,14 @@ export const QUERY: TypedDocumentNode<CommentsQuery, CommentsQueryVariables> =
   gql`
     query CommentsQuery {
       comments {
-        id
-        name
         body
         createdAt
+        id
+        linkId
+        author {
+          email
+          displayName
+        }
       }
     }
   `

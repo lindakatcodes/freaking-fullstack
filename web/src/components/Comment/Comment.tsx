@@ -4,9 +4,14 @@ import UpvoteArrow from '../icons/UpvoteArrow/UpvoteArrow'
 
 interface Props {
   comment: {
-    name: string
-    createdAt: string
     body: string
+    createdAt: string
+    id: string
+    linkId: string
+    author: {
+      email: string
+      displayName: string
+    }
   }
 }
 
@@ -23,6 +28,10 @@ const formattedDate = (datetime: ConstructorParameters<typeof Date>[0]) => {
 }
 
 const Comment = ({ comment }: Props) => {
+  const displayName =
+    comment.author.displayName ||
+    comment.author.email.slice(0, comment.author.email.indexOf('@'))
+
   return (
     <div className="flex gap-2">
       <button className="flex items-start">
@@ -32,7 +41,7 @@ const Comment = ({ comment }: Props) => {
       <div className="flex flex-col">
         <div className="flex gap-2 text-sm">
           <Link to="#" className="font-bold underline">
-            {comment.name}
+            {displayName}
           </Link>
           <p> • </p>
           <p>{formattedDate(comment.createdAt)}</p>

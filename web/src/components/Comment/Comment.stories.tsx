@@ -21,9 +21,14 @@ type Story = StoryObj<typeof Comment>
 export const Primary: Story = {
   args: {
     comment: {
-      name: 'LindaKat',
-      body: 'This is the first comment!',
-      createdAt: '2020-01-01T12:34:56Z',
+      id: '20',
+      body: 'First comment',
+      createdAt: '2020-01-02T12:34:56Z',
+      linkId: '42',
+      author: {
+        email: 'user0@test.co',
+        displayName: null,
+      },
     },
   },
 }
