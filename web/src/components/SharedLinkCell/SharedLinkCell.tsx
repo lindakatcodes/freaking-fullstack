@@ -10,6 +10,7 @@ import type {
 } from '@redwoodjs/web'
 
 import CommentForm from '../CommentForm/CommentForm'
+import CommentsCell from '../CommentsCell'
 import SharedLink from '../SharedLink/SharedLink'
 
 export const QUERY: TypedDocumentNode<
@@ -65,7 +66,7 @@ export const Success = ({
         <CommentForm onSubmit={() => {}} loading={false} error={null} />
       </div>
 
-      {/* list of comments */}
+      <CommentsCell />
     </>
   )
 }
