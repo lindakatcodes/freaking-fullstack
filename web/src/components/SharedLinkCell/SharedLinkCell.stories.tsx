@@ -6,6 +6,13 @@ import { standard } from './SharedLinkCell.mock'
 const meta: Meta = {
   title: 'Cells/SharedLinkCell',
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <div className="bg-yellow p-5">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta

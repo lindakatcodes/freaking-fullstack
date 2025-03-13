@@ -9,6 +9,7 @@ import type {
   TypedDocumentNode,
 } from '@redwoodjs/web'
 
+import CommentForm from '../CommentForm/CommentForm'
 import SharedLink from '../SharedLink/SharedLink'
 
 export const QUERY: TypedDocumentNode<
@@ -50,16 +51,21 @@ export const Success = ({
     )
 
   return (
-    <div className="pt-2">
-      <SharedLink
-        linkId={sharedLink.id}
-        title={sharedLink.title}
-        link={sharedLink.url}
-        displayName={displayName}
-      />
+    <>
+      <div className="mb-8">
+        <SharedLink
+          linkId={sharedLink.id}
+          title={sharedLink.title}
+          link={sharedLink.url}
+          displayName={displayName}
+        />
+      </div>
 
-      {/* comment form */}
+      <div className="mx-auto w-3/5">
+        <CommentForm onSubmit={() => {}} loading={false} error={null} />
+      </div>
+
       {/* list of comments */}
-    </div>
+    </>
   )
 }
