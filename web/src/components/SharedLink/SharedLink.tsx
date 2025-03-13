@@ -1,9 +1,10 @@
-import { Link } from '@redwoodjs/router'
+import { Link, routes } from '@redwoodjs/router'
 
 import RightArrow from '../icons/RightArrow/RightArrow'
 import UpvoteArrow from '../icons/UpvoteArrow/UpvoteArrow'
 
 interface SharedLinkProps {
+  linkId: string
   title: string
   points?: number
   displayName: string
@@ -13,6 +14,7 @@ interface SharedLinkProps {
 }
 
 const SharedLink = ({
+  linkId,
   title,
   points = 0,
   displayName,
@@ -54,7 +56,10 @@ const SharedLink = ({
             </Link>
           </p>
           <p> • </p>
-          <Link to="#" className="font-bold underline">
+          <Link
+            to={routes.linkDetails({ id: linkId })}
+            className="font-bold underline"
+          >
             {commentCount} {commentCount === 1 ? 'comment' : 'comments'}
           </Link>
         </div>

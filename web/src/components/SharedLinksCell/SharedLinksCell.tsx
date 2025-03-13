@@ -14,6 +14,7 @@ export const QUERY: TypedDocumentNode<
 > = gql`
   query SharedLinksQuery {
     sharedLinks {
+      id
       title
       url
       submittedBy {
@@ -53,7 +54,8 @@ export const Success = ({
           link.submittedBy.email.slice(0, link.submittedBy.email.indexOf('@'))
         return (
           <SharedLink
-            key={link.title}
+            key={link.id}
+            linkId={link.id}
             title={link.title}
             link={link.url}
             displayName={displayName}
