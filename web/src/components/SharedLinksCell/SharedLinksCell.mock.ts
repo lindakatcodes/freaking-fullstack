@@ -10,6 +10,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
         email: 'user0@test.co',
         displayName: 'Linda',
       },
+      comments: [{ id: '1' }, { id: '2' }],
     },
     {
       __typename: 'SharedLink' as const,
@@ -20,6 +21,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
         email: 'user1@test.co',
         displayName: null,
       },
+      comments: [],
     },
     {
       __typename: 'SharedLink' as const,
@@ -30,6 +32,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
         email: 'user2@test.co',
         displayName: 'Jon',
       },
+      comments: [{ id: '3' }],
     },
   ],
 })

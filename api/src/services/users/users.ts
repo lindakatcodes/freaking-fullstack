@@ -39,4 +39,7 @@ export const User: UserRelationResolvers = {
   sharedLinks: (_obj, { root }) => {
     return db.user.findUnique({ where: { id: root?.id } }).sharedLinks()
   },
+  comments: (_obj, { root }) => {
+    return db.user.findUnique({ where: { id: root?.id } }).comments()
+  },
 }

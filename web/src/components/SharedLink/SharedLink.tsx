@@ -1,9 +1,10 @@
-import { Link } from '@redwoodjs/router'
+import { Link, routes } from '@redwoodjs/router'
 
 import RightArrow from '../icons/RightArrow/RightArrow'
 import UpvoteArrow from '../icons/UpvoteArrow/UpvoteArrow'
 
 interface SharedLinkProps {
+  linkId: string
   title: string
   points?: number
   displayName: string
@@ -13,6 +14,7 @@ interface SharedLinkProps {
 }
 
 const SharedLink = ({
+  linkId,
   title,
   points = 0,
   displayName,
@@ -28,7 +30,7 @@ const SharedLink = ({
   // title and arrow go to link; displayName goes to user profile; comments goes to link comment page; link text shows domain only and shows all links shared from that domain (maybe skip this and just show the domain and go to the link)
 
   return (
-    <div className="group flex items-start gap-5 border-b-2 border-black px-2 py-3 hover:bg-black hover:text-yellow">
+    <div className="group flex items-start gap-5 border-b-2 border-black px-2 py-4 hover:bg-black hover:text-yellow">
       <div className="mt-2 flex flex-col">
         <button onClick={handleVote}>
           <UpvoteArrow />
@@ -54,7 +56,10 @@ const SharedLink = ({
             </Link>
           </p>
           <p> • </p>
-          <Link to="#" className="font-bold underline">
+          <Link
+            to={routes.linkDetails({ id: linkId })}
+            className="font-bold underline"
+          >
             {commentCount} {commentCount === 1 ? 'comment' : 'comments'}
           </Link>
         </div>
