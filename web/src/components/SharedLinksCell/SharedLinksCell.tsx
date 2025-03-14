@@ -21,6 +21,9 @@ export const QUERY: TypedDocumentNode<
         email
         displayName
       }
+      comments {
+        id
+      }
     }
   }
 `
@@ -52,6 +55,7 @@ export const Success = ({
         const displayName =
           link.submittedBy.displayName ||
           link.submittedBy.email.slice(0, link.submittedBy.email.indexOf('@'))
+        const commentCount = link.comments.length
         return (
           <SharedLink
             key={link.id}
@@ -59,6 +63,7 @@ export const Success = ({
             title={link.title}
             link={link.url}
             displayName={displayName}
+            commentCount={commentCount}
           />
         )
       })}

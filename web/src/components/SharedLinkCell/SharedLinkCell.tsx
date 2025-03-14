@@ -34,6 +34,9 @@ export const QUERY: TypedDocumentNode<
         displayName
         email
       }
+      comments {
+        id
+      }
     }
   }
 `
@@ -79,6 +82,9 @@ export const Failure = ({
 export const Success = ({
   sharedLink,
 }: CellSuccessProps<FindSharedLinkQuery, FindSharedLinkQueryVariables>) => {
+  const { currentUser } = useAuth()
+  const formMethods = useForm<CommentData>()
+
   const displayName =
     sharedLink.submittedBy.displayName ||
     sharedLink.submittedBy.email.slice(
@@ -86,16 +92,17 @@ export const Success = ({
       sharedLink.submittedBy.email.indexOf('@')
     )
 
+  const commentCount = sharedLink.comments.length
+
   const [createComment, { loading, error }] = useMutation(CREATE_COMMENT, {
     onCompleted: () => {
       toast.success('Comment successfully added!')
       formMethods.reset()
     },
-    refetchQueries: [{ query: CommentsQuery }],
+    refetchQueries: [
+      { query: CommentsQuery, variables: { linkId: sharedLink.id } },
+    ],
   })
-
-  const { currentUser } = useAuth()
-  const formMethods = useForm<CommentData>()
 
   const onSubmit = async (data: CommentData) => {
     const comment = {
@@ -114,6 +121,7 @@ export const Success = ({
           title={sharedLink.title}
           link={sharedLink.url}
           displayName={displayName}
+          commentCount={commentCount}
         />
       </div>
 
@@ -126,7 +134,9 @@ export const Success = ({
         />
       </div>
 
-      <CommentsCell linkId={sharedLink.id} />
+      <div className="mx-auto w-3/5">
+        <CommentsCell linkId={sharedLink.id} />
+      </div>
     </>
   )
 }
