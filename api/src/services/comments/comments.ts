@@ -6,8 +6,8 @@ import type {
 
 import { db } from 'src/lib/db'
 
-export const comments: QueryResolvers['comments'] = () => {
-  return db.comment.findMany()
+export const comments: QueryResolvers['comments'] = ({ linkId }) => {
+  return db.comment.findMany({ where: { linkId } })
 }
 
 export const comment: QueryResolvers['comment'] = ({ id }) => {

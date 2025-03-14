@@ -1,5 +1,7 @@
 import type { Comment } from '@prisma/client'
 
+import { db } from 'src/lib/db'
+
 import {
   comments,
   comment,
@@ -16,11 +18,17 @@ import type { StandardScenario } from './comments.scenarios'
 // https://redwoodjs.com/docs/testing#jest-expect-type-considerations
 
 describe('comments', () => {
-  scenario('returns all comments', async (scenario: StandardScenario) => {
-    const result = await comments()
-
-    expect(result.length).toEqual(Object.keys(scenario.comment).length)
-  })
+  scenario(
+    'returns all comments for a single post from the database',
+    async (scenario: StandardScenario) => {
+      const result = await comments({ linkId: scenario.comment.one.linkId })
+      const post = await db.sharedLink.findUnique({
+        where: { id: scenario.comment.one.linkId },
+        include: { comments: true },
+      })
+      expect(result.length).toEqual(post.comments.length)
+    }
+  )
 
   scenario('returns a single comment', async (scenario: StandardScenario) => {
     const result = await comment({ id: scenario.comment.one.id })

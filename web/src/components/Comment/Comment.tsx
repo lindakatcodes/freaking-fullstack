@@ -10,7 +10,7 @@ interface Props {
     linkId: string
     author: {
       email: string
-      displayName: string
+      displayName?: string
     }
   }
 }

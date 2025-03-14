@@ -1,11 +1,12 @@
 import type { Prisma, Comment } from '@prisma/client'
+
 import type { ScenarioData } from '@redwoodjs/testing/api'
 
 export const standard = defineScenario<Prisma.CommentCreateArgs>({
   comment: {
     one: {
       data: {
-        body: 'String',
+        body: 'Comment on post one',
         author: {
           create: {
             email: 'String4863399',
@@ -16,7 +17,7 @@ export const standard = defineScenario<Prisma.CommentCreateArgs>({
         link: {
           create: {
             updatedAt: '2025-03-13T23:04:47.671Z',
-            title: 'String',
+            title: 'First link',
             url: 'String',
             submittedBy: {
               create: {
@@ -31,7 +32,7 @@ export const standard = defineScenario<Prisma.CommentCreateArgs>({
     },
     two: {
       data: {
-        body: 'String',
+        body: 'Comment on post two',
         author: {
           create: {
             email: 'String3163585',
@@ -42,7 +43,7 @@ export const standard = defineScenario<Prisma.CommentCreateArgs>({
         link: {
           create: {
             updatedAt: '2025-03-13T23:04:47.698Z',
-            title: 'String',
+            title: 'Second link',
             url: 'String',
             submittedBy: {
               create: {

@@ -7,6 +7,7 @@ export const schema = gql`
     url: String!
     submittedBy: User!
     submittedById: Int!
+    comments: [Comment]!
   }
 
   type Query {

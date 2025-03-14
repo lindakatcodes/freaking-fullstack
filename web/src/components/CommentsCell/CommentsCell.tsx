@@ -10,8 +10,8 @@ import Comment from '../Comment/Comment'
 
 export const QUERY: TypedDocumentNode<CommentsQuery, CommentsQueryVariables> =
   gql`
-    query CommentsQuery {
-      comments {
+    query CommentsQuery($linkId: String!) {
+      comments(linkId: $linkId) {
         body
         createdAt
         id
@@ -24,21 +24,29 @@ export const QUERY: TypedDocumentNode<CommentsQuery, CommentsQueryVariables> =
     }
   `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => (
+  <div className="mt-8 text-center text-xl font-bold">Loading comments...</div>
+)
 
-export const Empty = () => <div>Empty</div>
+export const Empty = () => (
+  <div className="mt-8 text-center text-xl font-bold">
+    No comments yet. Add one in the form above to start the conversation!
+  </div>
+)
 
 export const Failure = ({
   error,
 }: CellFailureProps<CommentsQueryVariables>) => (
-  <div style={{ color: 'red' }}>Error: {error?.message}</div>
+  <div className="mt-8 text-center text-xl font-bold text-red-600">
+    Error: {error?.message}
+  </div>
 )
 
 export const Success = ({
   comments,
 }: CellSuccessProps<CommentsQuery, CommentsQueryVariables>) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-4">
       {comments.map((item) => {
         return <Comment comment={item} key={item.id} />
       })}

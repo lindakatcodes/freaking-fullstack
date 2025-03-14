@@ -14,6 +14,7 @@ export const schema = gql`
     bluesky: String
     website: String
     sharedLinks: [SharedLink]!
+    comments: [Comment]!
   }
 
   type Query {

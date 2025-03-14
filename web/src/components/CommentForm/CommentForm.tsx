@@ -6,21 +6,31 @@ import {
   RWGqlError,
   Submit,
   TextAreaField,
+  UseFormReturn,
 } from '@redwoodjs/forms'
 
+import type { CommentData } from '../SharedLinkCell'
+
 interface CommentFormProps {
-  onSubmit: (data: CommentFormData) => void
+  formMethods: UseFormReturn<CommentData>
+  onSubmit: (data: CommentData) => void
   loading: boolean
   error: RWGqlError | null
 }
 
-interface CommentFormData {
-  comment: string
-}
-
-const CommentForm = ({ onSubmit, loading, error }: CommentFormProps) => {
+const CommentForm = ({
+  formMethods,
+  onSubmit,
+  loading,
+  error,
+}: CommentFormProps) => {
   return (
-    <Form onSubmit={onSubmit} error="error" className="flex flex-col gap-1">
+    <Form
+      formMethods={formMethods}
+      onSubmit={onSubmit}
+      error="error"
+      className="flex flex-col gap-1"
+    >
       <FormError
         error={error}
         wrapperClassName="border-2 border-red-600 p-2 mb-4"
