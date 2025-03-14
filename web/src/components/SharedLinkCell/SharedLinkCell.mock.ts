@@ -10,5 +10,6 @@ export const standard = (/* vars, { ctx, req } */) => ({
       email: 'user0@test.co',
       displayName: 'Linda',
     },
+    comments: [{ id: '1' }, { id: '2' }],
   },
 })
