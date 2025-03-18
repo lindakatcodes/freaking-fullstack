@@ -30,8 +30,8 @@ model User {
   website             String?
   sharedLinks         SharedLink[]
   comments            Comment[]
-  // linkVotes           LinkUserVote[]
-  // commentVotes        CommentUserVote[]
+  linkVotes           LinkUserVote[]
+  commentVotes        CommentUserVote[]
 }
 
 model SharedLink {
@@ -43,7 +43,7 @@ model SharedLink {
   submittedBy   User     @relation(fields: [submittedById], references: [id])
   submittedById Int
   comments      Comment[]
-  // linkUserVotes LinkUserVote[]
+  linkVotes     LinkUserVote[]
 }
 
 model Comment {
@@ -54,4 +54,23 @@ model Comment {
   author        User @relation(fields: [authorId], references: [id])
   linkId        String
   link          SharedLink @relation(fields: [linkId], references: [id])
+  commentVotes  CommentUserVote[]
+}
+
+model LinkUserVote {
+  id            String   @id @default(uuid())
+  createdAt     DateTime @default(now())
+  linkId        String
+  link          SharedLink @relation(fields: [linkId], references: [id])
+  userId        Int
+  user          User @relation(fields: [userId], references: [id])
+}
+
+model CommentUserVote {
+  id            String   @id @default(uuid())
+  createdAt     DateTime @default(now())
+  commentId     String
+  comment       Comment @relation(fields: [commentId], references: [id])
+  userId        Int
+  user          User @relation(fields: [userId], references: [id])
 }
