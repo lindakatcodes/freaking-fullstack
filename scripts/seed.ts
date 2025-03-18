@@ -1,4 +1,6 @@
-// import { db } from 'api/src/lib/db'
+import { db } from 'api/src/lib/db'
+
+import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 
 // Manually apply seeds via the `yarn rw prisma db seed` command.
 //
@@ -9,18 +11,31 @@
 
 export default async () => {
   try {
-    // Create your database records here! For example, seed some users:
-    //
-    // const users = [
-    //   { name: 'Alice', email: 'alice@redwoodjs.com' },
-    //   { name: 'Bob', email: 'bob@redwoodjs.com' },
-    // ]
-    //
-    // await db.user.createMany({ data: users })
+    const users = [
+      { displayName: 'Linda', email: 'linda@example.com', password: 'secret1' },
+      { displayName: null, email: 'pip@example.com', password: 'secret2' },
+    ]
 
-    console.info(
-      '\n  No seed data, skipping. See scripts/seed.ts to start seeding your database!\n'
-    )
+    for (const user of users) {
+      const [hashedPassword, salt] = hashPassword(user.password)
+
+      await db.user.upsert({
+        where: {
+          email: user.email,
+        },
+        create: {
+          displayName: user.displayName,
+          email: user.email,
+          hashedPassword,
+          salt,
+        },
+        update: {
+          displayName: user.displayName,
+          hashedPassword,
+          salt,
+        },
+      })
+    }
   } catch (error) {
     console.error(error)
   }

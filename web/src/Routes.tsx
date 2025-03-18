@@ -18,6 +18,7 @@ const Routes = () => {
       </Set>
       <Set wrap={MainLayout}>
         <Route path="/" page={HomePage} name="home" />
+        <Route path="/link/{id}" page={LinkDetailsPage} name="linkDetails" />
         <PrivateSet unauthenticated="login">
           <Route path="/submit-link" page={SubmitLinkPage} name="submitLink" />
         </PrivateSet>
