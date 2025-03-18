@@ -7,8 +7,17 @@ import Comment from './Comment'
 
 describe('Comment', () => {
   it('renders successfully', () => {
+    const testComment = {
+      body: 'a test comment',
+      createdAt: '',
+      id: '1',
+      linkId: '42',
+      author: {
+        email: 'test@test.co',
+      },
+    }
     expect(() => {
-      render(<Comment />)
+      render(<Comment comment={testComment} />)
     }).not.toThrow()
   })
 })

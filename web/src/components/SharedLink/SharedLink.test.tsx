@@ -7,6 +7,7 @@ describe('Link', () => {
     expect(() => {
       render(
         <SharedLink
+          linkId={'42'}
           title={'Freaking Fullstack'}
           displayName={'Linda'}
           link={'https://freakingfullstack.com'}
@@ -19,6 +20,7 @@ describe('Link', () => {
     const title = 'Freaking Fullstack'
     render(
       <SharedLink
+        linkId={'42'}
         title={title}
         points={0}
         displayName={'Linda'}
@@ -33,6 +35,7 @@ describe('Link', () => {
   it('has 0 points by default', () => {
     render(
       <SharedLink
+        linkId={'42'}
         title={'Freaking Fullstack'}
         displayName={'Linda'}
         commentCount={0}
@@ -46,6 +49,7 @@ describe('Link', () => {
   it('has a display name for the person that submitted the link', () => {
     render(
       <SharedLink
+        linkId={'42'}
         title={'Freaking Fullstack'}
         points={0}
         displayName={'Linda'}
@@ -60,6 +64,7 @@ describe('Link', () => {
   it('links to the original url from the title', () => {
     render(
       <SharedLink
+        linkId={'42'}
         title={'Freaking Fullstack'}
         points={0}
         displayName={'Linda'}
@@ -74,6 +79,7 @@ describe('Link', () => {
   it('has a comment count', () => {
     render(
       <SharedLink
+        linkId={'42'}
         title={'Freaking Fullstack'}
         points={0}
         displayName={'Linda'}
@@ -94,6 +100,7 @@ describe('Link', () => {
 
     render(
       <SharedLink
+        linkId={'42'}
         title={'Freaking Fullstack'}
         displayName={'Linda'}
         link={'https://freakingfullstack.com'}
