@@ -65,4 +65,7 @@ export const SharedLink: SharedLinkRelationResolvers = {
   comments: (_obj, { root }) => {
     return db.sharedLink.findUnique({ where: { id: root?.id } }).comments()
   },
+  linkVotes: (_obj, { root }) => {
+    return db.sharedLink.findUnique({ where: { id: root?.id } }).linkVotes()
+  },
 }

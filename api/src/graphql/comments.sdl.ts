@@ -7,6 +7,7 @@ export const schema = gql`
     author: User!
     linkId: String!
     link: SharedLink!
+    commentVotes: [CommentUserVote]!
   }
 
   type Query {

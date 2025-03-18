@@ -42,4 +42,10 @@ export const User: UserRelationResolvers = {
   comments: (_obj, { root }) => {
     return db.user.findUnique({ where: { id: root?.id } }).comments()
   },
+  linkVotes: (_obj, { root }) => {
+    return db.user.findUnique({ where: { id: root?.id } }).linkVotes()
+  },
+  commentVotes: (_obj, { root }) => {
+    return db.user.findUnique({ where: { id: root?.id } }).commentVotes()
+  },
 }
