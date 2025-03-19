@@ -1,5 +1,7 @@
 import type { LinkUserVote } from '@prisma/client'
 
+import { db } from 'src/lib/db'
+
 import {
   linkUserVotes,
   linkUserVote,
@@ -17,9 +19,15 @@ import type { StandardScenario } from './linkUserVotes.scenarios'
 
 describe('linkUserVotes', () => {
   scenario('returns all linkUserVotes', async (scenario: StandardScenario) => {
-    const result = await linkUserVotes()
+    const result = await linkUserVotes({
+      linkId: scenario.linkUserVote.one.linkId,
+    })
+    const link = await db.sharedLink.findUnique({
+      where: { id: scenario.linkUserVote.one.linkId },
+      include: { linkVotes: true },
+    })
 
-    expect(result.length).toEqual(Object.keys(scenario.linkUserVote).length)
+    expect(result.length).toEqual(link.linkVotes.length)
   })
 
   scenario(

@@ -1,5 +1,7 @@
 import type { CommentUserVote } from '@prisma/client'
 
+import { db } from 'src/lib/db'
+
 import {
   commentUserVotes,
   commentUserVote,
@@ -19,11 +21,15 @@ describe('commentUserVotes', () => {
   scenario(
     'returns all commentUserVotes',
     async (scenario: StandardScenario) => {
-      const result = await commentUserVotes()
+      const result = await commentUserVotes({
+        commentId: scenario.commentUserVote.one.commentId,
+      })
+      const comment = await db.comment.findUnique({
+        where: { id: scenario.commentUserVote.one.commentId },
+        include: { commentVotes: true },
+      })
 
-      expect(result.length).toEqual(
-        Object.keys(scenario.commentUserVote).length
-      )
+      expect(result.length).toEqual(comment.commentVotes.length)
     }
   )
 

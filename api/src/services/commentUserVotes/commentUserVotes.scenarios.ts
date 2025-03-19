@@ -1,4 +1,5 @@
 import type { Prisma, CommentUserVote } from '@prisma/client'
+
 import type { ScenarioData } from '@redwoodjs/testing/api'
 
 export const standard = defineScenario<Prisma.CommentUserVoteCreateArgs>({
@@ -7,7 +8,7 @@ export const standard = defineScenario<Prisma.CommentUserVoteCreateArgs>({
       data: {
         comment: {
           create: {
-            body: 'String',
+            body: 'First comment',
             author: {
               create: {
                 email: 'String6844205',
