@@ -33,7 +33,6 @@ describe('SubmitLinkForm', () => {
     expect(onSubmit).not.toHaveBeenCalled()
   })
 
-  // jest can't find the title element, even though it shows it in it's list of options. so need to mess with the name field or something and figure out what's going on there
   it('submits when required fields are entered', async () => {
     const onSubmit = jest.fn()
     const loading = false

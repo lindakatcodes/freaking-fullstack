@@ -24,7 +24,7 @@ describe('CommentsCell', () => {
 
   it('renders Failure successfully', async () => {
     expect(() => {
-      render(<Failure error={new Error('Oh no')} />)
+      render(<Failure error={new Error('Oh no')} linkId={'42'} />)
     }).not.toThrow()
   })
 
@@ -36,7 +36,7 @@ describe('CommentsCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success comments={standard().comments} />)
+      render(<Success comments={standard().comments} linkId={'42'} />)
     }).not.toThrow()
   })
 })
