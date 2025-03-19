@@ -1,10 +1,18 @@
-import type { CommentsQuery, CommentsQueryVariables } from 'types/graphql'
-
 import type {
-  CellSuccessProps,
-  CellFailureProps,
-  TypedDocumentNode,
+  CommentsQuery,
+  CommentsQueryVariables,
+  CommentUserVote,
+} from 'types/graphql'
+
+import {
+  type CellSuccessProps,
+  type CellFailureProps,
+  type TypedDocumentNode,
+  useMutation,
 } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+
+import { useAuth } from 'src/auth'
 
 import Comment from '../Comment/Comment'
 
@@ -20,9 +28,29 @@ export const QUERY: TypedDocumentNode<CommentsQuery, CommentsQueryVariables> =
           email
           displayName
         }
+        commentVotes {
+          commentId
+          userId
+          id
+        }
       }
     }
   `
+export const CREATE_COMMENT_VOTE = gql`
+  mutation CommentVote($input: CreateCommentUserVoteInput!) {
+    createCommentUserVote(input: $input) {
+      id
+    }
+  }
+`
+
+export const DELETE_COMMENT_VOTE = gql`
+  mutation CommentVote($id: String!) {
+    deleteCommentUserVote(id: $id) {
+      id
+    }
+  }
+`
 
 export const Loading = () => (
   <div className="mt-8 text-center text-xl font-bold">Loading comments...</div>
@@ -44,11 +72,67 @@ export const Failure = ({
 
 export const Success = ({
   comments,
+  linkId,
 }: CellSuccessProps<CommentsQuery, CommentsQueryVariables>) => {
+  const { currentUser } = useAuth()
+
+  const [createCommentUserVote] = useMutation(CREATE_COMMENT_VOTE, {
+    onCompleted: () => {
+      console.log('comment upvoted')
+    },
+    refetchQueries: [{ query: QUERY, variables: { linkId } }],
+  })
+
+  const [deleteCommentUserVote] = useMutation(DELETE_COMMENT_VOTE, {
+    onCompleted: () => {
+      console.log('comment upvote removed')
+    },
+    refetchQueries: [{ query: QUERY, variables: { linkId } }],
+  })
+
+  if (!currentUser) {
+    return (
+      <div className="flex flex-col gap-4">
+        {comments.map((comment) => (
+          <Comment
+            comment={comment}
+            key={comment.id}
+            handleUpvoteClick={() => {
+              toast.error('You need to be signed in to upvote!')
+            }}
+            activeUser={null}
+          />
+        ))}
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-4">
-      {comments.map((item) => {
-        return <Comment comment={item} key={item.id} />
+      {comments.map((comment) => {
+        const handleClick = async () => {
+          const userUpvoteStatus: Partial<CommentUserVote> | undefined =
+            comment.commentVotes.find((vote) => vote.userId === currentUser.id)
+
+          if (!userUpvoteStatus) {
+            const upvote = {
+              commentId: comment.id,
+              userId: currentUser.id,
+            }
+            createCommentUserVote({ variables: { input: upvote } })
+          } else {
+            deleteCommentUserVote({ variables: { id: userUpvoteStatus.id } })
+          }
+        }
+
+        return (
+          <Comment
+            comment={comment}
+            key={comment.id}
+            handleUpvoteClick={handleClick}
+            activeUser={currentUser.id}
+          />
+        )
       })}
     </div>
   )

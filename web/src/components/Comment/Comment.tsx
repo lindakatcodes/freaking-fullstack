@@ -1,3 +1,5 @@
+import type { CommentUserVote } from 'types/graphql'
+
 import { Link } from '@redwoodjs/router'
 
 import UpvoteArrow from '../icons/UpvoteArrow/UpvoteArrow'
@@ -12,9 +14,11 @@ interface Props {
       email: string
       displayName?: string
     }
+    commentVotes: Partial<CommentUserVote>[]
   }
+  handleUpvoteClick: (() => Promise<void>) | (() => void)
+  activeUser: number | null
 }
-
 const formattedDate = (datetime: ConstructorParameters<typeof Date>[0]) => {
   const parsedDate = new Date(datetime)
   return parsedDate.toLocaleString('en-US', {
@@ -27,15 +31,19 @@ const formattedDate = (datetime: ConstructorParameters<typeof Date>[0]) => {
   })
 }
 
-const Comment = ({ comment }: Props) => {
+const Comment = ({ comment, handleUpvoteClick, activeUser }: Props) => {
   const displayName =
     comment.author.displayName ||
     comment.author.email.slice(0, comment.author.email.indexOf('@'))
 
+  const fillUpvote = !!comment.commentVotes.find(
+    (vote) => vote.userId === activeUser
+  )
+
   return (
     <div className="flex gap-2">
-      <button className="flex items-start">
-        <UpvoteArrow />
+      <button className="flex items-start" onClick={handleUpvoteClick}>
+        <UpvoteArrow fill={fillUpvote} />
       </button>
 
       <div className="flex flex-col">
