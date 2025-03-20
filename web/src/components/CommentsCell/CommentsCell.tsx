@@ -110,7 +110,7 @@ export const Success = ({
   return (
     <div className="flex flex-col gap-4">
       {comments.map((comment) => {
-        const handleClick = async () => {
+        const handleCommentUpvote = async () => {
           const userUpvoteStatus: Partial<CommentUserVote> | undefined =
             comment.commentVotes.find((vote) => vote.userId === currentUser.id)
 
@@ -129,7 +129,7 @@ export const Success = ({
           <Comment
             comment={comment}
             key={comment.id}
-            handleUpvoteClick={handleClick}
+            handleUpvoteClick={handleCommentUpvote}
             activeUser={currentUser.id}
           />
         )

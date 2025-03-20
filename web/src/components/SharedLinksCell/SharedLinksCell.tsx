@@ -1,12 +1,21 @@
-import type { SharedLinksQuery, SharedLinksQueryVariables } from 'types/graphql'
+import type {
+  SharedLinksQuery,
+  SharedLinksQueryVariables,
+  LinkUserVote,
+} from 'types/graphql'
 
 import type {
   CellSuccessProps,
   CellFailureProps,
   TypedDocumentNode,
 } from '@redwoodjs/web'
+import { useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+
+import { useAuth } from 'src/auth'
 
 import SharedLink from '../SharedLink/SharedLink'
+import { CREATE_LINK_VOTE, DELETE_LINK_VOTE } from '../SharedLinkCell'
 
 export const QUERY: TypedDocumentNode<
   SharedLinksQuery,
@@ -22,6 +31,11 @@ export const QUERY: TypedDocumentNode<
         displayName
       }
       comments {
+        id
+      }
+      linkVotes {
+        linkId
+        userId
         id
       }
     }
@@ -49,6 +63,43 @@ export const Failure = ({
 export const Success = ({
   sharedLinks,
 }: CellSuccessProps<SharedLinksQuery, SharedLinksQueryVariables>) => {
+  const { currentUser } = useAuth()
+
+  const [createLinkUserVote] = useMutation(CREATE_LINK_VOTE, {
+    onCompleted: () => {
+      console.log('link upvoted')
+    },
+    refetchQueries: [{ query: QUERY }],
+  })
+
+  const [deleteLinkUserVote] = useMutation(DELETE_LINK_VOTE, {
+    onCompleted: () => {
+      console.log('link upvote removed')
+    },
+    refetchQueries: [{ query: QUERY }],
+  })
+
+  const handleLinkUpvote = async (linkId: string) => {
+    if (!currentUser) {
+      toast.error('You need to be signed in to upvote!')
+      return
+    }
+
+    const link = sharedLinks.find((link) => link.id === linkId)
+    const userUpvoteStatus: Partial<LinkUserVote> | undefined =
+      link.linkVotes?.find((vote) => vote.userId === currentUser.id)
+
+    if (!userUpvoteStatus) {
+      const upvote = {
+        linkId: linkId,
+        userId: currentUser.id,
+      }
+      createLinkUserVote({ variables: { input: upvote } })
+    } else {
+      deleteLinkUserVote({ variables: { id: userUpvoteStatus.id } })
+    }
+  }
+
   return (
     <ul>
       {sharedLinks.map((link) => {
@@ -64,6 +115,9 @@ export const Success = ({
             link={link.url}
             displayName={displayName}
             commentCount={commentCount}
+            handleUpvoteClick={() => handleLinkUpvote(link.id)}
+            activeUser={currentUser?.id || null}
+            linkVotes={link.linkVotes || []}
           />
         )
       })}

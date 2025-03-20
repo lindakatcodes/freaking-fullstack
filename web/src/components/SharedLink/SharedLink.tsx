@@ -1,3 +1,5 @@
+import { LinkUserVote } from 'types/graphql'
+
 import { Link, routes } from '@redwoodjs/router'
 
 import RightArrow from '../icons/RightArrow/RightArrow'
@@ -10,7 +12,9 @@ interface SharedLinkProps {
   displayName: string
   commentCount?: number
   link: string
-  voteUp?: () => void
+  handleUpvoteClick?: () => void
+  activeUser: number | null
+  linkVotes: Partial<LinkUserVote>[]
 }
 
 const SharedLink = ({
@@ -20,20 +24,19 @@ const SharedLink = ({
   displayName,
   commentCount = 0,
   link,
-  voteUp = () => {},
+  handleUpvoteClick,
+  activeUser,
+  linkVotes,
 }: SharedLinkProps) => {
-  const handleVote = () => {
-    voteUp()
-    console.log('vote up!')
-  }
-
   // title and arrow go to link; displayName goes to user profile; comments goes to link comment page; link text shows domain only and shows all links shared from that domain (maybe skip this and just show the domain and go to the link)
+
+  const fillUpvote = !!linkVotes.find((vote) => vote.userId === activeUser)
 
   return (
     <div className="group flex items-start gap-5 border-b-2 border-black px-2 py-4 hover:bg-black hover:text-yellow">
       <div className="mt-2 flex flex-col">
-        <button onClick={handleVote}>
-          <UpvoteArrow />
+        <button onClick={handleUpvoteClick}>
+          <UpvoteArrow fill={fillUpvote} />
         </button>
       </div>
 
