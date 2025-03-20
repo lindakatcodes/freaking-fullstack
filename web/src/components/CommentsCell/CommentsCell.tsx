@@ -37,7 +37,7 @@ export const QUERY: TypedDocumentNode<CommentsQuery, CommentsQueryVariables> =
     }
   `
 export const CREATE_COMMENT_VOTE = gql`
-  mutation CommentVote($input: CreateCommentUserVoteInput!) {
+  mutation CreateCommentVote($input: CreateCommentUserVoteInput!) {
     createCommentUserVote(input: $input) {
       id
     }
@@ -45,7 +45,7 @@ export const CREATE_COMMENT_VOTE = gql`
 `
 
 export const DELETE_COMMENT_VOTE = gql`
-  mutation CommentVote($id: String!) {
+  mutation DeleteCommentVote($id: String!) {
     deleteCommentUserVote(id: $id) {
       id
     }

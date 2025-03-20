@@ -56,7 +56,7 @@ export const CREATE_COMMENT = gql`
 `
 
 export const CREATE_LINK_VOTE = gql`
-  mutation LinkVote($input: CreateLinkUserVoteInput!) {
+  mutation CreateLinkVote($input: CreateLinkUserVoteInput!) {
     createLinkUserVote(input: $input) {
       id
     }
@@ -64,7 +64,7 @@ export const CREATE_LINK_VOTE = gql`
 `
 
 export const DELETE_LINK_VOTE = gql`
-  mutation LinkVote($id: String!) {
+  mutation DeleteLinkVote($id: String!) {
     deleteLinkUserVote(id: $id) {
       id
     }
