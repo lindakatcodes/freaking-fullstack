@@ -12,7 +12,7 @@ interface SharedLinkProps {
   displayName: string
   commentCount?: number
   link: string
-  handleUpvoteClick?: () => void
+  handleUpvoteClick: () => void
   activeUser: number | null
   linkVotes: Partial<LinkUserVote>[]
 }

@@ -7,7 +7,7 @@ const meta: Meta<typeof SharedLink> = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div className="bg-yellow">
+      <div className="bg-yellow p-6">
         <Story />
       </div>
     ),
@@ -23,6 +23,10 @@ export const DefaultValues: Story = {
     title: 'Story test link',
     displayName: 'user1',
     link: 'https://bnn.co/subpage?q=test',
+    handleUpvoteClick: () => {},
+    activeUser: 1,
+    linkVotes: [],
+    linkId: '1',
   },
 }
 
@@ -34,7 +38,24 @@ export const CustomValues: Story = {
     link: 'https://bnn.co/subpage?q=test',
     points: 1234,
     commentCount: 6,
+    handleUpvoteClick: () => {},
+    activeUser: 1,
+    linkVotes: [],
+    linkId: '1',
   },
 }
 
 // upvoted story
+export const UpvotedLink: Story = {
+  args: {
+    title: 'So good it got upvoted',
+    displayName: 'LindaKat',
+    link: 'https://bnn.co/subpage?q=test',
+    points: 1234,
+    commentCount: 6,
+    handleUpvoteClick: () => {},
+    activeUser: 1,
+    linkVotes: [{ id: '100', linkId: '1', userId: 1 }],
+    linkId: '1',
+  },
+}

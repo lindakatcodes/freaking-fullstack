@@ -43,11 +43,13 @@ export const QUERY: TypedDocumentNode<
 `
 
 export const Loading = () => (
-  <div className="p-6 text-center">Fetching the best news...</div>
+  <div className="p-6 text-center text-xl font-bold">
+    Fetching the best news...
+  </div>
 )
 
 export const Empty = () => (
-  <div className="p-6 text-center">
+  <div className="p-6 text-center text-xl font-bold">
     <p>No news is good news?</p>
     <p>It looks like no links have been submitted yet!</p>
     <p>Join or login now to start submitting links for others to see.</p>
@@ -57,7 +59,9 @@ export const Empty = () => (
 export const Failure = ({
   error,
 }: CellFailureProps<SharedLinksQueryVariables>) => (
-  <div className="p-6 text-center text-red-700">Error: {error?.message}</div>
+  <div className="p-6 text-center text-xl font-bold text-red-700">
+    Error: {error?.message}
+  </div>
 )
 
 export const Success = ({
