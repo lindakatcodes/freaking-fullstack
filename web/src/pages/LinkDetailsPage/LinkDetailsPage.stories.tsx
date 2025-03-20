@@ -23,6 +23,6 @@ type Story = StoryObj<typeof LinkDetailsPage>
 
 export const Primary: Story = {
   args: {
-    id: '1',
+    id: '489eaeae-2021-4516-910c-154d9b8fd901',
   },
 }

@@ -47,4 +47,7 @@ export const Comment: CommentRelationResolvers = {
   link: (_obj, { root }) => {
     return db.comment.findUnique({ where: { id: root?.id } }).link()
   },
+  commentVotes: (_obj, { root }) => {
+    return db.comment.findUnique({ where: { id: root?.id } }).commentVotes()
+  },
 }

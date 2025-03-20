@@ -11,6 +11,13 @@ export const standard = (/* vars, { ctx, req } */) => ({
         displayName: 'Linda',
       },
       comments: [{ id: '1' }, { id: '2' }],
+      linkVotes: [
+        {
+          id: '100',
+          linkId: '42',
+          userId: 1,
+        },
+      ],
     },
     {
       __typename: 'SharedLink' as const,
@@ -22,6 +29,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
         displayName: null,
       },
       comments: [],
+      linkVotes: [],
     },
     {
       __typename: 'SharedLink' as const,
@@ -33,6 +41,18 @@ export const standard = (/* vars, { ctx, req } */) => ({
         displayName: 'Jon',
       },
       comments: [{ id: '3' }],
+      linkVotes: [
+        {
+          id: '100',
+          linkId: '44',
+          userId: 1,
+        },
+        {
+          id: '101',
+          linkId: '44',
+          userId: 2,
+        },
+      ],
     },
   ],
 })

@@ -10,6 +10,8 @@ export const standard = (/* vars, { ctx, req } */) => ({
         email: 'user0@test.co',
         displayName: null,
       },
+      commentVotes: [{ id: '101', commentId: '20', userId: 1 }],
+      activeUser: 1,
     },
     {
       id: '21',
@@ -20,6 +22,8 @@ export const standard = (/* vars, { ctx, req } */) => ({
         email: 'user1@test.co',
         displayName: 'Linda',
       },
+      commentVotes: [],
+      activeUser: 2,
     },
   ],
 })

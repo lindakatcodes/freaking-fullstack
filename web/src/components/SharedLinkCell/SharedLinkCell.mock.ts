@@ -11,5 +11,17 @@ export const standard = (/* vars, { ctx, req } */) => ({
       displayName: 'Linda',
     },
     comments: [{ id: '1' }, { id: '2' }],
+    linkVotes: [
+      {
+        id: '100',
+        linkId: '42',
+        userId: 1,
+      },
+      {
+        id: '101',
+        linkId: '42',
+        userId: 2,
+      },
+    ],
   },
 })

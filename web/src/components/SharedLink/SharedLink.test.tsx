@@ -11,6 +11,9 @@ describe('Link', () => {
           title={'Freaking Fullstack'}
           displayName={'Linda'}
           link={'https://freakingfullstack.com'}
+          handleUpvoteClick={() => {}}
+          activeUser={1}
+          linkVotes={[]}
         />
       )
     }).not.toThrow()
@@ -26,6 +29,9 @@ describe('Link', () => {
         displayName={'Linda'}
         commentCount={0}
         link={'https://freakingfullstack.com'}
+        handleUpvoteClick={() => {}}
+        activeUser={1}
+        linkVotes={[]}
       />
     )
     const titleElement = screen.getByText(title)
@@ -40,6 +46,9 @@ describe('Link', () => {
         displayName={'Linda'}
         commentCount={0}
         link={'https://freakingfullstack.com'}
+        handleUpvoteClick={() => {}}
+        activeUser={1}
+        linkVotes={[]}
       />
     )
     const points = screen.getByTestId('point')
@@ -55,6 +64,9 @@ describe('Link', () => {
         displayName={'Linda'}
         commentCount={0}
         link={'https://freakingfullstack.com'}
+        handleUpvoteClick={() => {}}
+        activeUser={1}
+        linkVotes={[]}
       />
     )
     const displayName = screen.getByText('Linda')
@@ -70,6 +82,9 @@ describe('Link', () => {
         displayName={'Linda'}
         commentCount={0}
         link={'https://freakingfullstack.com'}
+        handleUpvoteClick={() => {}}
+        activeUser={1}
+        linkVotes={[]}
       />
     )
     const title = screen.getByText('Freaking Fullstack')
@@ -85,6 +100,9 @@ describe('Link', () => {
         displayName={'Linda'}
         commentCount={123}
         link={'https://freakingfullstack.com'}
+        handleUpvoteClick={() => {}}
+        activeUser={1}
+        linkVotes={[]}
       />
     )
     const comments = screen.getByText('123 comments')
@@ -93,9 +111,26 @@ describe('Link', () => {
 
   it.skip('links to the person that submitted the link', () => {})
 
-  it.skip('links to an individual shared link page', () => {})
+  it('links to an individual shared link page', () => {
+    render(
+      <SharedLink
+        linkId={'42'}
+        title={'Freaking Fullstack'}
+        displayName={'Linda'}
+        link={'https://freakingfullstack.com'}
+        commentCount={123}
+        handleUpvoteClick={() => {}}
+        activeUser={1}
+        linkVotes={[{ id: '100', linkId: '1', userId: 1 }]}
+      />
+    )
 
-  it.skip('votes up', () => {
+    const commentsLink = screen.getByText('123 comments')
+    expect(commentsLink).toBeInTheDocument()
+    expect(commentsLink).toHaveAttribute('href', '/link/42')
+  })
+
+  it('upvotes a link when the upvote button is clicked', () => {
     const handleVote = jest.fn()
 
     render(
@@ -104,13 +139,17 @@ describe('Link', () => {
         title={'Freaking Fullstack'}
         displayName={'Linda'}
         link={'https://freakingfullstack.com'}
+        handleUpvoteClick={handleVote}
+        activeUser={1}
+        linkVotes={[]}
       />
     )
 
     expect(handleVote).not.toHaveBeenCalled()
-    const voteUp = screen.getByRole('button')
-    expect(voteUp).toBeInTheDocument()
-    voteUp.click()
+    const voteUpButton = screen.getByRole('button')
+    expect(voteUpButton).toBeInTheDocument()
+    voteUpButton.click()
     expect(handleVote).toHaveBeenCalled()
+    expect(handleVote).toHaveBeenCalledTimes(1)
   })
 })
