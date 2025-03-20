@@ -30,7 +30,9 @@ const SharedLink = ({
 }: SharedLinkProps) => {
   // title and arrow go to link; displayName goes to user profile; comments goes to link comment page; link text shows domain only and shows all links shared from that domain (maybe skip this and just show the domain and go to the link)
 
-  const fillUpvote = !!linkVotes.find((vote) => vote.userId === activeUser)
+  const fillUpvote = !!(linkVotes || []).find(
+    (vote) => vote.userId === activeUser
+  )
 
   return (
     <div className="group flex items-start gap-5 border-b-2 border-black px-2 py-4 hover:bg-black hover:text-yellow">
