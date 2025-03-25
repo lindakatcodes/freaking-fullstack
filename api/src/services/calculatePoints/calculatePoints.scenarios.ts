@@ -12,7 +12,7 @@ export const standard = defineScenario<Prisma.SharedLinkCreateArgs>({
         points: 0,
         submittedBy: {
           create: {
-            email: 'String793099',
+            email: 'user1@example.com',
             hashedPassword: 'String',
             salt: 'String',
           },
@@ -20,20 +20,44 @@ export const standard = defineScenario<Prisma.SharedLinkCreateArgs>({
         linkVotes: {
           create: [
             {
-              userId: 1,
+              user: {
+                create: {
+                  email: 'voter1@example.com',
+                  hashedPassword: 'String',
+                  salt: 'String',
+                },
+              },
             },
             {
-              userId: 2,
+              user: {
+                create: {
+                  email: 'voter2@example.com',
+                  hashedPassword: 'String',
+                  salt: 'String',
+                },
+              },
             },
           ],
         },
         comments: {
           create: {
             body: 'Test comment',
-            authorId: 1,
+            author: {
+              create: {
+                email: 'commenter@example.com',
+                hashedPassword: 'String',
+                salt: 'String',
+              },
+            },
             commentVotes: {
               create: {
-                userId: 1,
+                user: {
+                  create: {
+                    email: 'commentvoter@example.com',
+                    hashedPassword: 'String',
+                    salt: 'String',
+                  },
+                },
               },
             },
           },
