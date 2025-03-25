@@ -26,6 +26,7 @@ export const QUERY: TypedDocumentNode<
       id
       title
       url
+      points
       submittedBy {
         email
         displayName
@@ -117,6 +118,7 @@ export const Success = ({
             linkId={link.id}
             title={link.title}
             link={link.url}
+            points={link.points}
             displayName={displayName}
             commentCount={commentCount}
             handleUpvoteClick={() => handleLinkUpvote(link.id)}

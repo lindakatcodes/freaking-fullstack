@@ -8,7 +8,7 @@ import UpvoteArrow from '../icons/UpvoteArrow/UpvoteArrow'
 interface SharedLinkProps {
   linkId: string
   title: string
-  points?: number
+  points: number
   displayName: string
   commentCount?: number
   link: string

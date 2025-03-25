@@ -30,6 +30,7 @@ export const QUERY: TypedDocumentNode<
       id
       title
       url
+      points
       submittedBy {
         id
         displayName
@@ -176,6 +177,7 @@ export const Success = ({
           linkId={sharedLink.id}
           title={sharedLink.title}
           link={sharedLink.url}
+          points={sharedLink.points}
           displayName={displayName}
           commentCount={commentCount}
           handleUpvoteClick={handleLinkUpvote}

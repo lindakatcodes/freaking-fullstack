@@ -26,6 +26,7 @@ const SubmitLinkPage = () => {
     const newSharedLink = {
       ...data,
       submittedById: currentUser.id,
+      points: 0,
     }
     create({ variables: { input: newSharedLink } })
   }
