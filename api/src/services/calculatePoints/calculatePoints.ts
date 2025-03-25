@@ -1,8 +1,7 @@
 import { db } from 'src/lib/db'
-import { logger } from 'src/lib/logger'
 
 export const calculatePoints = async ({ linkId }) => {
-  // Get the link and related data
+  // get the requested link and related comment data
   const link = await db.sharedLink.findUnique({
     where: { id: linkId },
     include: {
@@ -17,20 +16,19 @@ export const calculatePoints = async ({ linkId }) => {
     },
   })
 
-  logger.info(link)
-  logger.info(linkComments)
-
-  // Your algorithm logic here
-  const currentPoints = link.points
+  // the actual calculation of points
   const linkUpvotes = link.linkVotes.length
   const commentCount = linkComments.length
-  const commentVotes = linkComments
-    .map((comment) => comment.commentVotes.length)
-    .reduce((a, b) => a + b)
+  const commentVotes =
+    commentCount <= 0
+      ? 0
+      : linkComments
+          .map((comment) => comment.commentVotes.length)
+          .reduce((a, b) => a + b)
 
-  const newPoints = currentPoints + linkUpvotes + commentCount + commentVotes
+  const newPoints = linkUpvotes + commentCount + commentVotes
 
-  // Update the database with the new point value
+  // update the database with the new point value
   return db.sharedLink.update({
     where: { id: linkId },
     data: { points: newPoints },

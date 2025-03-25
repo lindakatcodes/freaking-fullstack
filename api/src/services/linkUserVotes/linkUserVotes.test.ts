@@ -6,7 +6,6 @@ import {
   linkUserVotes,
   linkUserVote,
   createLinkUserVote,
-  updateLinkUserVote,
   deleteLinkUserVote,
 } from './linkUserVotes'
 import type { StandardScenario } from './linkUserVotes.scenarios'
@@ -49,18 +48,6 @@ describe('linkUserVotes', () => {
 
     expect(result.linkId).toEqual(scenario.linkUserVote.two.linkId)
     expect(result.userId).toEqual(scenario.linkUserVote.two.userId)
-  })
-
-  scenario('updates a linkUserVote', async (scenario: StandardScenario) => {
-    const original = (await linkUserVote({
-      id: scenario.linkUserVote.one.id,
-    })) as LinkUserVote
-    const result = await updateLinkUserVote({
-      id: original.id,
-      input: { linkId: scenario.linkUserVote.two.linkId },
-    })
-
-    expect(result.linkId).toEqual(scenario.linkUserVote.two.linkId)
   })
 
   scenario('deletes a linkUserVote', async (scenario: StandardScenario) => {
