@@ -64,6 +64,21 @@ export const standard = defineScenario<Prisma.SharedLinkCreateArgs>({
         },
       },
     },
+    testLinkTwo: {
+      data: {
+        updatedAt: '2024-11-13T21:58:18.650Z',
+        title: 'String',
+        url: 'String',
+        points: 0,
+        submittedBy: {
+          create: {
+            email: 'user1@example.com',
+            hashedPassword: 'String',
+            salt: 'String',
+          },
+        },
+      },
+    },
   },
 })
 export type StandardScenario = ScenarioData<SharedLink, 'sharedLink'>

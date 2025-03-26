@@ -13,4 +13,16 @@ describe('calculatePoints', () => {
       expect(testLink.points).toEqual(expectedPoints)
     }
   )
+
+  scenario(
+    'correctly calculates zero points',
+    async (scenario: StandardScenario) => {
+      const testLink = await calculatePoints({
+        linkId: scenario.sharedLink.testLinkTwo.id,
+      })
+      const expectedPoints = 0
+
+      expect(testLink.points).toEqual(expectedPoints)
+    }
+  )
 })
