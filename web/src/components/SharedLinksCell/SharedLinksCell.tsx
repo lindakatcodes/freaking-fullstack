@@ -111,7 +111,7 @@ export const Success = ({
         const displayName =
           link.submittedBy.displayName ||
           link.submittedBy.email.slice(0, link.submittedBy.email.indexOf('@'))
-        const commentCount = link.comments.length
+        const commentCount = link.comments && link.comments.length
         return (
           <SharedLink
             key={link.id}

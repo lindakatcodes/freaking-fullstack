@@ -115,7 +115,7 @@ export const Success = ({
       sharedLink.submittedBy.email.indexOf('@')
     )
 
-  const commentCount = sharedLink.comments.length
+  const commentCount = sharedLink.comments && sharedLink.comments.length
 
   const [createComment, { loading, error }] = useMutation(CREATE_COMMENT, {
     onCompleted: () => {
