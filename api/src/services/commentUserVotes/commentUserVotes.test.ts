@@ -6,7 +6,6 @@ import {
   commentUserVotes,
   commentUserVote,
   createCommentUserVote,
-  updateCommentUserVote,
   deleteCommentUserVote,
 } from './commentUserVotes'
 import type { StandardScenario } from './commentUserVotes.scenarios'
@@ -54,18 +53,6 @@ describe('commentUserVotes', () => {
 
     expect(result.commentId).toEqual(scenario.commentUserVote.two.commentId)
     expect(result.userId).toEqual(scenario.commentUserVote.two.userId)
-  })
-
-  scenario('updates a commentUserVote', async (scenario: StandardScenario) => {
-    const original = (await commentUserVote({
-      id: scenario.commentUserVote.one.id,
-    })) as CommentUserVote
-    const result = await updateCommentUserVote({
-      id: original.id,
-      input: { commentId: scenario.commentUserVote.two.commentId },
-    })
-
-    expect(result.commentId).toEqual(scenario.commentUserVote.two.commentId)
   })
 
   scenario('deletes a commentUserVote', async (scenario: StandardScenario) => {
