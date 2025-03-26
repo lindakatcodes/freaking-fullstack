@@ -72,7 +72,7 @@ export const standard = defineScenario<Prisma.SharedLinkCreateArgs>({
         points: 0,
         submittedBy: {
           create: {
-            email: 'user1@example.com',
+            email: 'user2@example.com',
             hashedPassword: 'String',
             salt: 'String',
           },
