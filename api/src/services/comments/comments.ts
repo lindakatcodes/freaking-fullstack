@@ -6,6 +6,8 @@ import type {
 
 import { db } from 'src/lib/db'
 
+import { calculatePoints } from '../calculatePoints/calculatePoints'
+
 export const comments: QueryResolvers['comments'] = ({ linkId }) => {
   return db.comment.findMany({ where: { linkId } })
 }
@@ -16,12 +18,16 @@ export const comment: QueryResolvers['comment'] = ({ id }) => {
   })
 }
 
-export const createComment: MutationResolvers['createComment'] = ({
+export const createComment: MutationResolvers['createComment'] = async ({
   input,
 }) => {
-  return db.comment.create({
+  const result = await db.comment.create({
     data: input,
   })
+
+  await calculatePoints({ linkId: input.linkId })
+
+  return result
 }
 
 export const updateComment: MutationResolvers['updateComment'] = ({
@@ -34,10 +40,16 @@ export const updateComment: MutationResolvers['updateComment'] = ({
   })
 }
 
-export const deleteComment: MutationResolvers['deleteComment'] = ({ id }) => {
-  return db.comment.delete({
+export const deleteComment: MutationResolvers['deleteComment'] = async ({
+  id,
+}) => {
+  const result = await db.comment.delete({
     where: { id },
   })
+
+  await calculatePoints({ linkId: result.linkId })
+
+  return result
 }
 
 export const Comment: CommentRelationResolvers = {

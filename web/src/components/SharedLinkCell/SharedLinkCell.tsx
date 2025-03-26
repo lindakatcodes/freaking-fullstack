@@ -124,6 +124,7 @@ export const Success = ({
     },
     refetchQueries: [
       { query: CommentsQuery, variables: { linkId: sharedLink.id } },
+      { query: QUERY, variables: { id: sharedLink.id } },
     ],
   })
 
