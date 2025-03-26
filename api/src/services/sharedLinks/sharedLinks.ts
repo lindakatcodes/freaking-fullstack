@@ -9,7 +9,7 @@ import { validate } from '@redwoodjs/api'
 import { db } from 'src/lib/db'
 
 export const sharedLinks: QueryResolvers['sharedLinks'] = () => {
-  return db.sharedLink.findMany()
+  return db.sharedLink.findMany({ orderBy: [{ points: 'desc' }] })
 }
 
 export const sharedLink: QueryResolvers['sharedLink'] = ({ id }) => {
