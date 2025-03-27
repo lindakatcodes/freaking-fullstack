@@ -15,7 +15,7 @@ describe('Navigation', () => {
   })
 
   it('shows a user the authenticated nav bar when logged in', () => {
-    mockCurrentUser({ id: 1 })
+    mockCurrentUser({ id: 1, email: '' })
 
     render(<Navigation />)
     expect(screen.getByText('My Profile')).toBeInTheDocument()

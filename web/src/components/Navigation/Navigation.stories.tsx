@@ -26,7 +26,7 @@ const meta: Meta<typeof Navigation> = {
 export default meta
 
 const LoggedInDecorator = (Story) => {
-  mockCurrentUser({ id: 1 })
+  mockCurrentUser({ id: 1, email: '' })
   return (
     <AuthProvider>
       <Story />
