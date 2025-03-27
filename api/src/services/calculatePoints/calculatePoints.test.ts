@@ -8,7 +8,7 @@ describe('calculatePoints', () => {
       const testLink = await calculatePoints({
         linkId: scenario.sharedLink.testLink.id,
       })
-      const expectedPoints = 24
+      const expectedPoints = 27
 
       expect(testLink.points).toEqual(expectedPoints)
     }
