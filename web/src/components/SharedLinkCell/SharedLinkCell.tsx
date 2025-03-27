@@ -30,6 +30,7 @@ export const QUERY: TypedDocumentNode<
       id
       title
       url
+      points
       submittedBy {
         id
         displayName
@@ -114,7 +115,7 @@ export const Success = ({
       sharedLink.submittedBy.email.indexOf('@')
     )
 
-  const commentCount = sharedLink.comments.length
+  const commentCount = sharedLink.comments && sharedLink.comments.length
 
   const [createComment, { loading, error }] = useMutation(CREATE_COMMENT, {
     onCompleted: () => {
@@ -123,6 +124,7 @@ export const Success = ({
     },
     refetchQueries: [
       { query: CommentsQuery, variables: { linkId: sharedLink.id } },
+      { query: QUERY, variables: { id: sharedLink.id } },
     ],
   })
 
@@ -176,6 +178,7 @@ export const Success = ({
           linkId={sharedLink.id}
           title={sharedLink.title}
           link={sharedLink.url}
+          points={sharedLink.points}
           displayName={displayName}
           commentCount={commentCount}
           handleUpvoteClick={handleLinkUpvote}

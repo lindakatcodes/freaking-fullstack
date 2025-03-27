@@ -15,6 +15,7 @@ import { toast } from '@redwoodjs/web/toast'
 import { useAuth } from 'src/auth'
 
 import Comment from '../Comment/Comment'
+import { QUERY as SharedLinkQuery } from '../SharedLinkCell'
 
 export const QUERY: TypedDocumentNode<CommentsQuery, CommentsQueryVariables> =
   gql`
@@ -80,14 +81,20 @@ export const Success = ({
     onCompleted: () => {
       console.log('comment upvoted')
     },
-    refetchQueries: [{ query: QUERY, variables: { linkId } }],
+    refetchQueries: [
+      { query: QUERY, variables: { linkId } },
+      { query: SharedLinkQuery, variables: { id: linkId } },
+    ],
   })
 
   const [deleteCommentUserVote] = useMutation(DELETE_COMMENT_VOTE, {
     onCompleted: () => {
       console.log('comment upvote removed')
     },
-    refetchQueries: [{ query: QUERY, variables: { linkId } }],
+    refetchQueries: [
+      { query: QUERY, variables: { linkId } },
+      { query: SharedLinkQuery, variables: { id: linkId } },
+    ],
   })
 
   if (!currentUser) {

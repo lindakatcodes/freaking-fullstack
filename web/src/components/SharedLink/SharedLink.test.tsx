@@ -14,6 +14,7 @@ describe('Link', () => {
           handleUpvoteClick={() => {}}
           activeUser={1}
           linkVotes={[]}
+          points={5}
         />
       )
     }).not.toThrow()
@@ -36,23 +37,6 @@ describe('Link', () => {
     )
     const titleElement = screen.getByText(title)
     expect(titleElement).toBeInTheDocument()
-  })
-
-  it('has 0 points by default', () => {
-    render(
-      <SharedLink
-        linkId={'42'}
-        title={'Freaking Fullstack'}
-        displayName={'Linda'}
-        commentCount={0}
-        link={'https://freakingfullstack.com'}
-        handleUpvoteClick={() => {}}
-        activeUser={1}
-        linkVotes={[]}
-      />
-    )
-    const points = screen.getByTestId('point')
-    expect(points).toHaveTextContent('0')
   })
 
   it('has a display name for the person that submitted the link', () => {
@@ -117,6 +101,7 @@ describe('Link', () => {
         linkId={'42'}
         title={'Freaking Fullstack'}
         displayName={'Linda'}
+        points={16}
         link={'https://freakingfullstack.com'}
         commentCount={123}
         handleUpvoteClick={() => {}}
@@ -138,6 +123,7 @@ describe('Link', () => {
         linkId={'42'}
         title={'Freaking Fullstack'}
         displayName={'Linda'}
+        points={3}
         link={'https://freakingfullstack.com'}
         handleUpvoteClick={handleVote}
         activeUser={1}

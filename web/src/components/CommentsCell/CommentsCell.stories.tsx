@@ -37,6 +37,7 @@ export const failure: StoryObj<typeof Failure> = {
 
 export const success: StoryObj<typeof Success> = {
   render: (args) => {
+    mockCurrentUser({ id: 1 })
     return Success ? <Success {...standard()} {...args} /> : <></>
   },
 }

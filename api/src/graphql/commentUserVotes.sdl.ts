@@ -18,18 +18,9 @@ export const schema = gql`
     userId: Int!
   }
 
-  input UpdateCommentUserVoteInput {
-    commentId: String
-    userId: Int
-  }
-
   type Mutation {
     createCommentUserVote(input: CreateCommentUserVoteInput!): CommentUserVote!
       @requireAuth
-    updateCommentUserVote(
-      id: String!
-      input: UpdateCommentUserVoteInput!
-    ): CommentUserVote! @requireAuth
     deleteCommentUserVote(id: String!): CommentUserVote! @requireAuth
   }
 `

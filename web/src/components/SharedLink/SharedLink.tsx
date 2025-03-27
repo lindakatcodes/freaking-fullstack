@@ -8,7 +8,7 @@ import UpvoteArrow from '../icons/UpvoteArrow/UpvoteArrow'
 interface SharedLinkProps {
   linkId: string
   title: string
-  points?: number
+  points: number
   displayName: string
   commentCount?: number
   link: string
@@ -51,7 +51,8 @@ const SharedLink = ({
         </a>
         <div className="flex gap-2 text-sm">
           <p>
-            <span data-testid="point">{points}</span> points
+            <span data-testid="point">{points}</span>{' '}
+            {points === 1 ? 'point' : 'points'}
           </p>
           <p> • </p>
           <p>

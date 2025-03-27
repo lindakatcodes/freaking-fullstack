@@ -40,6 +40,7 @@ model SharedLink {
   updatedAt     DateTime @updatedAt
   title         String
   url           String
+  points        Int      @default(0)
   submittedBy   User     @relation(fields: [submittedById], references: [id])
   submittedById Int
   comments      Comment[]

@@ -6,6 +6,8 @@ import type {
 
 import { db } from 'src/lib/db'
 
+import { calculatePoints } from '../calculatePoints/calculatePoints'
+
 export const commentUserVotes: QueryResolvers['commentUserVotes'] = ({
   commentId,
 }) => {
@@ -19,25 +21,33 @@ export const commentUserVote: QueryResolvers['commentUserVote'] = ({ id }) => {
 }
 
 export const createCommentUserVote: MutationResolvers['createCommentUserVote'] =
-  ({ input }) => {
-    return db.commentUserVote.create({
+  async ({ input }) => {
+    const result = await db.commentUserVote.create({
       data: input,
     })
-  }
 
-export const updateCommentUserVote: MutationResolvers['updateCommentUserVote'] =
-  ({ id, input }) => {
-    return db.commentUserVote.update({
-      data: input,
-      where: { id },
+    const comment = await db.comment.findUnique({
+      where: { id: result.commentId },
     })
+
+    await calculatePoints({ linkId: comment.linkId })
+
+    return result
   }
 
 export const deleteCommentUserVote: MutationResolvers['deleteCommentUserVote'] =
-  ({ id }) => {
-    return db.commentUserVote.delete({
+  async ({ id }) => {
+    const result = await db.commentUserVote.delete({
       where: { id },
     })
+
+    const comment = await db.comment.findUnique({
+      where: { id: result.commentId },
+    })
+
+    await calculatePoints({ linkId: comment.linkId })
+
+    return result
   }
 
 export const CommentUserVote: CommentUserVoteRelationResolvers = {

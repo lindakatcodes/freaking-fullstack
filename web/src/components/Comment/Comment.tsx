@@ -36,9 +36,9 @@ const Comment = ({ comment, handleUpvoteClick, activeUser }: Props) => {
     comment.author.displayName ||
     comment.author.email.slice(0, comment.author.email.indexOf('@'))
 
-  const fillUpvote = !!comment.commentVotes.find(
-    (vote) => vote.userId === activeUser
-  )
+  const fillUpvote =
+    comment.commentVotes &&
+    !!comment.commentVotes.find((vote) => vote.userId === activeUser)
 
   return (
     <div className="flex gap-2">

@@ -5,6 +5,7 @@ export const schema = gql`
     updatedAt: DateTime!
     title: String!
     url: String!
+    points: Int!
     submittedBy: User!
     submittedById: Int!
     comments: [Comment]!
@@ -19,12 +20,14 @@ export const schema = gql`
   input CreateSharedLinkInput {
     title: String!
     url: String!
+    points: Int!
     submittedById: Int!
   }
 
   input UpdateSharedLinkInput {
     title: String
     url: String
+    points: Int
     submittedById: Int
   }
 

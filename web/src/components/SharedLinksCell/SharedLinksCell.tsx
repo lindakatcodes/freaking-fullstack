@@ -26,6 +26,7 @@ export const QUERY: TypedDocumentNode<
       id
       title
       url
+      points
       submittedBy {
         email
         displayName
@@ -110,13 +111,14 @@ export const Success = ({
         const displayName =
           link.submittedBy.displayName ||
           link.submittedBy.email.slice(0, link.submittedBy.email.indexOf('@'))
-        const commentCount = link.comments.length
+        const commentCount = link.comments && link.comments.length
         return (
           <SharedLink
             key={link.id}
             linkId={link.id}
             title={link.title}
             link={link.url}
+            points={link.points}
             displayName={displayName}
             commentCount={commentCount}
             handleUpvoteClick={() => handleLinkUpvote(link.id)}

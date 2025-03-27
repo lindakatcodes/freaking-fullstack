@@ -6,6 +6,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
       id: '42',
       title: 'Post 1',
       url: 'https://example.com',
+      points: 3,
       submittedBy: {
         email: 'user0@test.co',
         displayName: 'Linda',
@@ -24,6 +25,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
       id: '43',
       title: 'Post 2',
       url: 'https://redwoodjs.com',
+      points: 0,
       submittedBy: {
         email: 'user1@test.co',
         displayName: null,
@@ -36,6 +38,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
       id: '44',
       title: 'Post 3',
       url: 'https://example.com',
+      points: 3,
       submittedBy: {
         email: 'user2@test.co',
         displayName: 'Jon',

@@ -36,6 +36,7 @@ describe('sharedLinks', () => {
       input: {
         title: 'String',
         url: 'https://example.com',
+        points: 16,
         submittedById: scenario.sharedLink.two.submittedById,
       },
     })
