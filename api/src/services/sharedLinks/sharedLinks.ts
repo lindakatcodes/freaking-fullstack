@@ -12,6 +12,12 @@ export const sharedLinks: QueryResolvers['sharedLinks'] = () => {
   return db.sharedLink.findMany({ orderBy: [{ points: 'desc' }] })
 }
 
+export const sharedLinksByUser: QueryResolvers['sharedLinksByUser'] = ({
+  id,
+}) => {
+  return db.sharedLink.findMany({ where: { submittedById: id } })
+}
+
 export const sharedLink: QueryResolvers['sharedLink'] = ({ id }) => {
   return db.sharedLink.findUnique({
     where: { id },

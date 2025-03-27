@@ -22,9 +22,9 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
   const last = currentUser.email.slice(currentUser.email.indexOf('@'))
 
   return (
-    <main className="h-dvh w-dvw">
+    <main className="h-dvh w-dvw px-6">
       <Header />
-      <div className="@container flex pl-4 pt-2">
+      <div className="@container flex pt-2">
         <h2 className="text-outline-white font-serif text-[9cqw] font-bold leading-[0.875] tracking-wider text-black">
           {first}
         </h2>
