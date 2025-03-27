@@ -43,7 +43,7 @@ export const standard = defineScenario<Prisma.SharedLinkCreateArgs>({
               createdAt: '2025-03-27T05:13:00Z',
               user: {
                 create: {
-                  email: 'voter1@example.com',
+                  email: 'voter3@example.com',
                   hashedPassword: 'String',
                   salt: 'String',
                 },
