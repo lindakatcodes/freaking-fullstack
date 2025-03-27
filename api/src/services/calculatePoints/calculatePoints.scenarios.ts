@@ -6,7 +6,7 @@ export const standard = defineScenario<Prisma.SharedLinkCreateArgs>({
   sharedLink: {
     testLink: {
       data: {
-        updatedAt: '2024-11-13T21:58:18.650Z',
+        createdAt: '2025-03-27T03:13:00Z',
         title: 'String',
         url: 'String',
         points: 0,
@@ -20,6 +20,7 @@ export const standard = defineScenario<Prisma.SharedLinkCreateArgs>({
         linkVotes: {
           create: [
             {
+              createdAt: '2025-03-27T03:14:00Z',
               user: {
                 create: {
                   email: 'voter1@example.com',
@@ -29,6 +30,7 @@ export const standard = defineScenario<Prisma.SharedLinkCreateArgs>({
               },
             },
             {
+              createdAt: '2025-03-27T03:36:31Z',
               user: {
                 create: {
                   email: 'voter2@example.com',
@@ -42,6 +44,7 @@ export const standard = defineScenario<Prisma.SharedLinkCreateArgs>({
         comments: {
           create: {
             body: 'Test comment',
+            createdAt: '2025-03-27T03:16:45Z',
             author: {
               create: {
                 email: 'commenter@example.com',
@@ -51,6 +54,7 @@ export const standard = defineScenario<Prisma.SharedLinkCreateArgs>({
             },
             commentVotes: {
               create: {
+                createdAt: '2025-03-27T03:17:10Z',
                 user: {
                   create: {
                     email: 'commentvoter@example.com',
@@ -66,7 +70,7 @@ export const standard = defineScenario<Prisma.SharedLinkCreateArgs>({
     },
     testLinkTwo: {
       data: {
-        updatedAt: '2024-11-13T21:58:18.650Z',
+        createdAt: '2025-03-27T03:20:00Z',
         title: 'String',
         url: 'String',
         points: 0,
