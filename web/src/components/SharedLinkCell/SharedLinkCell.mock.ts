@@ -4,6 +4,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
     __typename: 'SharedLink' as const,
     id: '42',
     title: 'Post 1',
+    points: 1,
     url: 'https://example.com',
     submittedBy: {
       id: 1,
