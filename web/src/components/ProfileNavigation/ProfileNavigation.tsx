@@ -13,7 +13,7 @@ const ProfileNavigation = () => {
       <NavLink
         className="text-3xl font-bold uppercase tracking-tighter text-blue"
         activeClassName="text-3xl font-bold uppercase tracking-tighter text-yellow"
-        to={routes.home()}
+        to={routes.userComments()}
       >
         Comments
       </NavLink>

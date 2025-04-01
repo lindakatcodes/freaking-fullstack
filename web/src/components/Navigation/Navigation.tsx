@@ -13,7 +13,10 @@ const Navigation = () => {
             <Link to={routes.userLinks()} className="mx-4 font-bold text-white">
               Links Shared
             </Link>
-            <Link to={routes.home()} className="mx-4 font-bold text-white">
+            <Link
+              to={routes.userComments()}
+              className="mx-4 font-bold text-white"
+            >
               Comments
             </Link>
             <Link
