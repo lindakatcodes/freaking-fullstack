@@ -24,7 +24,7 @@ describe('UserLinksCell', () => {
 
   it('renders Failure successfully', async () => {
     expect(() => {
-      render(<Failure error={new Error('Oh no')} />)
+      render(<Failure id={1} error={new Error('Oh no')} />)
     }).not.toThrow()
   })
 
@@ -36,7 +36,9 @@ describe('UserLinksCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success userLinks={standard().userLinks} />)
+      render(
+        <Success id={1} sharedLinksByUser={standard().sharedLinksByUser} />
+      )
     }).not.toThrow()
   })
 })

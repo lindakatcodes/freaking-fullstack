@@ -10,6 +10,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
       submittedBy: {
         email: 'user0@test.co',
         displayName: 'Linda',
+        id: 1,
       },
       comments: [{ id: '1' }, { id: '2' }],
       linkVotes: [
@@ -29,6 +30,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
       submittedBy: {
         email: 'user1@test.co',
         displayName: null,
+        id: 2,
       },
       comments: [],
       linkVotes: [],
@@ -42,6 +44,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
       submittedBy: {
         email: 'user2@test.co',
         displayName: 'Jon',
+        id: 3,
       },
       comments: [{ id: '3' }],
       linkVotes: [
