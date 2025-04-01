@@ -8,6 +8,7 @@ import UserLinksPage from './UserLinksPage'
 describe('UserLinksPage', () => {
   it('renders successfully', () => {
     expect(() => {
+      mockCurrentUser({ id: 1, email: 'hi@test.co' })
       render(<UserLinksPage />)
     }).not.toThrow()
   })

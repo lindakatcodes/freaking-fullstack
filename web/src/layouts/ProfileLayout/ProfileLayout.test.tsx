@@ -8,6 +8,7 @@ import ProfileLayout from './ProfileLayout'
 describe('ProfileLayout', () => {
   it('renders successfully', () => {
     expect(() => {
+      mockCurrentUser({ id: 1, email: 'hi@test.co' })
       render(<ProfileLayout />)
     }).not.toThrow()
   })
