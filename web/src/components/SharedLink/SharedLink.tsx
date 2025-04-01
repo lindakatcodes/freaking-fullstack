@@ -15,6 +15,7 @@ interface SharedLinkProps {
   handleUpvoteClick: () => void
   activeUser: number | null
   linkVotes: Partial<LinkUserVote>[]
+  invertColors?: boolean
 }
 
 const SharedLink = ({
@@ -27,6 +28,7 @@ const SharedLink = ({
   handleUpvoteClick,
   activeUser,
   linkVotes,
+  invertColors = false,
 }: SharedLinkProps) => {
   // title and arrow go to link; displayName goes to user profile; comments goes to link comment page; link text shows domain only and shows all links shared from that domain (maybe skip this and just show the domain and go to the link)
 
@@ -35,7 +37,9 @@ const SharedLink = ({
   )
 
   return (
-    <div className="group flex items-start gap-5 border-b-2 border-black px-2 py-4 hover:bg-black hover:text-yellow">
+    <div
+      className={`group flex items-start gap-5 border-b-2  px-2 py-4  ${!invertColors ? 'border-black hover:bg-black hover:text-yellow' : 'border-yellow bg-black text-yellow hover:bg-yellow hover:text-black'}`}
+    >
       <div className="mt-2 flex flex-col">
         <button onClick={handleUpvoteClick}>
           <UpvoteArrow fill={fillUpvote} />
@@ -45,7 +49,7 @@ const SharedLink = ({
       <div className="">
         <a
           href={link}
-          className="text-5xl font-bold uppercase tracking-tight visited:text-pink-700 group-hover:visited:text-pink-400"
+          className={`text-5xl font-bold uppercase tracking-tight  ${!invertColors ? 'visited:text-pink-700 group-hover:visited:text-pink-400' : 'visited:text-pink-400 group-hover:visited:text-pink-700'}`}
         >
           {title}
         </a>

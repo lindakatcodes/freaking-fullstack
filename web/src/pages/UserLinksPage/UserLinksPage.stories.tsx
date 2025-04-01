@@ -7,13 +7,16 @@ import UserLinksPage from './UserLinksPage'
 const meta: Meta<typeof UserLinksPage> = {
   component: UserLinksPage,
   decorators: [
-    (Story) => (
-      <div className="relative">
-        <ProfileLayout>
-          <Story />
-        </ProfileLayout>
-      </div>
-    ),
+    (Story) => {
+      mockCurrentUser({ id: 1, email: 'hello@bnn.news' })
+      return (
+        <div className="relative">
+          <ProfileLayout>
+            <Story />
+          </ProfileLayout>
+        </div>
+      )
+    },
   ],
 }
 

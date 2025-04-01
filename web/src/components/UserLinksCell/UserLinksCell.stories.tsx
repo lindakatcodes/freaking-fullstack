@@ -6,6 +6,13 @@ import { standard } from './UserLinksCell.mock'
 const meta: Meta = {
   title: 'Cells/UserLinksCell',
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <div className="bg-black">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta
@@ -30,6 +37,7 @@ export const failure: StoryObj<typeof Failure> = {
 
 export const success: StoryObj<typeof Success> = {
   render: (args) => {
+    mockCurrentUser({ id: 1, email: 'hello@bnn.news' })
     return Success ? <Success {...standard()} {...args} /> : <></>
   },
 }

@@ -38,14 +38,24 @@ export const QUERY: TypedDocumentNode<
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => (
+  <div className="p-6 text-center text-xl font-bold text-white">
+    Fetching all the links this user has shared...
+  </div>
+)
 
-export const Empty = () => <div>Empty</div>
+export const Empty = () => (
+  <div className="p-6 text-center text-xl font-bold text-white">
+    Looks like this user hasn&apos;t shared any links yet!
+  </div>
+)
 
 export const Failure = ({
   error,
 }: CellFailureProps<SharedLinksByUserQueryVariables>) => (
-  <div style={{ color: 'red' }}>Error: {error?.message}</div>
+  <div className="p-6 text-center text-xl font-bold text-red-500">
+    Error: {error?.message}
+  </div>
 )
 
 export const Success = ({
@@ -73,6 +83,7 @@ export const Success = ({
             handleUpvoteClick={() => {}}
             activeUser={link.submittedBy.id || null}
             linkVotes={link.linkVotes || []}
+            invertColors={true}
           />
         )
       })}
