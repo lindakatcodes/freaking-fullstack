@@ -28,14 +28,9 @@ describe('UserCommentsCell', () => {
     }).not.toThrow()
   })
 
-  // When you're ready to test the actual output of your component render
-  // you could test that, for example, certain text is present:
-  //
-  // 1. import { screen } from '@redwoodjs/testing/web'
-  // 2. Add test: expect(screen.getByText('Hello, world')).toBeInTheDocument()
-
   it('renders Success successfully', async () => {
     expect(() => {
+      mockCurrentUser({ id: 1, email: '' })
       render(<Success id={1} user={standard().user} />)
     }).not.toThrow()
   })
