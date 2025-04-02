@@ -8,7 +8,7 @@ const meta: Meta<typeof EditProfilePage> = {
   component: EditProfilePage,
   decorators: [
     (Story) => {
-      mockCurrentUser({ id: 1 })
+      mockCurrentUser({ id: 1, email: '' })
       return (
         <div className="relative">
           <AuthLayout>

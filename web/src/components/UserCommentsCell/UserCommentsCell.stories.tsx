@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Loading, Empty, Failure, Success } from './SharedLinkCell'
-import { standard } from './SharedLinkCell.mock'
+import { Loading, Empty, Failure, Success } from './UserCommentsCell'
+import { standard } from './UserCommentsCell.mock'
 
 const meta: Meta = {
-  title: 'Cells/SharedLinkCell',
+  title: 'Cells/UserCommentsCell',
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div className="bg-yellow p-5">
+      <div className="bg-black p-5">
         <Story />
       </div>
     ),
@@ -37,7 +37,7 @@ export const failure: StoryObj<typeof Failure> = {
 
 export const success: StoryObj<typeof Success> = {
   render: (args) => {
-    mockCurrentUser({ id: 1, email: '' })
+    mockCurrentUser({ id: 1, email: 'hello@bnn.news' })
     return Success ? <Success {...standard()} {...args} /> : <></>
   },
 }

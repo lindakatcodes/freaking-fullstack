@@ -18,6 +18,7 @@ interface Props {
   }
   handleUpvoteClick: (() => Promise<void>) | (() => void)
   activeUser: number | null
+  invertColors?: boolean
 }
 const formattedDate = (datetime: ConstructorParameters<typeof Date>[0]) => {
   const parsedDate = new Date(datetime)
@@ -31,7 +32,12 @@ const formattedDate = (datetime: ConstructorParameters<typeof Date>[0]) => {
   })
 }
 
-const Comment = ({ comment, handleUpvoteClick, activeUser }: Props) => {
+const Comment = ({
+  comment,
+  handleUpvoteClick,
+  activeUser,
+  invertColors = false,
+}: Props) => {
   const displayName =
     comment.author.displayName ||
     comment.author.email.slice(0, comment.author.email.indexOf('@'))
@@ -41,7 +47,7 @@ const Comment = ({ comment, handleUpvoteClick, activeUser }: Props) => {
     !!comment.commentVotes.find((vote) => vote.userId === activeUser)
 
   return (
-    <div className="flex gap-2">
+    <div className={`flex gap-2 ${invertColors && 'text-yellow'}`}>
       <button className="flex items-start" onClick={handleUpvoteClick}>
         <UpvoteArrow fill={fillUpvote} />
       </button>

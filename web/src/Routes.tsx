@@ -3,6 +3,7 @@ import { Router, Route, Set, PrivateSet } from '@redwoodjs/router'
 import { useAuth } from './auth'
 import AuthLayout from './layouts/AuthLayout/AuthLayout'
 import MainLayout from './layouts/MainLayout/MainLayout'
+import ProfileLayout from './layouts/ProfileLayout/ProfileLayout'
 
 const Routes = () => {
   return (
@@ -23,6 +24,10 @@ const Routes = () => {
           <Route path="/submit-link" page={SubmitLinkPage} name="submitLink" />
         </PrivateSet>
       </Set>
+      <PrivateSet unauthenticated="login" wrap={ProfileLayout}>
+        <Route path="/user-links" page={UserLinksPage} name="userLinks" />
+        <Route path="/user-comments" page={UserCommentsPage} name="userComments" />
+      </PrivateSet>
       <Route notfound page={NotFoundPage} />
     </Router>
   )
