@@ -1,7 +1,4 @@
-import type {
-  UserCommentsQuery,
-  UserCommentsQueryVariables,
-} from 'types/graphql'
+import type { UserComments, UserCommentsVariables } from 'types/graphql'
 
 import type {
   CellSuccessProps,
@@ -9,24 +6,40 @@ import type {
   TypedDocumentNode,
 } from '@redwoodjs/web'
 
-export const QUERY: TypedDocumentNode<
-  UserCommentsQuery,
-  UserCommentsQueryVariables
-> = gql`
-  query UserComments($id: Int!) {
-    user(id: $id) {
-      comments {
-        link {
-          title
-          url
+import { useAuth } from 'src/auth'
+
+import LinkCommentsCombo from '../LinkCommentsCombo/LinkCommentsCombo'
+
+export const QUERY: TypedDocumentNode<UserComments, UserCommentsVariables> =
+  gql`
+    query UserComments($id: Int!) {
+      user(id: $id) {
+        comments {
+          link {
+            title
+            url
+          }
+          body
+          createdAt
+          linkId
+          id
+          commentVotes {
+            commentId
+            userId
+            id
+          }
+          author {
+            email
+            displayName
+          }
         }
-        body
-        createdAt
-        linkId
       }
     }
-  }
-`
+  `
+
+export const isEmpty = (data, { isDataEmpty }) => {
+  return isDataEmpty(data) || isDataEmpty(data?.user?.comments)
+}
 
 export const Loading = () => (
   <div className="p-6 text-center text-xl font-bold text-white">
@@ -40,9 +53,7 @@ export const Empty = () => (
   </div>
 )
 
-export const Failure = ({
-  error,
-}: CellFailureProps<UserCommentsQueryVariables>) => (
+export const Failure = ({ error }: CellFailureProps<UserCommentsVariables>) => (
   <div className="p-6 text-center text-xl font-bold text-red-500">
     Error: {error?.message}
   </div>
@@ -50,16 +61,30 @@ export const Failure = ({
 
 export const Success = ({
   user,
-}: CellSuccessProps<UserCommentsQuery, UserCommentsQueryVariables>) => {
+}: CellSuccessProps<UserComments, UserCommentsVariables>) => {
+  const { currentUser } = useAuth()
+
+  const commentsByLinkId = user.comments.reduce(
+    (acc, comment) => {
+      const linkId = comment.linkId
+      if (!acc[linkId]) {
+        acc[linkId] = []
+      }
+      acc[linkId].push(comment)
+      return acc
+    },
+    {} as Record<string, typeof user.comments>
+  )
+
   return (
-    <ul>
-      {user.comments.map((item) => {
-        return (
-          <li className="text-xl text-white" key={item.id}>
-            {JSON.stringify(item)}
-          </li>
-        )
-      })}
-    </ul>
+    <section className="grid gap-4">
+      {Object.entries(commentsByLinkId).map(([key, comments]) => (
+        <LinkCommentsCombo
+          key={key}
+          commentArray={comments}
+          currentUser={currentUser.id}
+        />
+      ))}
+    </section>
   )
 }
