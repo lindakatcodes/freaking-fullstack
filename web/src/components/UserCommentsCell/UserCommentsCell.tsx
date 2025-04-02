@@ -17,7 +17,6 @@ export const QUERY: TypedDocumentNode<UserComments, UserCommentsVariables> =
         comments {
           link {
             title
-            url
           }
           body
           createdAt

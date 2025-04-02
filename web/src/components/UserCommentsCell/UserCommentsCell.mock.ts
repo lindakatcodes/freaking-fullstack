@@ -11,7 +11,18 @@ export const standard = (/* vars, { ctx, req } */) => ({
         linkId: '489eaeae-2021-4516-910c-154d9b8fd901',
         link: {
           title: 'Join the Torc platform!',
-          url: 'https://www.torc.dev/',
+        },
+        id: '21',
+        commentVotes: [
+          {
+            commentId: '200',
+            userId: 1,
+            id: '101',
+          },
+        ],
+        author: {
+          email: 'user1@test.co',
+          displayName: null,
         },
       },
       {
@@ -21,7 +32,18 @@ export const standard = (/* vars, { ctx, req } */) => ({
         linkId: 'bca336d9-a16a-47b9-bd37-b7d0f3d31bea',
         link: {
           title: 'Super cool dev site!',
-          url: 'https://lindakat.com',
+        },
+        id: '22',
+        commentVotes: [
+          {
+            commentId: '201',
+            userId: 1,
+            id: '102',
+          },
+        ],
+        author: {
+          email: 'user1@test.co',
+          displayName: null,
         },
       },
     ],
