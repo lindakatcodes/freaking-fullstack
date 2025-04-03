@@ -27,6 +27,7 @@ const Routes = () => {
       <PrivateSet unauthenticated="login" wrap={ProfileLayout}>
         <Route path="/user-links" page={UserLinksPage} name="userLinks" />
         <Route path="/user-comments" page={UserCommentsPage} name="userComments" />
+        <Route path="/user-profile" page={UserProfilePage} name="userProfile" />
       </PrivateSet>
       <Route notfound page={NotFoundPage} />
     </Router>

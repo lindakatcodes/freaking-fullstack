@@ -41,7 +41,7 @@ const Navigation = () => {
               Logout
             </button>
             <Link
-              to={routes.home()}
+              to={routes.userProfile()}
               className="mx-4 bg-blue px-4 py-1 font-bold"
             >
               My Profile

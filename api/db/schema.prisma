@@ -22,6 +22,7 @@ model User {
   salt                String
   resetToken          String?
   resetTokenExpiresAt DateTime?
+  createdAt           DateTime     @default(now())
   youtube             String?
   linkedin            String?
   github              String?

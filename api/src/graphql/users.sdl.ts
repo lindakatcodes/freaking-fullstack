@@ -7,6 +7,7 @@ export const schema = gql`
     salt: String!
     resetToken: String
     resetTokenExpiresAt: DateTime
+    createdAt: DateTime!
     youtube: String
     linkedin: String
     github: String
