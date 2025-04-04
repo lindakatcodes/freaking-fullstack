@@ -70,6 +70,28 @@ export const Success = ({
     })
   }
 
+  const votesGiven =
+    (user.commentVotes ? user.commentVotes.length : 0) +
+    (user.linkVotes ? user.linkVotes.length : 0)
+
+  const commentVotesReceived = !user.comments
+    ? 0
+    : user.comments
+        .map((comment) => comment.commentVotes.length || 0)
+        .reduce((acc, num) => {
+          return acc + num
+        }, 0)
+
+  const linkVotesReceived = !user.sharedLinks
+    ? 0
+    : user.sharedLinks
+        .map((link) => link.linkVotes.length || 0)
+        .reduce((acc, num) => {
+          return acc + num
+        }, 0)
+
+  const votesReceived = commentVotesReceived + linkVotesReceived
+
   return (
     <section className="grid grid-cols-2 gap-4 text-lg">
       <div>
@@ -83,11 +105,11 @@ export const Success = ({
         </div>
         <div className="flex gap-2">
           <p className="font-bold uppercase text-yellow">upvotes given:</p>
-          <p className="text-white">links+comments upvoted count</p>
+          <p className="text-white">{votesGiven}</p>
         </div>
         <div className="flex gap-2">
           <p className="font-bold uppercase text-yellow">upvotes received:</p>
-          <p className="text-white">votes on their links+comments</p>
+          <p className="text-white">{votesReceived}</p>
         </div>
       </div>
       <div>Socials</div>

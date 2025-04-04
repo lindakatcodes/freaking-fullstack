@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Loading, Empty, Failure, Success } from './UserProfileCell'
+import { Loading, Failure, Success } from './UserProfileCell'
 import { standard } from './UserProfileCell.mock'
 
 const meta: Meta = {
@@ -13,12 +13,6 @@ export default meta
 export const loading: StoryObj<typeof Loading> = {
   render: () => {
     return Loading ? <Loading /> : <></>
-  },
-}
-
-export const empty: StoryObj<typeof Empty> = {
-  render: () => {
-    return Empty ? <Empty /> : <></>
   },
 }
 

@@ -1,4 +1,4 @@
-import { NavLink, routes } from '@redwoodjs/router'
+import { Link, NavLink, routes } from '@redwoodjs/router'
 
 const ProfileNavigation = () => {
   return (
@@ -25,6 +25,13 @@ const ProfileNavigation = () => {
         >
           Profile
         </NavLink>
+        <div className="flex-grow"></div>
+        <Link
+          className="text-3xl font-bold uppercase tracking-tighter text-blue"
+          to={routes.editProfile()}
+        >
+          Edit My Profile
+        </Link>
       </nav>
       <div className="mb-1 mt-3 border border-yellow" />
     </>
