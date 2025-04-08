@@ -8,7 +8,7 @@ import {
   FieldError,
   EmailField,
 } from '@redwoodjs/forms'
-import { Link, navigate, routes } from '@redwoodjs/router'
+import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
@@ -17,12 +17,19 @@ import DisplayText from 'src/components/DisplayText/DisplayText'
 
 const LoginPage = () => {
   const { isAuthenticated, logIn } = useAuth()
+  const { search } = useLocation()
 
   useEffect(() => {
+    const hasRedirect = search && search.includes('redirectTo')
     if (isAuthenticated) {
-      navigate(routes.home())
+      if (hasRedirect) {
+        const redirectPath = search.split('?redirectTo=')[1]
+        navigate(redirectPath)
+      } else {
+        navigate(routes.home())
+      }
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, search])
 
   const emailRef = useRef<HTMLInputElement>(null)
   useEffect(() => {
@@ -41,7 +48,6 @@ const LoginPage = () => {
       toast.error(response.error)
     } else {
       toast.success('Welcome back!')
-      navigate(routes.home())
     }
   }
 
