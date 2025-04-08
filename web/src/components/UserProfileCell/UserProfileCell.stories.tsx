@@ -6,6 +6,13 @@ import { standard } from './UserProfileCell.mock'
 const meta: Meta = {
   title: 'Cells/UserProfileCell',
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <div className="bg-black">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta

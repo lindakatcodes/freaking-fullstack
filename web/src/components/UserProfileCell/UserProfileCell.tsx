@@ -6,6 +6,13 @@ import type {
   TypedDocumentNode,
 } from '@redwoodjs/web'
 
+import Bluesky from '../icons/Bluesky/Bluesky'
+import Github from '../icons/Github/Github'
+import Globe from '../icons/Globe/Globe'
+import LinkedIn from '../icons/LinkedIn/LinkedIn'
+import Twitch from '../icons/Twitch/Twitch'
+import Youtube from '../icons/Youtube/Youtube'
+
 export const QUERY: TypedDocumentNode<
   UserProfileInfo,
   UserProfileInfoVariables
@@ -95,24 +102,77 @@ export const Success = ({
   return (
     <section className="grid grid-cols-2 gap-4 text-lg">
       <div>
-        <div className="flex gap-2">
+        <div className="mb-1 flex gap-2">
           <p className="font-bold uppercase text-yellow">display name:</p>
           <p className="text-white">{displayName}</p>
         </div>
-        <div className="flex gap-2">
+        <div className="mb-1 flex gap-2">
           <p className="font-bold uppercase text-yellow">account created:</p>
           <p className="text-white">{formattedDate(user.createdAt)}</p>
         </div>
-        <div className="flex gap-2">
+        <div className="mb-1 flex gap-2">
           <p className="font-bold uppercase text-yellow">upvotes given:</p>
-          <p className="text-white">{votesGiven}</p>
+          <p className="text-white" data-testid="votesGiven">
+            {votesGiven}
+          </p>
         </div>
-        <div className="flex gap-2">
+        <div className="mb-1 flex gap-2">
           <p className="font-bold uppercase text-yellow">upvotes received:</p>
-          <p className="text-white">{votesReceived}</p>
+          <p className="text-white" data-testid="votesReceived">
+            {votesReceived}
+          </p>
         </div>
       </div>
-      <div>Socials</div>
+      <div className="grid items-start gap-3 text-yellow">
+        {user.website && (
+          <div className="flex items-end gap-2">
+            <Globe />
+            <a href={user.website} className="grow text-white underline">
+              {user.website}
+            </a>
+          </div>
+        )}
+        {user.github && (
+          <div className="flex items-end gap-2">
+            <Github />
+            <a href={user.github} className="grow text-white underline">
+              {user.github}
+            </a>
+          </div>
+        )}
+        {user.bluesky && (
+          <div className="flex items-end gap-2">
+            <Bluesky />
+            <a href={user.bluesky} className="grow text-white underline">
+              {user.bluesky}
+            </a>
+          </div>
+        )}
+        {user.linkedin && (
+          <div className="flex items-end gap-2">
+            <LinkedIn />
+            <a href={user.linkedin} className="grow text-white underline">
+              {user.linkedin}
+            </a>
+          </div>
+        )}
+        {user.twitch && (
+          <div className="flex items-end gap-2">
+            <Twitch />
+            <a href={user.twitch} className="grow text-white underline">
+              {user.twitch}
+            </a>
+          </div>
+        )}
+        {user.youtube && (
+          <div className="flex items-end gap-2">
+            <Youtube />
+            <a href={user.youtube} className="grow text-white underline">
+              {user.youtube}
+            </a>
+          </div>
+        )}
+      </div>
     </section>
   )
 }
