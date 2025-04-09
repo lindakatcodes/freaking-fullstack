@@ -6,28 +6,31 @@ const Navigation = () => {
   const { isAuthenticated, logOut } = useAuth()
 
   return (
-    <nav className="absolute top-0 z-10 flex h-12 w-full items-center justify-end gap-1 bg-black p-3 drop-shadow-md">
+    <nav className="absolute top-0 z-10 flex h-8 w-full items-center justify-end gap-1 bg-black text-xs drop-shadow-md md:h-12 md:p-3 md:text-base">
       {isAuthenticated ? (
         <div className="grid w-full grid-flow-col grid-cols-6 items-center">
-          <div className="col-span-4 flex">
-            <Link to={routes.userLinks()} className="mx-4 font-bold text-white">
+          <div className="col-span-4 flex items-center md:items-stretch">
+            <Link
+              to={routes.userLinks()}
+              className="mx-2 font-bold text-white md:mx-4"
+            >
               Links Shared
             </Link>
             <Link
               to={routes.userComments()}
-              className="mx-4 font-bold text-white"
+              className="mx-2 font-bold text-white md:mx-4"
             >
               Comments
             </Link>
             <Link
               to={routes.editProfile()}
-              className="mx-4 font-bold text-white"
+              className="mx-2 font-bold text-white md:mx-4"
             >
               Edit Profile
             </Link>
             <Link
               to={routes.submitLink()}
-              className="mx-4 font-bold text-white"
+              className="mx-2 font-bold text-white md:mx-4"
             >
               Submit Link
             </Link>
@@ -36,13 +39,13 @@ const Navigation = () => {
             <button
               type="button"
               onClick={logOut}
-              className="mx-4 font-bold text-white"
+              className="mx-2 font-bold text-white md:mx-4"
             >
               Logout
             </button>
             <Link
               to={routes.userProfile()}
-              className="mx-4 bg-blue px-4 py-1 font-bold"
+              className="mx-2 bg-blue px-2 py-0 font-bold md:mx-4 md:px-4 md:py-1"
             >
               My Profile
             </Link>
@@ -50,12 +53,15 @@ const Navigation = () => {
         </div>
       ) : (
         <div>
-          <Link to={routes.signup()} className="mx-4 font-bold text-white">
+          <Link
+            to={routes.signup()}
+            className="mx-2 font-bold text-white md:mx-4"
+          >
             Sign Up
           </Link>
           <Link
             to={routes.login()}
-            className=" mx-4 bg-blue px-4 py-1 font-bold"
+            className="mx-2 bg-blue px-2 py-0 font-bold md:mx-4 md:px-4 md:py-1"
           >
             Login
           </Link>
