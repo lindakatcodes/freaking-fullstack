@@ -54,7 +54,7 @@ const CommentForm = ({
 
       <Submit
         disabled={loading}
-        className="w-1/3 self-end bg-blue py-4 text-lg font-bold text-black disabled:bg-opacity-75 disabled:text-opacity-75"
+        className="w-2/3 self-end bg-blue py-4 text-lg font-bold text-black disabled:bg-opacity-75 disabled:text-opacity-75 md:w-1/3"
       >
         Add Comment
       </Submit>

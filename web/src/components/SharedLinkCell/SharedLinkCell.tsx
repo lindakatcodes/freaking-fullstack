@@ -187,7 +187,7 @@ export const Success = ({
         />
       </div>
 
-      <div className="mx-auto w-3/5">
+      <div className="mx-auto mb-8 w-4/5 lg:w-3/5">
         <CommentForm
           formMethods={formMethods}
           onSubmit={onSubmit}
@@ -196,7 +196,7 @@ export const Success = ({
         />
       </div>
 
-      <div className="mx-auto w-3/5">
+      <div className="mx-auto w-4/5 pb-8 lg:w-3/5">
         <CommentsCell linkId={sharedLink.id} />
       </div>
     </>
