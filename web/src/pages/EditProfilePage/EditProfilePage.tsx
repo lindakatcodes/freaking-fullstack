@@ -13,12 +13,12 @@ const EditProfilePage = () => {
       <Metadata title="Edit Profile" />
       <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
 
-      <div className="mx-auto flex w-10/12">
-        <div className="basis-7/12">
+      <div className="mx-auto flex w-11/12 flex-col lg:flex-row">
+        <div className="lg:basis-7/12">
           <DisplayText solidText="edit my" outlineText="profile" />
         </div>
 
-        <div className="mt-8 basis-5/12">
+        <div className="mt-4 lg:mt-8 lg:basis-5/12">
           <EditUserProfileCell id={currentUser.id} />
         </div>
       </div>

@@ -42,12 +42,12 @@ const ForgotPasswordPage = () => {
       <Metadata title="Forgot Password" />
       <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
 
-      <div className="mx-auto flex w-10/12 gap-4">
-        <div className="max-w-[60%]">
+      <div className="mx-auto flex w-11/12 flex-col lg:flex-row">
+        <div className="lg:basis-7/12">
           <DisplayText solidText="forgot" outlineText="password" />
         </div>
 
-        <div className="mt-8 basis-5/12">
+        <div className="mt-4 lg:mt-8 lg:basis-5/12">
           <Form onSubmit={onSubmit} className="flex flex-col gap-6 px-2">
             <div className="flex flex-col gap-2">
               <Label name="email" className="text-xl font-bold text-yellow">

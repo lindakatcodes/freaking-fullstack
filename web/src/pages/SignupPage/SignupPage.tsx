@@ -55,12 +55,12 @@ const SignupPage = () => {
       <Metadata title="Signup" />
       <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
 
-      <div className="mx-auto flex w-10/12">
-        <div className="basis-7/12">
+      <div className="mx-auto flex w-11/12 flex-col lg:flex-row">
+        <div className="lg:basis-7/12">
           <DisplayText solidText="sign" outlineText="up" />
         </div>
 
-        <div className="mt-8 basis-5/12">
+        <div className="mt-4 lg:mt-8 lg:basis-5/12">
           <Form
             onSubmit={onSubmit}
             error="error"
@@ -133,7 +133,7 @@ const SignupPage = () => {
             </Submit>
           </Form>
 
-          <div className="text-center text-lg text-white">
+          <div className="pb-4 text-center text-lg text-white">
             <span>Already have an account?</span>{' '}
             <Link
               to={routes.login()}

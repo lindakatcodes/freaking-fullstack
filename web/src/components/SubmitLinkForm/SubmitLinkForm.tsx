@@ -30,7 +30,7 @@ const SubmitLinkForm = ({ onSubmit, loading, error }: SubmitLinkFormProps) => {
       onSubmit={onSubmit}
       config={{ mode: 'onBlur' }}
       error="error"
-      className="mt-10 flex basis-5/12 flex-col gap-1"
+      className="flex flex-col gap-1 lg:mt-10 lg:basis-5/12"
     >
       <FormError
         error={error}
@@ -44,7 +44,7 @@ const SubmitLinkForm = ({ onSubmit, loading, error }: SubmitLinkFormProps) => {
       </Label>
       <TextField
         name="title"
-        className="mb-8 rounded-md border border-black p-1"
+        className="mb-4 rounded-md border border-black p-1 lg:mb-8"
         errorClassName="border-red-600 border mb-1 p-1 rounded-md"
         validation={{
           required: true,
@@ -57,7 +57,7 @@ const SubmitLinkForm = ({ onSubmit, loading, error }: SubmitLinkFormProps) => {
       </Label>
       <UrlField
         name="url"
-        className="mb-9 rounded-md border border-black p-1"
+        className="mb-8 rounded-md border border-black p-1"
         errorClassName="border-red-600 border mb-1 p-1 rounded-md"
         validation={{
           required: true,
