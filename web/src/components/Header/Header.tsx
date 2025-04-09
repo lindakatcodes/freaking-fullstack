@@ -2,7 +2,7 @@ const Header = () => {
   return (
     <>
       <div className="@container pointer-events-none relative w-full bg-black">
-        <h1 className="whitespace-nowrap pt-6 text-center font-serif text-[11cqw] font-bold leading-[0.875] tracking-wider text-yellow md:pt-4">
+        <h1 className="whitespace-nowrap pt-4 text-center font-serif text-[11cqw] font-bold leading-[0.875] tracking-wider text-yellow">
           Brazilian Nut{' '}
           <span className="text-outline-yellow text-black">News</span>
         </h1>

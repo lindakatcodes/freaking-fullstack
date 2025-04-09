@@ -6,7 +6,7 @@ const Navigation = () => {
   const { isAuthenticated, logOut } = useAuth()
 
   return (
-    <nav className="absolute top-0 z-10 flex h-8 w-full items-center justify-end gap-1 bg-black text-xs drop-shadow-md md:h-12 md:p-3 md:text-base">
+    <nav className="flex h-12 w-full items-center justify-end gap-1 bg-black text-xs drop-shadow-md md:absolute md:top-0 md:z-10 md:p-3 md:text-base">
       {isAuthenticated ? (
         <div className="grid w-full grid-flow-col grid-cols-6 items-center">
           <div className="col-span-4 flex items-center md:items-stretch">
