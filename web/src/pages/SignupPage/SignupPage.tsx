@@ -76,12 +76,12 @@ const SignupPage = () => {
               <TextField
                 name="displayName"
                 className="h-[2.5rem] rounded-md border-2 border-white p-1"
-                errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
+                errorClassName="border-red-500 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
                 ref={firstFieldRef}
               />
               <FieldError
                 name="displayName"
-                className="text-lg font-bold text-red-600"
+                className="text-lg font-bold text-red-500"
               />
             </div>
 
@@ -92,7 +92,7 @@ const SignupPage = () => {
               <EmailField
                 name="email"
                 className="h-[2.5rem] rounded-md border-2 border-white p-1"
-                errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
+                errorClassName="border-red-500 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
                 validation={{
                   required: {
                     value: true,
@@ -102,7 +102,7 @@ const SignupPage = () => {
               />
               <FieldError
                 name="email"
-                className="text-lg font-bold text-red-600"
+                className="text-lg font-bold text-red-500"
               />
             </div>
 
@@ -113,7 +113,7 @@ const SignupPage = () => {
               <PasswordField
                 name="password"
                 className="h-[2.5rem] rounded-md border-2 border-white p-1"
-                errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
+                errorClassName="border-red-500 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
                 autoComplete="current-password"
                 validation={{
                   required: {
@@ -124,7 +124,7 @@ const SignupPage = () => {
               />
               <FieldError
                 name="password"
-                className="text-lg font-bold text-red-600"
+                className="text-lg font-bold text-red-500"
               />
             </div>
 

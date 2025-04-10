@@ -97,7 +97,7 @@ export const Empty = () => (
 export const Failure = ({
   error,
 }: CellFailureProps<FindSharedLinkQueryVariables>) => (
-  <div className="mt-8 text-center text-xl font-bold text-red-600">
+  <div className="mt-8 text-center text-xl font-bold text-red-700">
     Error: {error?.message}
   </div>
 )

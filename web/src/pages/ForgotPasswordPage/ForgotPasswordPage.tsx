@@ -56,7 +56,7 @@ const ForgotPasswordPage = () => {
               <EmailField
                 name="email"
                 className="h-[2.5rem] rounded-md border-2 border-white p-1"
-                errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
+                errorClassName="border-red-500 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
                 ref={emailRef}
                 validation={{
                   required: {
@@ -67,7 +67,7 @@ const ForgotPasswordPage = () => {
               />
               <FieldError
                 name="email"
-                className="text-lg font-bold text-red-600"
+                className="text-lg font-bold text-red-500"
               />
             </div>
 

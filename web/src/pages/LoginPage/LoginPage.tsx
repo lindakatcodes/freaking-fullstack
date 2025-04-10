@@ -64,7 +64,7 @@ const LoginPage = () => {
               <EmailField
                 name="email"
                 className="h-[2.5rem] rounded-md border-2 border-white p-1"
-                errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
+                errorClassName="border-red-500 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
                 ref={emailRef}
                 validation={{
                   required: {
@@ -75,7 +75,7 @@ const LoginPage = () => {
               />
               <FieldError
                 name="email"
-                className="text-lg font-bold text-red-600"
+                className="text-lg font-bold text-red-500"
               />
             </div>
 
@@ -86,7 +86,7 @@ const LoginPage = () => {
               <PasswordField
                 name="password"
                 className="h-[2.5rem] rounded-md border-2 border-white p-1"
-                errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
+                errorClassName="border-red-500 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
                 autoComplete="current-password"
                 validation={{
                   required: {
@@ -97,7 +97,7 @@ const LoginPage = () => {
               />
               <FieldError
                 name="password"
-                className="text-lg font-bold text-red-600"
+                className="text-lg font-bold text-red-500"
               />
               <Link
                 to={routes.forgotPassword()}

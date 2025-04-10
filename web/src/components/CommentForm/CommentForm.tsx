@@ -33,9 +33,9 @@ const CommentForm = ({
     >
       <FormError
         error={error}
-        wrapperClassName="border-2 border-red-600 p-2 mb-4"
-        titleClassName="font-bold mb-1 text-red-600"
-        listClassName="text-red-600 list-disc pl-5"
+        wrapperClassName="border-2 border-red-700 p-2 mb-4"
+        titleClassName="font-bold mb-1 text-red-700"
+        listClassName="text-red-700 list-disc pl-5"
       />
 
       <Label name="comment" className="text-lg font-bold">
@@ -45,12 +45,12 @@ const CommentForm = ({
         name="comment"
         className="mb-8 rounded-md border border-black p-1"
         rows={5}
-        errorClassName="border-red-600 border mb-1 p-1 rounded-md"
+        errorClassName="border-red-700 border mb-1 p-1 rounded-md"
         validation={{
           required: true,
         }}
       />
-      <FieldError name="comment" className="text-red-600" />
+      <FieldError name="comment" className="text-red-700" />
 
       <Submit
         disabled={loading}
