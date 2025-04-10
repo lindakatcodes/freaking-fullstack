@@ -76,7 +76,7 @@ export const Success = ({
   )
 
   return (
-    <section className="grid gap-4">
+    <section className="grid gap-4 pb-4">
       {Object.entries(commentsByLinkId).map(([key, comments]) => (
         <LinkCommentsCombo
           key={key}

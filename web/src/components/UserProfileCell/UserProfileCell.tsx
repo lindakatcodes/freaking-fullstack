@@ -100,73 +100,91 @@ export const Success = ({
   const votesReceived = commentVotesReceived + linkVotesReceived
 
   return (
-    <section className="grid grid-cols-2 gap-4 text-lg">
+    <section className="grid grid-cols-1 gap-4 text-lg md:grid-cols-2">
       <div>
-        <div className="mb-1 flex gap-2">
+        <div className="mb-2 flex gap-4">
           <p className="font-bold uppercase text-yellow">display name:</p>
           <p className="text-white">{displayName}</p>
         </div>
-        <div className="mb-1 flex gap-2">
+        <div className="mb-2 flex gap-2">
           <p className="font-bold uppercase text-yellow">account created:</p>
           <p className="text-white">{formattedDate(user.createdAt)}</p>
         </div>
-        <div className="mb-1 flex gap-2">
+        <div className="mb-2 flex gap-2">
           <p className="font-bold uppercase text-yellow">upvotes given:</p>
           <p className="text-white" data-testid="votesGiven">
             {votesGiven}
           </p>
         </div>
-        <div className="mb-1 flex gap-2">
+        <div className="mb-2 flex gap-2">
           <p className="font-bold uppercase text-yellow">upvotes received:</p>
           <p className="text-white" data-testid="votesReceived">
             {votesReceived}
           </p>
         </div>
       </div>
-      <div className="grid items-start gap-3 text-yellow">
+      <div className="grid items-start gap-5 pb-6 text-yellow md:gap-3">
         {user.website && (
-          <div className="flex items-end gap-2">
-            <Globe />
+          <div className="flex flex-col gap-1 lg:flex-row lg:items-end lg:gap-2">
+            <div className="flex items-center gap-2">
+              <Globe />
+              <p className="font-bold uppercase text-yellow">Website:</p>
+            </div>
             <a href={user.website} className="grow text-white underline">
               {user.website}
             </a>
           </div>
         )}
         {user.github && (
-          <div className="flex items-end gap-2">
-            <Github />
+          <div className="flex flex-col gap-1 lg:flex-row lg:items-end lg:gap-2">
+            <div className="flex items-center gap-2">
+              <Github />
+              <p className="font-bold uppercase text-yellow">Github:</p>
+            </div>
             <a href={user.github} className="grow text-white underline">
               {user.github}
             </a>
           </div>
         )}
         {user.bluesky && (
-          <div className="flex items-end gap-2">
-            <Bluesky />
+          <div className="flex flex-col gap-1 lg:flex-row lg:items-end lg:gap-2">
+            <div className="flex items-center gap-2">
+              <Bluesky />
+              <p className="font-bold uppercase text-yellow">Bluesky:</p>
+            </div>
             <a href={user.bluesky} className="grow text-white underline">
               {user.bluesky}
             </a>
           </div>
         )}
         {user.linkedin && (
-          <div className="flex items-end gap-2">
-            <LinkedIn />
+          <div className="flex flex-col gap-1 lg:flex-row lg:items-end lg:gap-2">
+            <div className="flex items-center gap-2">
+              <LinkedIn />
+              <p className="font-bold uppercase text-yellow">LinkedIn:</p>
+            </div>
             <a href={user.linkedin} className="grow text-white underline">
               {user.linkedin}
             </a>
           </div>
         )}
         {user.twitch && (
-          <div className="flex items-end gap-2">
-            <Twitch />
+          <div className="flex flex-col gap-1 lg:flex-row lg:items-end lg:gap-2">
+            <div className="flex items-center gap-2">
+              <Twitch />
+              <p className="font-bold uppercase text-yellow">Twitch:</p>
+            </div>
             <a href={user.twitch} className="grow text-white underline">
               {user.twitch}
             </a>
           </div>
         )}
         {user.youtube && (
-          <div className="flex items-end gap-2">
-            <Youtube />
+          <div className="flex flex-col gap-1 lg:flex-row lg:items-end lg:gap-2">
+            <div className="flex items-center gap-2">
+              <Youtube />
+              <p className="font-bold uppercase text-yellow">Youtube:</p>
+            </div>
             <a href={user.youtube} className="grow text-white underline">
               {user.youtube}
             </a>
