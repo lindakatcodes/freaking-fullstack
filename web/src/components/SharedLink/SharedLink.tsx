@@ -53,8 +53,8 @@ const SharedLink = ({
         >
           {title}
         </a>
-        <div className="flex gap-2 text-sm">
-          <p>
+        <div className="flex items-center gap-3 text-sm md:gap-2">
+          <p className="min-w-fit">
             <span data-testid="point">{points}</span>{' '}
             {points === 1 ? 'point' : 'points'}
           </p>
@@ -68,7 +68,7 @@ const SharedLink = ({
           <p> • </p>
           <Link
             to={routes.linkDetails({ id: linkId })}
-            className="font-bold underline"
+            className="min-w-fit font-bold underline"
           >
             {commentCount} {commentCount === 1 ? 'comment' : 'comments'}
           </Link>
