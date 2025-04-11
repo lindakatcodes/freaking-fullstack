@@ -59,6 +59,8 @@ export const updateSharedLink: MutationResolvers['updateSharedLink'] = ({
 export const deleteSharedLink: MutationResolvers['deleteSharedLink'] = ({
   id,
 }) => {
+  // db.$transaction([]) is what you're gonna need. build out the delete queries like what's currently returned as variables, then pass them in order into the transaction and have the function return that instead
+  // https://www.prisma.io/docs/orm/prisma-client/queries/transactions#the-transaction-api
   return db.sharedLink.delete({
     where: { id },
   })
