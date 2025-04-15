@@ -24,7 +24,7 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
   return (
     <main className="h-dvh w-dvw px-3 md:px-6">
       <Header />
-      <div className="@container flex flex-col gap-2 pt-2 md:flex-row">
+      <div className="flex flex-col gap-2 pt-2 md:flex-row">
         <h2 className="text-outline-white font-serif text-5xl font-bold leading-[0.875] tracking-wider text-black md:text-[clamp(3rem,8vw,9rem)]">
           {first}
         </h2>

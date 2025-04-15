@@ -41,10 +41,10 @@ const SubmitLinkPage = () => {
 
       <div className="mx-auto flex w-11/12 flex-col lg:flex-row">
         <div className="@container lg:basis-7/12">
-          <p className="font-serif text-[30cqw] font-bold uppercase leading-none tracking-wide text-black lg:text-[20cqw]">
+          <p className="font-serif text-[6rem] font-bold uppercase leading-none tracking-wide text-black lg:text-[20cqw]">
             submit
           </p>
-          <p className="text-outline-black font-serif text-[30cqw] font-bold uppercase leading-none tracking-wide text-yellow lg:text-[20cqw]">
+          <p className="text-outline-black font-serif text-[6rem] font-bold uppercase leading-none tracking-wide text-yellow lg:text-[20cqw]">
             a link
           </p>
         </div>

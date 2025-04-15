@@ -1,7 +1,7 @@
 const Header = () => {
   return (
     <>
-      <div className="@container pointer-events-none relative w-full bg-black">
+      <div className="pointer-events-none relative w-full bg-black">
         <h1 className="whitespace-nowrap pt-4 text-center font-serif text-[2.75rem] font-bold leading-[0.875] tracking-wider text-yellow md:text-[clamp(6rem,12vw,12rem)]">
           Brazilian Nut{' '}
           <span className="text-outline-yellow text-black">News</span>
