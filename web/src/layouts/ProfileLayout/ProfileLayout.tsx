@@ -25,10 +25,10 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
     <main className="h-dvh w-dvw px-3 md:px-6">
       <Header />
       <div className="@container flex flex-col gap-2 pt-2 md:flex-row">
-        <h2 className="text-outline-white font-serif text-[10cqw] font-bold leading-[0.875] tracking-wider text-black md:text-[8cqw]">
+        <h2 className="text-outline-white font-serif text-5xl font-bold leading-[0.875] tracking-wider text-black md:text-[clamp(3rem,8vw,9rem)]">
           {first}
         </h2>
-        <h2 className="font-serif text-[10cqw] font-bold leading-[0.875] tracking-wider text-blue md:text-[8cqw]">
+        <h2 className="font-serif text-5xl font-bold leading-[0.875] tracking-wider text-blue md:text-[clamp(3rem,8vw,9rem)]">
           {last}
         </h2>
       </div>
