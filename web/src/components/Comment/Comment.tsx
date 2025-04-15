@@ -9,6 +9,7 @@ interface Props {
     body: string
     createdAt: string
     id: string
+    authorId: number
     linkId: string
     author: {
       email: string
@@ -17,8 +18,10 @@ interface Props {
     commentVotes: Partial<CommentUserVote>[]
   }
   handleUpvoteClick: (() => Promise<void>) | (() => void)
+  handleCommentDeletion: (commentId) => void
   activeUser: number | null
   invertColors?: boolean
+  isCommentDeletionRunning?: boolean
 }
 const formattedDate = (datetime: ConstructorParameters<typeof Date>[0]) => {
   const parsedDate = new Date(datetime)
@@ -35,8 +38,10 @@ const formattedDate = (datetime: ConstructorParameters<typeof Date>[0]) => {
 const Comment = ({
   comment,
   handleUpvoteClick,
+  handleCommentDeletion,
   activeUser,
   invertColors = false,
+  isCommentDeletionRunning,
 }: Props) => {
   const displayName =
     comment.author.displayName ||
@@ -59,6 +64,18 @@ const Comment = ({
           </Link>
           <p> • </p>
           <p>{formattedDate(comment.createdAt)}</p>
+          {comment.authorId === activeUser && (
+            <>
+              <p> • </p>
+              <button
+                className="font-bold underline opacity-80 disabled:opacity-40"
+                onClick={() => handleCommentDeletion(comment.id)}
+                disabled={isCommentDeletionRunning}
+              >
+                Delete Comment
+              </button>
+            </>
+          )}
         </div>
         <p>{comment.body}</p>
       </div>
