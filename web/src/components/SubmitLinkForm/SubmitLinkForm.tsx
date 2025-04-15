@@ -30,13 +30,13 @@ const SubmitLinkForm = ({ onSubmit, loading, error }: SubmitLinkFormProps) => {
       onSubmit={onSubmit}
       config={{ mode: 'onBlur' }}
       error="error"
-      className="mt-10 flex basis-5/12 flex-col gap-1"
+      className="flex flex-col gap-1 lg:mt-10 lg:basis-5/12"
     >
       <FormError
         error={error}
-        wrapperClassName="border-2 border-red-600 p-2 mb-4"
-        titleClassName="font-bold mb-1 text-red-600"
-        listClassName="text-red-600 list-disc pl-5"
+        wrapperClassName="border-2 border-red-700 p-2 mb-4"
+        titleClassName="font-bold mb-1 text-red-700"
+        listClassName="text-red-700 list-disc pl-5"
       />
 
       <Label name="title" className="text-lg font-bold">
@@ -44,21 +44,21 @@ const SubmitLinkForm = ({ onSubmit, loading, error }: SubmitLinkFormProps) => {
       </Label>
       <TextField
         name="title"
-        className="mb-8 rounded-md border border-black p-1"
-        errorClassName="border-red-600 border mb-1 p-1 rounded-md"
+        className="mb-4 rounded-md border border-black p-1 lg:mb-8"
+        errorClassName="border-red-700 border mb-1 p-1 rounded-md"
         validation={{
           required: true,
         }}
       />
-      <FieldError name="title" className="text-red-600" />
+      <FieldError name="title" className="text-red-700" />
 
       <Label name="url" className="text-lg font-bold">
         Url
       </Label>
       <UrlField
         name="url"
-        className="mb-9 rounded-md border border-black p-1"
-        errorClassName="border-red-600 border mb-1 p-1 rounded-md"
+        className="mb-8 rounded-md border border-black p-1"
+        errorClassName="border-red-700 border mb-1 p-1 rounded-md"
         validation={{
           required: true,
           pattern: {
@@ -67,7 +67,7 @@ const SubmitLinkForm = ({ onSubmit, loading, error }: SubmitLinkFormProps) => {
           },
         }}
       />
-      <FieldError name="url" className="mb-4 text-red-600" />
+      <FieldError name="url" className="mb-4 text-red-700" />
 
       <Submit
         disabled={loading}

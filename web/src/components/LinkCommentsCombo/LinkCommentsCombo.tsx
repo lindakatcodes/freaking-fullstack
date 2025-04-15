@@ -16,7 +16,7 @@ const LinkCommentsCombo = ({
     <section>
       <Link
         to={routes.linkDetails({ id: commentArray[0].linkId })}
-        className="mb-1 flex justify-between text-5xl font-bold uppercase tracking-tight text-yellow"
+        className="mb-1 flex items-center justify-between text-balance text-2xl font-bold uppercase tracking-tight text-yellow md:text-5xl"
       >
         {commentArray[0].link?.title}
         <RightArrow />

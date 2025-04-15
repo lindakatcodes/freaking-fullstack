@@ -38,7 +38,7 @@ const SharedLink = ({
 
   return (
     <div
-      className={`group flex items-start gap-5 border-b-2  px-2 py-4  ${!invertColors ? 'border-black hover:bg-black hover:text-yellow' : 'border-yellow bg-black text-yellow hover:bg-yellow hover:text-black'}`}
+      className={`group flex flex-col gap-2 border-b-2 px-2 py-2 md:flex-row md:items-start md:gap-5 md:py-4  ${!invertColors ? 'border-black hover:bg-black hover:text-yellow' : 'border-yellow bg-black text-yellow hover:bg-yellow hover:text-black'}`}
     >
       <div className="mt-2 flex flex-col">
         <button onClick={handleUpvoteClick}>
@@ -46,15 +46,15 @@ const SharedLink = ({
         </button>
       </div>
 
-      <div className="">
+      <div>
         <a
           href={link}
-          className={`text-5xl font-bold uppercase tracking-tight  ${!invertColors ? 'visited:text-pink-700 group-hover:visited:text-pink-400' : 'visited:text-pink-400 group-hover:visited:text-pink-700'}`}
+          className={`text-balance text-4xl font-bold uppercase tracking-tight md:text-5xl  ${!invertColors ? 'visited:text-pink-700 group-hover:visited:text-pink-400' : 'visited:text-pink-400 group-hover:visited:text-pink-700'}`}
         >
           {title}
         </a>
-        <div className="flex gap-2 text-sm">
-          <p>
+        <div className="flex items-center gap-3 text-sm md:gap-2">
+          <p className="min-w-fit">
             <span data-testid="point">{points}</span>{' '}
             {points === 1 ? 'point' : 'points'}
           </p>
@@ -68,14 +68,14 @@ const SharedLink = ({
           <p> • </p>
           <Link
             to={routes.linkDetails({ id: linkId })}
-            className="font-bold underline"
+            className="min-w-fit font-bold underline"
           >
             {commentCount} {commentCount === 1 ? 'comment' : 'comments'}
           </Link>
         </div>
       </div>
 
-      <div className="mt-3 flex flex-1 items-center justify-between gap-4">
+      <div className="flex items-center justify-between gap-4 md:mt-3 md:flex-1">
         <Link to="#" className="underline">{`${new URL(link).hostname}`}</Link>
         <a href={link}>
           <RightArrow />

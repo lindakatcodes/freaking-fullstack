@@ -17,8 +17,8 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   return (
     <main className="h-dvh w-dvw">
-      <Navigation />
       <Header />
+      <Navigation />
       {children}
     </main>
   )

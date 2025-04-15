@@ -55,12 +55,12 @@ const SignupPage = () => {
       <Metadata title="Signup" />
       <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
 
-      <div className="mx-auto flex w-10/12">
-        <div className="basis-7/12">
+      <div className="mx-auto flex w-11/12 flex-col lg:flex-row">
+        <div className="lg:basis-7/12">
           <DisplayText solidText="sign" outlineText="up" />
         </div>
 
-        <div className="mt-8 basis-5/12">
+        <div className="mt-4 lg:mt-8 lg:basis-5/12">
           <Form
             onSubmit={onSubmit}
             error="error"
@@ -76,12 +76,12 @@ const SignupPage = () => {
               <TextField
                 name="displayName"
                 className="h-[2.5rem] rounded-md border-2 border-white p-1"
-                errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
+                errorClassName="border-red-500 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
                 ref={firstFieldRef}
               />
               <FieldError
                 name="displayName"
-                className="text-lg font-bold text-red-600"
+                className="text-lg font-bold text-red-500"
               />
             </div>
 
@@ -92,7 +92,7 @@ const SignupPage = () => {
               <EmailField
                 name="email"
                 className="h-[2.5rem] rounded-md border-2 border-white p-1"
-                errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
+                errorClassName="border-red-500 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
                 validation={{
                   required: {
                     value: true,
@@ -102,7 +102,7 @@ const SignupPage = () => {
               />
               <FieldError
                 name="email"
-                className="text-lg font-bold text-red-600"
+                className="text-lg font-bold text-red-500"
               />
             </div>
 
@@ -113,7 +113,7 @@ const SignupPage = () => {
               <PasswordField
                 name="password"
                 className="h-[2.5rem] rounded-md border-2 border-white p-1"
-                errorClassName="border-red-600 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
+                errorClassName="border-red-500 h-[2.5rem] rounded-md border-2 border-b-4 p-1"
                 autoComplete="current-password"
                 validation={{
                   required: {
@@ -124,7 +124,7 @@ const SignupPage = () => {
               />
               <FieldError
                 name="password"
-                className="text-lg font-bold text-red-600"
+                className="text-lg font-bold text-red-500"
               />
             </div>
 
@@ -133,7 +133,7 @@ const SignupPage = () => {
             </Submit>
           </Form>
 
-          <div className="text-center text-lg text-white">
+          <div className="pb-4 text-center text-lg text-white">
             <span>Already have an account?</span>{' '}
             <Link
               to={routes.login()}

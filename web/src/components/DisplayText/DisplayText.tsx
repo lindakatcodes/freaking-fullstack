@@ -6,11 +6,11 @@ const DisplayText = ({
   outlineText: string
 }) => {
   return (
-    <div className="@container pl-4">
-      <p className="inline-block font-serif text-[20cqw] font-bold uppercase leading-none tracking-wide text-white">
+    <div className="@container lg:pl-4">
+      <p className="inline-block font-serif text-[6rem] font-bold uppercase leading-none tracking-wide text-white lg:text-[20cqw]">
         {solidText}
       </p>
-      <p className="text-outline-blue inline-block font-serif text-[20cqw] font-bold uppercase leading-none tracking-wide text-black">
+      <p className="text-outline-blue inline-block font-serif text-[6rem] font-bold uppercase leading-none tracking-wide text-black lg:text-[20cqw]">
         {outlineText}
       </p>
     </div>
