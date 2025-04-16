@@ -1,13 +1,16 @@
 import type { UserComments, UserCommentsVariables } from 'types/graphql'
 
-import type {
-  CellSuccessProps,
-  CellFailureProps,
-  TypedDocumentNode,
+import {
+  type CellSuccessProps,
+  type CellFailureProps,
+  type TypedDocumentNode,
+  useMutation,
 } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 
+import { DELETE_COMMENT } from '../CommentsCell'
 import LinkCommentsCombo from '../LinkCommentsCombo/LinkCommentsCombo'
 
 export const QUERY: TypedDocumentNode<UserComments, UserCommentsVariables> =
@@ -22,6 +25,7 @@ export const QUERY: TypedDocumentNode<UserComments, UserCommentsVariables> =
           createdAt
           linkId
           id
+          authorId
           commentVotes {
             commentId
             userId
@@ -75,6 +79,20 @@ export const Success = ({
     {} as Record<string, typeof user.comments>
   )
 
+  const [deleteComment, { loading }] = useMutation(DELETE_COMMENT, {
+    onCompleted: () => {
+      console.log('comment has been deleted')
+    },
+    onError: (error) => {
+      toast(`Sorry, there was an issue deleting this comment: ${error.message}`)
+    },
+    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+  })
+
+  const deleteCommentHandler = async (commentId: string) => {
+    deleteComment({ variables: { id: commentId } })
+  }
+
   return (
     <section className="grid gap-4 pb-4">
       {Object.entries(commentsByLinkId).map(([key, comments]) => (
@@ -82,6 +100,8 @@ export const Success = ({
           key={key}
           commentArray={comments}
           currentUser={currentUser.id}
+          handleCommentDeletion={deleteCommentHandler}
+          isCommentDeletionRunning={loading}
         />
       ))}
     </section>

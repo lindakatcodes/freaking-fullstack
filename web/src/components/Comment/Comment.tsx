@@ -41,7 +41,7 @@ const Comment = ({
   handleCommentDeletion,
   activeUser,
   invertColors = false,
-  isCommentDeletionRunning,
+  isCommentDeletionRunning = false,
 }: Props) => {
   const displayName =
     comment.author.displayName ||

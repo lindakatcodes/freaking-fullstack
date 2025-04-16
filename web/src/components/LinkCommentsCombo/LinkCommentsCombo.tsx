@@ -8,9 +8,13 @@ import RightArrow from '../icons/RightArrow/RightArrow'
 const LinkCommentsCombo = ({
   commentArray,
   currentUser,
+  handleCommentDeletion,
+  isCommentDeletionRunning = false,
 }: {
   commentArray: UserComments['user']['comments']
   currentUser: number
+  handleCommentDeletion: (commentId) => void
+  isCommentDeletionRunning?: boolean
 }) => {
   return (
     <section>
@@ -29,6 +33,8 @@ const LinkCommentsCombo = ({
             handleUpvoteClick={() => {}}
             activeUser={currentUser}
             invertColors={true}
+            isCommentDeletionRunning={isCommentDeletionRunning}
+            handleCommentDeletion={handleCommentDeletion}
           />
         ))}
       </ul>
