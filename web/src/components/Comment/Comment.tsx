@@ -68,7 +68,7 @@ const Comment = ({
             <>
               <p> • </p>
               <button
-                className="font-bold underline opacity-80 disabled:opacity-40"
+                className="font-bold underline opacity-90 disabled:opacity-60"
                 onClick={() => handleCommentDeletion(comment.id)}
                 disabled={isCommentDeletionRunning}
               >

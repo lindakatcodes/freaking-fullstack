@@ -3,11 +3,15 @@ import type {
   SharedLinksByUserQueryVariables,
 } from 'types/graphql'
 
-import type {
-  CellSuccessProps,
-  CellFailureProps,
-  TypedDocumentNode,
+import {
+  type CellSuccessProps,
+  type CellFailureProps,
+  type TypedDocumentNode,
+  useMutation,
 } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+
+import { useAuth } from 'src/auth'
 
 import SharedLink from '../SharedLink/SharedLink'
 
@@ -38,6 +42,14 @@ export const QUERY: TypedDocumentNode<
   }
 `
 
+export const DELETE_SHARED_LINK = gql`
+  mutation DeleteSharedLink($id: String!) {
+    deleteSharedLink(id: $id) {
+      id
+    }
+  }
+`
+
 export const Loading = () => (
   <div className="p-6 text-center text-xl font-bold text-white">
     Fetching all the links this user has shared...
@@ -64,6 +76,18 @@ export const Success = ({
   SharedLinksByUserQuery,
   SharedLinksByUserQueryVariables
 >) => {
+  const { currentUser } = useAuth()
+
+  const [deleteSharedLink, { loading }] = useMutation(DELETE_SHARED_LINK, {
+    onCompleted: () => {
+      console.log('link has been deleted')
+    },
+    onError: (error) => {
+      toast(`Sorry, there was an issue deleting this link: ${error.message}`)
+    },
+    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+  })
+
   return (
     <ul>
       {sharedLinksByUser.map((link) => {
@@ -71,6 +95,11 @@ export const Success = ({
           link.submittedBy.displayName ||
           link.submittedBy.email.slice(0, link.submittedBy.email.indexOf('@'))
         const commentCount = link.comments && link.comments.length
+
+        const deleteLinkHandler = async (linkId: string) => {
+          deleteSharedLink({ variables: { id: linkId } })
+        }
+
         return (
           <SharedLink
             key={link.id}
@@ -84,6 +113,9 @@ export const Success = ({
             activeUser={link.submittedBy.id || null}
             linkVotes={link.linkVotes || []}
             invertColors={true}
+            handleLinkDeletion={deleteLinkHandler}
+            isLinkDeletionRunning={loading}
+            showDeleteButton={true}
           />
         )
       })}

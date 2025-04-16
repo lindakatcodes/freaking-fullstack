@@ -16,6 +16,7 @@ import { useAuth } from 'src/auth'
 
 import SharedLink from '../SharedLink/SharedLink'
 import { CREATE_LINK_VOTE, DELETE_LINK_VOTE } from '../SharedLinkCell'
+import { DELETE_SHARED_LINK } from '../UserLinksCell'
 
 export const QUERY: TypedDocumentNode<
   SharedLinksQuery,
@@ -28,6 +29,7 @@ export const QUERY: TypedDocumentNode<
       url
       points
       submittedBy {
+        id
         email
         displayName
       }
@@ -84,6 +86,16 @@ export const Success = ({
     refetchQueries: [{ query: QUERY }],
   })
 
+  const [deleteSharedLink, { loading }] = useMutation(DELETE_SHARED_LINK, {
+    onCompleted: () => {
+      console.log('link has been deleted')
+    },
+    onError: (error) => {
+      toast(`Sorry, there was an issue deleting this link: ${error.message}`)
+    },
+    refetchQueries: [{ query: QUERY }],
+  })
+
   const handleLinkUpvote = async (linkId: string) => {
     if (!currentUser) {
       toast.error('You need to be signed in to upvote!')
@@ -112,6 +124,11 @@ export const Success = ({
           link.submittedBy.displayName ||
           link.submittedBy.email.slice(0, link.submittedBy.email.indexOf('@'))
         const commentCount = link.comments && link.comments.length
+
+        const deleteLinkHandler = async (linkId: string) => {
+          deleteSharedLink({ variables: { id: linkId } })
+        }
+
         return (
           <SharedLink
             key={link.id}
@@ -124,6 +141,11 @@ export const Success = ({
             handleUpvoteClick={() => handleLinkUpvote(link.id)}
             activeUser={currentUser?.id || null}
             linkVotes={link.linkVotes || []}
+            handleLinkDeletion={deleteLinkHandler}
+            isLinkDeletionRunning={loading}
+            showDeleteButton={
+              !!currentUser && currentUser.id === link.submittedBy.id
+            }
           />
         )
       })}

@@ -16,6 +16,9 @@ interface SharedLinkProps {
   activeUser: number | null
   linkVotes: Partial<LinkUserVote>[]
   invertColors?: boolean
+  handleLinkDeletion: (id: string) => void
+  isLinkDeletionRunning?: boolean
+  showDeleteButton?: boolean
 }
 
 const SharedLink = ({
@@ -29,6 +32,9 @@ const SharedLink = ({
   activeUser,
   linkVotes,
   invertColors = false,
+  handleLinkDeletion,
+  isLinkDeletionRunning = false,
+  showDeleteButton = false,
 }: SharedLinkProps) => {
   // title and arrow go to link; displayName goes to user profile; comments goes to link comment page; link text shows domain only and shows all links shared from that domain (maybe skip this and just show the domain and go to the link)
 
@@ -72,6 +78,18 @@ const SharedLink = ({
           >
             {commentCount} {commentCount === 1 ? 'comment' : 'comments'}
           </Link>
+          {showDeleteButton && (
+            <>
+              <p> • </p>
+              <button
+                className="font-bold underline opacity-90 disabled:opacity-60"
+                onClick={() => handleLinkDeletion(linkId)}
+                disabled={isLinkDeletionRunning}
+              >
+                Delete Link
+              </button>
+            </>
+          )}
         </div>
       </div>
 

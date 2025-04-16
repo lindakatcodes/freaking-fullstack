@@ -171,6 +171,12 @@ export const Success = ({
     }
   }
 
+  const deleteLinkHandler = () => {
+    toast.error(
+      'Links you have shared can only be deleted from the main page or your shared links page.'
+    )
+  }
+
   return (
     <>
       <div className="mb-8">
@@ -184,6 +190,7 @@ export const Success = ({
           handleUpvoteClick={handleLinkUpvote}
           activeUser={currentUser?.id || null}
           linkVotes={sharedLink.linkVotes || []}
+          handleLinkDeletion={deleteLinkHandler}
         />
       </div>
 
