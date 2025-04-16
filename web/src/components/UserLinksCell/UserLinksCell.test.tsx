@@ -36,6 +36,7 @@ describe('UserLinksCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
+      mockCurrentUser({ id: 2, email: '' })
       render(
         <Success id={1} sharedLinksByUser={standard().sharedLinksByUser} />
       )

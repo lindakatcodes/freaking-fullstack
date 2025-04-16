@@ -6,6 +6,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
       body: 'First comment',
       createdAt: '2020-01-02T12:34:56Z',
       linkId: '42',
+      authorId: 1,
       author: {
         email: 'user0@test.co',
         displayName: null,
@@ -17,6 +18,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
       body: 'Second comment',
       createdAt: '2020-05-24T12:34:56Z',
       linkId: '42',
+      authorId: 2,
       author: {
         email: 'user1@test.co',
         displayName: 'Linda',

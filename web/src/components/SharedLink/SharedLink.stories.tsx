@@ -27,13 +27,14 @@ export const DefaultValues: Story = {
     activeUser: 1,
     linkVotes: [],
     linkId: '1',
+    handleLinkDeletion: () => {},
   },
 }
 
 // story with points and comments
 export const CustomValues: Story = {
   args: {
-    title: 'Story test link that is extra long so it covers two lines',
+    title: 'Story test link that is extra long so it covers multiple lines',
     displayName: 'LindaKat',
     link: 'https://bnn.co/subpage?q=test',
     points: 1234,
@@ -42,6 +43,7 @@ export const CustomValues: Story = {
     activeUser: 1,
     linkVotes: [],
     linkId: '1',
+    handleLinkDeletion: () => {},
   },
 }
 
@@ -57,5 +59,45 @@ export const UpvotedLink: Story = {
     activeUser: 1,
     linkVotes: [{ id: '100', linkId: '1', userId: 1 }],
     linkId: '1',
+    handleLinkDeletion: () => {},
   },
+}
+
+export const LinkWithDelete: Story = {
+  args: {
+    title: 'The current user submitted this one',
+    displayName: 'LindaKat',
+    link: 'https://bnn.co/subpage?q=test',
+    points: 1234,
+    commentCount: 6,
+    handleUpvoteClick: () => {},
+    activeUser: 1,
+    linkVotes: [{ id: '100', linkId: '1', userId: 1 }],
+    linkId: '1',
+    handleLinkDeletion: () => {},
+    showDeleteButton: true,
+  },
+}
+
+export const InvertedColors: Story = {
+  args: {
+    title: 'This is how it looks on user pages',
+    displayName: 'LindaKat',
+    link: 'https://bnn.co/subpage?q=test',
+    points: 123,
+    commentCount: 1,
+    handleUpvoteClick: () => {},
+    activeUser: 1,
+    linkVotes: [],
+    linkId: '1',
+    handleLinkDeletion: () => {},
+    invertColors: true,
+  },
+  decorators: [
+    (Story) => (
+      <div className="bg-black p-6">
+        <Story />
+      </div>
+    ),
+  ],
 }

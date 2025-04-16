@@ -8,7 +8,7 @@ const meta: Meta<typeof UserCommentsPage> = {
   component: UserCommentsPage,
   decorators: [
     (Story) => {
-      mockCurrentUser({ id: 2, email: 'hello@bnn.news' })
+      mockCurrentUser({ id: 1, email: 'hello@bnn.news' })
       return (
         <div className="relative">
           <ProfileLayout>

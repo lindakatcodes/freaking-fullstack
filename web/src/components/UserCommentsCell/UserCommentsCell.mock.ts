@@ -13,6 +13,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
           title: 'Join the Torc platform!',
         },
         id: '21',
+        authorId: 1,
         commentVotes: [
           {
             commentId: '200',
@@ -34,6 +35,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
           title: 'Super cool dev site!',
         },
         id: '22',
+        authorId: 1,
         commentVotes: [
           {
             commentId: '201',
