@@ -25,6 +25,7 @@ export const QUERY: TypedDocumentNode<CommentsQuery, CommentsQueryVariables> =
         createdAt
         id
         linkId
+        authorId
         author {
           email
           displayName
@@ -48,6 +49,14 @@ export const CREATE_COMMENT_VOTE = gql`
 export const DELETE_COMMENT_VOTE = gql`
   mutation DeleteCommentVote($id: String!) {
     deleteCommentUserVote(id: $id) {
+      id
+    }
+  }
+`
+
+export const DELETE_COMMENT = gql`
+  mutation DeleteComment($id: String!) {
+    deleteComment(id: $id) {
       id
     }
   }
@@ -97,6 +106,19 @@ export const Success = ({
     ],
   })
 
+  const [deleteComment, { loading }] = useMutation(DELETE_COMMENT, {
+    onCompleted: () => {
+      console.log('comment has been deleted')
+    },
+    onError: (error) => {
+      toast(`Sorry, there was an issue deleting this comment: ${error.message}`)
+    },
+    refetchQueries: [
+      { query: QUERY, variables: { linkId } },
+      { query: SharedLinkQuery, variables: { id: linkId } },
+    ],
+  })
+
   if (!currentUser) {
     return (
       <div className="flex flex-col gap-4">
@@ -107,6 +129,7 @@ export const Success = ({
             handleUpvoteClick={() => {
               toast.error('You need to be signed in to upvote!')
             }}
+            handleCommentDeletion={() => {}}
             activeUser={null}
           />
         ))}
@@ -132,12 +155,18 @@ export const Success = ({
           }
         }
 
+        const deleteCommentHandler = async (commentId: string) => {
+          deleteComment({ variables: { id: commentId } })
+        }
+
         return (
           <Comment
             comment={comment}
             key={comment.id}
             handleUpvoteClick={handleCommentUpvote}
+            handleCommentDeletion={deleteCommentHandler}
             activeUser={currentUser.id}
+            isCommentDeletionRunning={loading}
           />
         )
       })}
