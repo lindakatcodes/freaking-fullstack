@@ -9,8 +9,8 @@ import {
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import { DELETE_COMMENT } from 'src/mutations'
 
-import { DELETE_COMMENT } from '../CommentsCell'
 import LinkCommentsCombo from '../LinkCommentsCombo/LinkCommentsCombo'
 
 export const QUERY: TypedDocumentNode<UserComments, UserCommentsVariables> =
@@ -67,6 +67,16 @@ export const Success = ({
 }: CellSuccessProps<UserComments, UserCommentsVariables>) => {
   const { currentUser } = useAuth()
 
+  const [deleteComment, { loading }] = useMutation(DELETE_COMMENT, {
+    onCompleted: () => {
+      console.log('comment has been deleted')
+    },
+    onError: (error) => {
+      toast(`Sorry, there was an issue deleting this comment: ${error.message}`)
+    },
+    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+  })
+
   const commentsByLinkId = user.comments.reduce(
     (acc, comment) => {
       const linkId = comment.linkId
@@ -78,16 +88,6 @@ export const Success = ({
     },
     {} as Record<string, typeof user.comments>
   )
-
-  const [deleteComment, { loading }] = useMutation(DELETE_COMMENT, {
-    onCompleted: () => {
-      console.log('comment has been deleted')
-    },
-    onError: (error) => {
-      toast(`Sorry, there was an issue deleting this comment: ${error.message}`)
-    },
-    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
-  })
 
   const deleteCommentHandler = async (commentId: string) => {
     deleteComment({ variables: { id: commentId } })

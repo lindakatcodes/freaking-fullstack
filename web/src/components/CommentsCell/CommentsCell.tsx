@@ -13,6 +13,11 @@ import {
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import {
+  CREATE_COMMENT_VOTE,
+  DELETE_COMMENT_VOTE,
+  DELETE_COMMENT,
+} from 'src/mutations'
 
 import Comment from '../Comment/Comment'
 import { QUERY as SharedLinkQuery } from '../SharedLinkCell'
@@ -38,29 +43,6 @@ export const QUERY: TypedDocumentNode<CommentsQuery, CommentsQueryVariables> =
       }
     }
   `
-export const CREATE_COMMENT_VOTE = gql`
-  mutation CreateCommentVote($input: CreateCommentUserVoteInput!) {
-    createCommentUserVote(input: $input) {
-      id
-    }
-  }
-`
-
-export const DELETE_COMMENT_VOTE = gql`
-  mutation DeleteCommentVote($id: String!) {
-    deleteCommentUserVote(id: $id) {
-      id
-    }
-  }
-`
-
-export const DELETE_COMMENT = gql`
-  mutation DeleteComment($id: String!) {
-    deleteComment(id: $id) {
-      id
-    }
-  }
-`
 
 export const Loading = () => (
   <div className="mt-8 text-center text-xl font-bold">Loading comments...</div>

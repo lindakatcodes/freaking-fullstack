@@ -4,22 +4,18 @@ import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 import SubmitLinkForm from 'src/components/SubmitLinkForm/SubmitLinkForm'
-
-const CREATE_SHARED_LINK = gql`
-  mutation CreateSharedLinkMutation($input: CreateSharedLinkInput!) {
-    createSharedLink(input: $input) {
-      id
-    }
-  }
-`
+import { CREATE_SHARED_LINK } from 'src/mutations'
 
 const SubmitLinkPage = () => {
-  const [create, { loading, error }] = useMutation(CREATE_SHARED_LINK, {
-    onCompleted: () => {
-      toast.success('Thank you for your submission!')
-      navigate(routes.home())
-    },
-  })
+  const [createSharedLink, { loading, error }] = useMutation(
+    CREATE_SHARED_LINK,
+    {
+      onCompleted: () => {
+        toast.success('Thank you for your submission!')
+        navigate(routes.home())
+      },
+    }
+  )
   const { currentUser } = useAuth()
 
   const onSubmit = (data) => {
@@ -28,7 +24,7 @@ const SubmitLinkPage = () => {
       submittedById: currentUser.id,
       points: 0,
     }
-    create({ variables: { input: newSharedLink } })
+    createSharedLink({ variables: { input: newSharedLink } })
   }
 
   return (

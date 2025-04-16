@@ -12,6 +12,7 @@ import {
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import { DELETE_SHARED_LINK } from 'src/mutations'
 
 import SharedLink from '../SharedLink/SharedLink'
 
@@ -38,14 +39,6 @@ export const QUERY: TypedDocumentNode<
         userId
         id
       }
-    }
-  }
-`
-
-export const DELETE_SHARED_LINK = gql`
-  mutation DeleteSharedLink($id: String!) {
-    deleteSharedLink(id: $id) {
-      id
     }
   }
 `

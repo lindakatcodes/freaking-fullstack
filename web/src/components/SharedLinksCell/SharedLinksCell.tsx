@@ -13,10 +13,13 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import {
+  CREATE_LINK_VOTE,
+  DELETE_LINK_VOTE,
+  DELETE_SHARED_LINK,
+} from 'src/mutations'
 
 import SharedLink from '../SharedLink/SharedLink'
-import { CREATE_LINK_VOTE, DELETE_LINK_VOTE } from '../SharedLinkCell'
-import { DELETE_SHARED_LINK } from '../UserLinksCell'
 
 export const QUERY: TypedDocumentNode<
   SharedLinksQuery,

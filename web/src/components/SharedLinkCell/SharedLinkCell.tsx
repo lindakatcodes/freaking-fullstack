@@ -15,6 +15,11 @@ import type {
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import {
+  CREATE_COMMENT,
+  CREATE_LINK_VOTE,
+  DELETE_LINK_VOTE,
+} from 'src/mutations'
 
 import CommentForm from '../CommentForm/CommentForm'
 import CommentsCell from '../CommentsCell'
@@ -44,30 +49,6 @@ export const QUERY: TypedDocumentNode<
         userId
         id
       }
-    }
-  }
-`
-
-export const CREATE_COMMENT = gql`
-  mutation CreateComment($input: CreateCommentInput!) {
-    createComment(input: $input) {
-      id
-    }
-  }
-`
-
-export const CREATE_LINK_VOTE = gql`
-  mutation CreateLinkVote($input: CreateLinkUserVoteInput!) {
-    createLinkUserVote(input: $input) {
-      id
-    }
-  }
-`
-
-export const DELETE_LINK_VOTE = gql`
-  mutation DeleteLinkVote($id: String!) {
-    deleteLinkUserVote(id: $id) {
-      id
     }
   }
 `
@@ -143,6 +124,10 @@ export const Success = ({
   })
 
   const onSubmit = async (data: CommentData) => {
+    if (!currentUser) {
+      formMethods.reset()
+      return toast.error('you must be signed in to leave a comment.')
+    }
     const comment = {
       body: data.comment,
       authorId: currentUser.id,
