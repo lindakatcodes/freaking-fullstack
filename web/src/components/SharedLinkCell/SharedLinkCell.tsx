@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { useForm } from 'react-hook-form'
 import type {
   FindSharedLinkQuery,
@@ -85,16 +87,12 @@ export const Success = ({
   const { currentUser } = useAuth()
   const formMethods = useForm<CommentData>()
 
-  const displayName =
-    sharedLink.submittedBy.displayName ||
-    sharedLink.submittedBy.email.slice(
-      0,
-      sharedLink.submittedBy.email.indexOf('@')
-    )
+  const [activeLinkId, setActiveLinkId] = useState<string | null>(null)
 
-  const commentCount = sharedLink.comments && sharedLink.comments.length
-
-  const [createComment, { loading, error }] = useMutation(CREATE_COMMENT, {
+  const [
+    createComment,
+    { loading: createCommentLoading, error: createCommentError },
+  ] = useMutation(CREATE_COMMENT, {
     onCompleted: () => {
       toast.success('Comment successfully added!')
       formMethods.reset()
@@ -105,9 +103,22 @@ export const Success = ({
     ],
   })
 
-  const { handleLinkUpvote, handleLinkDownvote } = useLinkVotes({
+  const {
+    handleLinkUpvote,
+    handleLinkDownvote,
+    loading: linkVoteLoading,
+  } = useLinkVotes({
     refetchQueries: [{ query: QUERY, variables: { id: sharedLink.id } }],
   })
+
+  const displayName =
+    sharedLink.submittedBy.displayName ||
+    sharedLink.submittedBy.email.slice(
+      0,
+      sharedLink.submittedBy.email.indexOf('@')
+    )
+
+  const commentCount = sharedLink.comments && sharedLink.comments.length
 
   const onSubmit = async (data: CommentData) => {
     if (!currentUser) {
@@ -128,14 +139,19 @@ export const Success = ({
       return
     }
 
-    const userUpvoteStatus = sharedLink.linkVotes?.find(
-      (vote) => vote.userId === currentUser.id
-    )
+    setActiveLinkId(sharedLink.id)
+    try {
+      const userUpvoteStatus = sharedLink.linkVotes?.find(
+        (vote) => vote.userId === currentUser.id
+      )
 
-    if (!userUpvoteStatus) {
-      handleLinkUpvote(sharedLink.id, currentUser.id)
-    } else {
-      handleLinkDownvote(userUpvoteStatus.id)
+      if (!userUpvoteStatus) {
+        await handleLinkUpvote(sharedLink.id, currentUser.id)
+      } else {
+        await handleLinkDownvote(userUpvoteStatus.id)
+      }
+    } finally {
+      setActiveLinkId(null)
     }
   }
 
@@ -156,6 +172,9 @@ export const Success = ({
           displayName={displayName}
           commentCount={commentCount}
           handleUpvoteClick={handleLinkVote}
+          isLinkUpvoteRunning={
+            linkVoteLoading && activeLinkId === sharedLink.id
+          }
           activeUser={currentUser?.id || null}
           linkVotes={sharedLink.linkVotes || []}
           handleLinkDeletion={deleteLinkHandler}
@@ -166,8 +185,8 @@ export const Success = ({
         <CommentForm
           formMethods={formMethods}
           onSubmit={onSubmit}
-          loading={loading}
-          error={error}
+          loading={createCommentLoading}
+          error={createCommentError}
         />
       </div>
 

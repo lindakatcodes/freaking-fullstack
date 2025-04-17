@@ -13,6 +13,7 @@ interface SharedLinkProps {
   commentCount?: number
   link: string
   handleUpvoteClick: () => void
+  isLinkUpvoteRunning?: boolean
   activeUser: number | null
   linkVotes: Partial<LinkUserVote>[]
   invertColors?: boolean
@@ -29,6 +30,7 @@ const SharedLink = ({
   commentCount = 0,
   link,
   handleUpvoteClick,
+  isLinkUpvoteRunning = false,
   activeUser,
   linkVotes,
   invertColors = false,
@@ -47,7 +49,11 @@ const SharedLink = ({
       className={`group flex flex-col gap-2 border-b-2 px-2 py-2 md:flex-row md:items-start md:gap-5 md:py-4  ${!invertColors ? 'border-black hover:bg-black hover:text-yellow' : 'border-yellow bg-black text-yellow hover:bg-yellow hover:text-black'}`}
     >
       <div className="mt-2 flex flex-col">
-        <button onClick={handleUpvoteClick}>
+        <button
+          className="disabled:opacity-50"
+          onClick={handleUpvoteClick}
+          disabled={isLinkUpvoteRunning}
+        >
           <UpvoteArrow fill={fillUpvote} />
         </button>
       </div>

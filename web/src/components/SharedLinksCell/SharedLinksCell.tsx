@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import type { SharedLinksQuery, SharedLinksQueryVariables } from 'types/graphql'
 
 import type {
@@ -5,12 +7,11 @@ import type {
   CellFailureProps,
   TypedDocumentNode,
 } from '@redwoodjs/web'
-import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import { useLinkDeletion } from 'src/hooks/useLinkDeletion'
 import { useLinkVotes } from 'src/hooks/useLinkVotes'
-import { DELETE_SHARED_LINK } from 'src/mutations'
 
 import SharedLink from '../SharedLink/SharedLink'
 
@@ -68,37 +69,19 @@ export const Success = ({
 }: CellSuccessProps<SharedLinksQuery, SharedLinksQueryVariables>) => {
   const { currentUser } = useAuth()
 
-  const { handleLinkUpvote, handleLinkDownvote } = useLinkVotes({
+  const [activeLinkId, setActiveLinkId] = useState<string | null>(null)
+
+  const {
+    handleLinkUpvote,
+    handleLinkDownvote,
+    loading: linkVoteLoading,
+  } = useLinkVotes({
     refetchQueries: [{ query: QUERY }],
   })
 
-  const [deleteSharedLink, { loading }] = useMutation(DELETE_SHARED_LINK, {
-    onCompleted: () => {
-      console.log('link has been deleted')
-    },
-    onError: (error) => {
-      toast(`Sorry, there was an issue deleting this link: ${error.message}`)
-    },
+  const { handleLinkDeletion, loading: linkDeleteLoading } = useLinkDeletion({
     refetchQueries: [{ query: QUERY }],
   })
-
-  const handleLinkVote = async (linkId: string) => {
-    if (!currentUser) {
-      toast.error('You need to be signed in to upvote!')
-      return
-    }
-
-    const link = sharedLinks.find((link) => link.id === linkId)
-    const userUpvoteStatus = link.linkVotes?.find(
-      (vote) => vote.userId === currentUser.id
-    )
-
-    if (!userUpvoteStatus) {
-      handleLinkUpvote(linkId, currentUser.id)
-    } else {
-      handleLinkDownvote(userUpvoteStatus.id)
-    }
-  }
 
   return (
     <ul>
@@ -106,10 +89,41 @@ export const Success = ({
         const displayName =
           link.submittedBy.displayName ||
           link.submittedBy.email.slice(0, link.submittedBy.email.indexOf('@'))
+
         const commentCount = link.comments && link.comments.length
 
-        const deleteLinkHandler = async (linkId: string) => {
-          deleteSharedLink({ variables: { id: linkId } })
+        const handleLinkVote = async () => {
+          if (!currentUser) {
+            toast.error('You need to be signed in to upvote!')
+            return
+          }
+
+          setActiveLinkId(link.id)
+          try {
+            const linkToVote = sharedLinks.find(
+              (tempLink) => tempLink.id === link.id
+            )
+            const userUpvoteStatus = linkToVote.linkVotes?.find(
+              (vote) => vote.userId === currentUser.id
+            )
+
+            if (!userUpvoteStatus) {
+              await handleLinkUpvote(link.id, currentUser.id)
+            } else {
+              await handleLinkDownvote(userUpvoteStatus.id)
+            }
+          } finally {
+            setActiveLinkId(null)
+          }
+        }
+
+        const handleLinkDelete = async () => {
+          setActiveLinkId(link.id)
+          try {
+            await handleLinkDeletion(link.id)
+          } finally {
+            setActiveLinkId(null)
+          }
         }
 
         return (
@@ -121,11 +135,14 @@ export const Success = ({
             points={link.points}
             displayName={displayName}
             commentCount={commentCount}
-            handleUpvoteClick={() => handleLinkVote(link.id)}
+            handleUpvoteClick={handleLinkVote}
+            isLinkUpvoteRunning={linkVoteLoading && activeLinkId === link.id}
             activeUser={currentUser?.id || null}
             linkVotes={link.linkVotes || []}
-            handleLinkDeletion={deleteLinkHandler}
-            isLinkDeletionRunning={loading}
+            handleLinkDeletion={handleLinkDelete}
+            isLinkDeletionRunning={
+              linkDeleteLoading && activeLinkId === link.id
+            }
             showDeleteButton={
               !!currentUser && currentUser.id === link.submittedBy.id
             }
