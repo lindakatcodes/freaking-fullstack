@@ -1,8 +1,4 @@
-import type {
-  SharedLinksQuery,
-  SharedLinksQueryVariables,
-  LinkUserVote,
-} from 'types/graphql'
+import type { SharedLinksQuery, SharedLinksQueryVariables } from 'types/graphql'
 
 import type {
   CellSuccessProps,
@@ -13,11 +9,8 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
-import {
-  CREATE_LINK_VOTE,
-  DELETE_LINK_VOTE,
-  DELETE_SHARED_LINK,
-} from 'src/mutations'
+import { useLinkVotes } from 'src/hooks/useLinkVotes'
+import { DELETE_SHARED_LINK } from 'src/mutations'
 
 import SharedLink from '../SharedLink/SharedLink'
 
@@ -75,17 +68,7 @@ export const Success = ({
 }: CellSuccessProps<SharedLinksQuery, SharedLinksQueryVariables>) => {
   const { currentUser } = useAuth()
 
-  const [createLinkUserVote] = useMutation(CREATE_LINK_VOTE, {
-    onCompleted: () => {
-      console.log('link upvoted')
-    },
-    refetchQueries: [{ query: QUERY }],
-  })
-
-  const [deleteLinkUserVote] = useMutation(DELETE_LINK_VOTE, {
-    onCompleted: () => {
-      console.log('link upvote removed')
-    },
+  const { handleLinkUpvote, handleLinkDownvote } = useLinkVotes({
     refetchQueries: [{ query: QUERY }],
   })
 
@@ -99,24 +82,21 @@ export const Success = ({
     refetchQueries: [{ query: QUERY }],
   })
 
-  const handleLinkUpvote = async (linkId: string) => {
+  const handleLinkVote = async (linkId: string) => {
     if (!currentUser) {
       toast.error('You need to be signed in to upvote!')
       return
     }
 
     const link = sharedLinks.find((link) => link.id === linkId)
-    const userUpvoteStatus: Partial<LinkUserVote> | undefined =
-      link.linkVotes?.find((vote) => vote.userId === currentUser.id)
+    const userUpvoteStatus = link.linkVotes?.find(
+      (vote) => vote.userId === currentUser.id
+    )
 
     if (!userUpvoteStatus) {
-      const upvote = {
-        linkId: linkId,
-        userId: currentUser.id,
-      }
-      createLinkUserVote({ variables: { input: upvote } })
+      handleLinkUpvote(linkId, currentUser.id)
     } else {
-      deleteLinkUserVote({ variables: { id: userUpvoteStatus.id } })
+      handleLinkDownvote(userUpvoteStatus.id)
     }
   }
 
@@ -141,7 +121,7 @@ export const Success = ({
             points={link.points}
             displayName={displayName}
             commentCount={commentCount}
-            handleUpvoteClick={() => handleLinkUpvote(link.id)}
+            handleUpvoteClick={() => handleLinkVote(link.id)}
             activeUser={currentUser?.id || null}
             linkVotes={link.linkVotes || []}
             handleLinkDeletion={deleteLinkHandler}

@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form'
 import type {
   FindSharedLinkQuery,
   FindSharedLinkQueryVariables,
-  LinkUserVote,
 } from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
@@ -15,11 +14,8 @@ import type {
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
-import {
-  CREATE_COMMENT,
-  CREATE_LINK_VOTE,
-  DELETE_LINK_VOTE,
-} from 'src/mutations'
+import { useLinkVotes } from 'src/hooks/useLinkVotes'
+import { CREATE_COMMENT } from 'src/mutations'
 
 import CommentForm from '../CommentForm/CommentForm'
 import CommentsCell from '../CommentsCell'
@@ -109,17 +105,7 @@ export const Success = ({
     ],
   })
 
-  const [createLinkUserVote] = useMutation(CREATE_LINK_VOTE, {
-    onCompleted: () => {
-      console.log('link upvoted')
-    },
-    refetchQueries: [{ query: QUERY, variables: { id: sharedLink.id } }],
-  })
-
-  const [deleteLinkUserVote] = useMutation(DELETE_LINK_VOTE, {
-    onCompleted: () => {
-      console.log('link upvote removed')
-    },
+  const { handleLinkUpvote, handleLinkDownvote } = useLinkVotes({
     refetchQueries: [{ query: QUERY, variables: { id: sharedLink.id } }],
   })
 
@@ -136,23 +122,20 @@ export const Success = ({
     createComment({ variables: { input: comment } })
   }
 
-  const handleLinkUpvote = async () => {
+  const handleLinkVote = async () => {
     if (!currentUser) {
       toast.error('You need to be signed in to upvote!')
       return
     }
 
-    const userUpvoteStatus: Partial<LinkUserVote> | undefined =
-      sharedLink.linkVotes?.find((vote) => vote.userId === currentUser.id)
+    const userUpvoteStatus = sharedLink.linkVotes?.find(
+      (vote) => vote.userId === currentUser.id
+    )
 
     if (!userUpvoteStatus) {
-      const upvote = {
-        linkId: sharedLink.id,
-        userId: currentUser.id,
-      }
-      createLinkUserVote({ variables: { input: upvote } })
+      handleLinkUpvote(sharedLink.id, currentUser.id)
     } else {
-      deleteLinkUserVote({ variables: { id: userUpvoteStatus.id } })
+      handleLinkDownvote(userUpvoteStatus.id)
     }
   }
 
@@ -172,7 +155,7 @@ export const Success = ({
           points={sharedLink.points}
           displayName={displayName}
           commentCount={commentCount}
-          handleUpvoteClick={handleLinkUpvote}
+          handleUpvoteClick={handleLinkVote}
           activeUser={currentUser?.id || null}
           linkVotes={sharedLink.linkVotes || []}
           handleLinkDeletion={deleteLinkHandler}

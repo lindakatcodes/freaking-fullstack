@@ -12,6 +12,7 @@ import {
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import { useLinkVotes } from 'src/hooks/useLinkVotes'
 import { DELETE_SHARED_LINK } from 'src/mutations'
 
 import SharedLink from '../SharedLink/SharedLink'
@@ -71,6 +72,10 @@ export const Success = ({
 >) => {
   const { currentUser } = useAuth()
 
+  const { handleLinkUpvote, handleLinkDownvote } = useLinkVotes({
+    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+  })
+
   const [deleteSharedLink, { loading }] = useMutation(DELETE_SHARED_LINK, {
     onCompleted: () => {
       console.log('link has been deleted')
@@ -80,6 +85,19 @@ export const Success = ({
     },
     refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
   })
+
+  const handleLinkVote = async (linkId: string) => {
+    const link = sharedLinksByUser.find((link) => link.id === linkId)
+    const userUpvoteStatus = link.linkVotes?.find(
+      (vote) => vote.userId === currentUser.id
+    )
+
+    if (!userUpvoteStatus) {
+      handleLinkUpvote(linkId, currentUser.id)
+    } else {
+      handleLinkDownvote(userUpvoteStatus.id)
+    }
+  }
 
   return (
     <ul>
@@ -102,7 +120,7 @@ export const Success = ({
             points={link.points}
             displayName={displayName}
             commentCount={commentCount}
-            handleUpvoteClick={() => {}}
+            handleUpvoteClick={() => handleLinkVote(link.id)}
             activeUser={link.submittedBy.id || null}
             linkVotes={link.linkVotes || []}
             invertColors={true}
