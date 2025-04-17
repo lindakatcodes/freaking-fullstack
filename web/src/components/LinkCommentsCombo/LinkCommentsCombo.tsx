@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { UserComments } from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
@@ -22,6 +24,8 @@ const LinkCommentsCombo = ({
   handleCommentUpvote,
   handleCommentDownvote,
 }: LinkCommentsComboProps) => {
+  const [activeCommentId, setActiveCommentId] = useState<string | null>(null)
+
   return (
     <section>
       <Link
@@ -34,14 +38,19 @@ const LinkCommentsCombo = ({
       <ul className="grid gap-2">
         {commentArray.map((comment) => {
           const handleCommentVote = async () => {
-            const userUpvoteStatus = comment.commentVotes.find(
-              (vote) => vote.userId === currentUser
-            )
+            setActiveCommentId(comment.id)
+            try {
+              const userUpvoteStatus = comment.commentVotes.find(
+                (vote) => vote.userId === currentUser
+              )
 
-            if (!userUpvoteStatus) {
-              handleCommentUpvote(comment.id, currentUser)
-            } else {
-              handleCommentDownvote(userUpvoteStatus.id)
+              if (!userUpvoteStatus) {
+                await handleCommentUpvote(comment.id, currentUser)
+              } else {
+                await handleCommentDownvote(userUpvoteStatus.id)
+              }
+            } finally {
+              setActiveCommentId(null)
             }
           }
 
@@ -50,6 +59,7 @@ const LinkCommentsCombo = ({
               comment={comment}
               key={comment.createdAt}
               handleUpvoteClick={handleCommentVote}
+              isUpvoteLogicRunning={activeCommentId === comment.id}
               activeUser={currentUser}
               invertColors={true}
               isCommentDeletionRunning={isCommentDeletionRunning}

@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import type { CommentsQuery, CommentsQueryVariables } from 'types/graphql'
 
 import {
@@ -61,6 +63,8 @@ export const Success = ({
 }: CellSuccessProps<CommentsQuery, CommentsQueryVariables>) => {
   const { currentUser } = useAuth()
 
+  const [activeCommentId, setActiveCommentId] = useState<string | null>(null)
+
   const { handleCommentUpvote, handleCommentDownvote } = useCommentVotes({
     refetchQueries: [
       { query: QUERY, variables: { linkId } },
@@ -103,14 +107,19 @@ export const Success = ({
     <div className="flex flex-col gap-4">
       {comments.map((comment) => {
         const handleCommentVote = async () => {
-          const userUpvoteStatus = comment.commentVotes.find(
-            (vote) => vote.userId === currentUser.id
-          )
+          setActiveCommentId(comment.id)
+          try {
+            const userUpvoteStatus = comment.commentVotes.find(
+              (vote) => vote.userId === currentUser.id
+            )
 
-          if (!userUpvoteStatus) {
-            handleCommentUpvote(comment.id, currentUser.id)
-          } else {
-            handleCommentDownvote(userUpvoteStatus.id)
+            if (!userUpvoteStatus) {
+              await handleCommentUpvote(comment.id, currentUser.id)
+            } else {
+              await handleCommentDownvote(userUpvoteStatus.id)
+            }
+          } finally {
+            setActiveCommentId(null)
           }
         }
 
@@ -123,6 +132,7 @@ export const Success = ({
             comment={comment}
             key={comment.id}
             handleUpvoteClick={handleCommentVote}
+            isUpvoteLogicRunning={activeCommentId === comment.id}
             handleCommentDeletion={deleteCommentHandler}
             activeUser={currentUser.id}
             isCommentDeletionRunning={loading}

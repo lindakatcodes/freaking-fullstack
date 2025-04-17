@@ -18,6 +18,7 @@ interface Props {
     commentVotes: Partial<CommentUserVote>[]
   }
   handleUpvoteClick: (() => Promise<void>) | (() => void)
+  isUpvoteLogicRunning?: boolean
   handleCommentDeletion: (commentId) => void
   activeUser: number | null
   invertColors?: boolean
@@ -38,6 +39,7 @@ const formattedDate = (datetime: ConstructorParameters<typeof Date>[0]) => {
 const Comment = ({
   comment,
   handleUpvoteClick,
+  isUpvoteLogicRunning = false,
   handleCommentDeletion,
   activeUser,
   invertColors = false,
@@ -53,7 +55,11 @@ const Comment = ({
 
   return (
     <div className={`flex gap-2 ${invertColors && 'text-yellow'}`}>
-      <button className="flex items-start" onClick={handleUpvoteClick}>
+      <button
+        className="flex items-start disabled:opacity-50"
+        onClick={handleUpvoteClick}
+        disabled={isUpvoteLogicRunning}
+      >
         <UpvoteArrow fill={fillUpvote} />
       </button>
 
