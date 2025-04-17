@@ -1,12 +1,14 @@
 import type { UserComments, UserCommentsVariables } from 'types/graphql'
 
-import type {
-  CellSuccessProps,
-  CellFailureProps,
-  TypedDocumentNode,
+import {
+  type CellSuccessProps,
+  type CellFailureProps,
+  type TypedDocumentNode,
 } from '@redwoodjs/web'
 
 import { useAuth } from 'src/auth'
+import { useCommentDeletion } from 'src/hooks/useCommentDeletion'
+import { useCommentVotes } from 'src/hooks/useCommentVotes'
 
 import LinkCommentsCombo from '../LinkCommentsCombo/LinkCommentsCombo'
 
@@ -22,6 +24,7 @@ export const QUERY: TypedDocumentNode<UserComments, UserCommentsVariables> =
           createdAt
           linkId
           id
+          authorId
           commentVotes {
             commentId
             userId
@@ -63,6 +66,19 @@ export const Success = ({
 }: CellSuccessProps<UserComments, UserCommentsVariables>) => {
   const { currentUser } = useAuth()
 
+  const {
+    handleCommentUpvote,
+    handleCommentDownvote,
+    loading: commentVoteLoading,
+  } = useCommentVotes({
+    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+  })
+
+  const { handleCommentDeletion, loading: deleteCommentLoading } =
+    useCommentDeletion({
+      refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+    })
+
   const commentsByLinkId = user.comments.reduce(
     (acc, comment) => {
       const linkId = comment.linkId
@@ -82,6 +98,11 @@ export const Success = ({
           key={key}
           commentArray={comments}
           currentUser={currentUser.id}
+          handleCommentDeletion={handleCommentDeletion}
+          handleCommentUpvote={handleCommentUpvote}
+          handleCommentDownvote={handleCommentDownvote}
+          isCommentVoteRunning={commentVoteLoading}
+          isCommentDeleteRunning={deleteCommentLoading}
         />
       ))}
     </section>

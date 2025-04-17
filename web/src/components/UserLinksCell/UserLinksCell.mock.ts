@@ -28,9 +28,9 @@ export const standard = (/* vars, { ctx, req } */) => ({
       url: 'https://redwoodjs.com',
       points: 0,
       submittedBy: {
-        email: 'user1@test.co',
-        displayName: null,
-        id: 2,
+        email: 'user0@test.co',
+        displayName: 'Linda',
+        id: 1,
       },
       comments: [],
       linkVotes: [],
@@ -42,9 +42,9 @@ export const standard = (/* vars, { ctx, req } */) => ({
       url: 'https://example.com',
       points: 3,
       submittedBy: {
-        email: 'user2@test.co',
-        displayName: 'Jon',
-        id: 3,
+        email: 'user0@test.co',
+        displayName: 'Linda',
+        id: 1,
       },
       comments: [{ id: '3' }],
       linkVotes: [

@@ -13,9 +13,13 @@ interface SharedLinkProps {
   commentCount?: number
   link: string
   handleUpvoteClick: () => void
+  isLinkUpvoteRunning?: boolean
   activeUser: number | null
   linkVotes: Partial<LinkUserVote>[]
   invertColors?: boolean
+  handleLinkDeletion: (id: string) => void
+  isLinkDeletionRunning?: boolean
+  showDeleteButton?: boolean
 }
 
 const SharedLink = ({
@@ -26,9 +30,13 @@ const SharedLink = ({
   commentCount = 0,
   link,
   handleUpvoteClick,
+  isLinkUpvoteRunning = false,
   activeUser,
   linkVotes,
   invertColors = false,
+  handleLinkDeletion,
+  isLinkDeletionRunning = false,
+  showDeleteButton = false,
 }: SharedLinkProps) => {
   // title and arrow go to link; displayName goes to user profile; comments goes to link comment page; link text shows domain only and shows all links shared from that domain (maybe skip this and just show the domain and go to the link)
 
@@ -41,7 +49,11 @@ const SharedLink = ({
       className={`group flex flex-col gap-2 border-b-2 px-2 py-2 md:flex-row md:items-start md:gap-5 md:py-4  ${!invertColors ? 'border-black hover:bg-black hover:text-yellow' : 'border-yellow bg-black text-yellow hover:bg-yellow hover:text-black'}`}
     >
       <div className="mt-2 flex flex-col">
-        <button onClick={handleUpvoteClick}>
+        <button
+          className="disabled:opacity-50"
+          onClick={handleUpvoteClick}
+          disabled={isLinkUpvoteRunning}
+        >
           <UpvoteArrow fill={fillUpvote} />
         </button>
       </div>
@@ -72,6 +84,18 @@ const SharedLink = ({
           >
             {commentCount} {commentCount === 1 ? 'comment' : 'comments'}
           </Link>
+          {showDeleteButton && (
+            <>
+              <p> • </p>
+              <button
+                className="font-bold underline opacity-90 disabled:opacity-60"
+                onClick={() => handleLinkDeletion(linkId)}
+                disabled={isLinkDeletionRunning}
+              >
+                Delete Link
+              </button>
+            </>
+          )}
         </div>
       </div>
 

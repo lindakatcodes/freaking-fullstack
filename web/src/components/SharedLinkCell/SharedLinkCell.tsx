@@ -1,8 +1,9 @@
+import { useState } from 'react'
+
 import { useForm } from 'react-hook-form'
 import type {
   FindSharedLinkQuery,
   FindSharedLinkQueryVariables,
-  LinkUserVote,
 } from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
@@ -15,6 +16,8 @@ import type {
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import { useLinkVotes } from 'src/hooks/useLinkVotes'
+import { CREATE_COMMENT } from 'src/mutations'
 
 import CommentForm from '../CommentForm/CommentForm'
 import CommentsCell from '../CommentsCell'
@@ -44,30 +47,6 @@ export const QUERY: TypedDocumentNode<
         userId
         id
       }
-    }
-  }
-`
-
-export const CREATE_COMMENT = gql`
-  mutation CreateComment($input: CreateCommentInput!) {
-    createComment(input: $input) {
-      id
-    }
-  }
-`
-
-export const CREATE_LINK_VOTE = gql`
-  mutation CreateLinkVote($input: CreateLinkUserVoteInput!) {
-    createLinkUserVote(input: $input) {
-      id
-    }
-  }
-`
-
-export const DELETE_LINK_VOTE = gql`
-  mutation DeleteLinkVote($id: String!) {
-    deleteLinkUserVote(id: $id) {
-      id
     }
   }
 `
@@ -108,16 +87,12 @@ export const Success = ({
   const { currentUser } = useAuth()
   const formMethods = useForm<CommentData>()
 
-  const displayName =
-    sharedLink.submittedBy.displayName ||
-    sharedLink.submittedBy.email.slice(
-      0,
-      sharedLink.submittedBy.email.indexOf('@')
-    )
+  const [activeLinkId, setActiveLinkId] = useState<string | null>(null)
 
-  const commentCount = sharedLink.comments && sharedLink.comments.length
-
-  const [createComment, { loading, error }] = useMutation(CREATE_COMMENT, {
+  const [
+    createComment,
+    { loading: createCommentLoading, error: createCommentError },
+  ] = useMutation(CREATE_COMMENT, {
     onCompleted: () => {
       toast.success('Comment successfully added!')
       formMethods.reset()
@@ -128,21 +103,28 @@ export const Success = ({
     ],
   })
 
-  const [createLinkUserVote] = useMutation(CREATE_LINK_VOTE, {
-    onCompleted: () => {
-      console.log('link upvoted')
-    },
+  const {
+    handleLinkUpvote,
+    handleLinkDownvote,
+    loading: linkVoteLoading,
+  } = useLinkVotes({
     refetchQueries: [{ query: QUERY, variables: { id: sharedLink.id } }],
   })
 
-  const [deleteLinkUserVote] = useMutation(DELETE_LINK_VOTE, {
-    onCompleted: () => {
-      console.log('link upvote removed')
-    },
-    refetchQueries: [{ query: QUERY, variables: { id: sharedLink.id } }],
-  })
+  const displayName =
+    sharedLink.submittedBy.displayName ||
+    sharedLink.submittedBy.email.slice(
+      0,
+      sharedLink.submittedBy.email.indexOf('@')
+    )
+
+  const commentCount = sharedLink.comments && sharedLink.comments.length
 
   const onSubmit = async (data: CommentData) => {
+    if (!currentUser) {
+      formMethods.reset()
+      return toast.error('you must be signed in to leave a comment.')
+    }
     const comment = {
       body: data.comment,
       authorId: currentUser.id,
@@ -151,24 +133,32 @@ export const Success = ({
     createComment({ variables: { input: comment } })
   }
 
-  const handleLinkUpvote = async () => {
+  const handleLinkVote = async () => {
     if (!currentUser) {
       toast.error('You need to be signed in to upvote!')
       return
     }
 
-    const userUpvoteStatus: Partial<LinkUserVote> | undefined =
-      sharedLink.linkVotes?.find((vote) => vote.userId === currentUser.id)
+    setActiveLinkId(sharedLink.id)
+    try {
+      const userUpvoteStatus = sharedLink.linkVotes?.find(
+        (vote) => vote.userId === currentUser.id
+      )
 
-    if (!userUpvoteStatus) {
-      const upvote = {
-        linkId: sharedLink.id,
-        userId: currentUser.id,
+      if (!userUpvoteStatus) {
+        await handleLinkUpvote(sharedLink.id, currentUser.id)
+      } else {
+        await handleLinkDownvote(userUpvoteStatus.id)
       }
-      createLinkUserVote({ variables: { input: upvote } })
-    } else {
-      deleteLinkUserVote({ variables: { id: userUpvoteStatus.id } })
+    } finally {
+      setActiveLinkId(null)
     }
+  }
+
+  const deleteLinkHandler = () => {
+    toast.error(
+      'Links you have shared can only be deleted from the main page or your shared links page.'
+    )
   }
 
   return (
@@ -181,9 +171,13 @@ export const Success = ({
           points={sharedLink.points}
           displayName={displayName}
           commentCount={commentCount}
-          handleUpvoteClick={handleLinkUpvote}
+          handleUpvoteClick={handleLinkVote}
+          isLinkUpvoteRunning={
+            linkVoteLoading && activeLinkId === sharedLink.id
+          }
           activeUser={currentUser?.id || null}
           linkVotes={sharedLink.linkVotes || []}
+          handleLinkDeletion={deleteLinkHandler}
         />
       </div>
 
@@ -191,8 +185,8 @@ export const Success = ({
         <CommentForm
           formMethods={formMethods}
           onSubmit={onSubmit}
-          loading={loading}
-          error={error}
+          loading={createCommentLoading}
+          error={createCommentError}
         />
       </div>
 

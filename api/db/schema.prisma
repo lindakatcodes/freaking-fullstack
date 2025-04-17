@@ -55,7 +55,7 @@ model Comment {
   authorId      Int
   author        User @relation(fields: [authorId], references: [id])
   linkId        String
-  link          SharedLink @relation(fields: [linkId], references: [id])
+  link          SharedLink @relation(fields: [linkId], references: [id], onDelete: Cascade)
   commentVotes  CommentUserVote[]
 }
 
@@ -63,7 +63,7 @@ model LinkUserVote {
   id            String   @id @default(uuid())
   createdAt     DateTime @default(now())
   linkId        String
-  link          SharedLink @relation(fields: [linkId], references: [id])
+  link          SharedLink @relation(fields: [linkId], references: [id], onDelete: Cascade)
   userId        Int
   user          User @relation(fields: [userId], references: [id])
 }
@@ -72,7 +72,7 @@ model CommentUserVote {
   id            String   @id @default(uuid())
   createdAt     DateTime @default(now())
   commentId     String
-  comment       Comment @relation(fields: [commentId], references: [id])
+  comment       Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
   userId        Int
   user          User @relation(fields: [userId], references: [id])
 }

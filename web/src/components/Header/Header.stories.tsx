@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { AuthProvider } from '../../auth'
-
 import Header from './Header'
 
 const meta: Meta<typeof Header> = {

@@ -1,13 +1,19 @@
+import { useState } from 'react'
+
 import type {
   SharedLinksByUserQuery,
   SharedLinksByUserQueryVariables,
 } from 'types/graphql'
 
-import type {
-  CellSuccessProps,
-  CellFailureProps,
-  TypedDocumentNode,
+import {
+  type CellSuccessProps,
+  type CellFailureProps,
+  type TypedDocumentNode,
 } from '@redwoodjs/web'
+
+import { useAuth } from 'src/auth'
+import { useLinkDeletion } from 'src/hooks/useLinkDeletion'
+import { useLinkVotes } from 'src/hooks/useLinkVotes'
 
 import SharedLink from '../SharedLink/SharedLink'
 
@@ -64,13 +70,60 @@ export const Success = ({
   SharedLinksByUserQuery,
   SharedLinksByUserQueryVariables
 >) => {
+  const { currentUser } = useAuth()
+
+  const [activeLinkId, setActiveLinkId] = useState<string | null>(null)
+
+  const {
+    handleLinkUpvote,
+    handleLinkDownvote,
+    loading: linkVoteLoading,
+  } = useLinkVotes({
+    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+  })
+
+  const { handleLinkDeletion, loading: linkDeleteLoading } = useLinkDeletion({
+    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+  })
+
   return (
     <ul>
       {sharedLinksByUser.map((link) => {
         const displayName =
           link.submittedBy.displayName ||
           link.submittedBy.email.slice(0, link.submittedBy.email.indexOf('@'))
+
         const commentCount = link.comments && link.comments.length
+
+        const handleLinkVote = async () => {
+          setActiveLinkId(link.id)
+          try {
+            const linkToVote = sharedLinksByUser.find(
+              (tempLink) => tempLink.id === link.id
+            )
+            const userUpvoteStatus = linkToVote.linkVotes?.find(
+              (vote) => vote.userId === currentUser.id
+            )
+
+            if (!userUpvoteStatus) {
+              await handleLinkUpvote(link.id, currentUser.id)
+            } else {
+              await handleLinkDownvote(userUpvoteStatus.id)
+            }
+          } finally {
+            setActiveLinkId(null)
+          }
+        }
+
+        const handleLinkDelete = async () => {
+          setActiveLinkId(link.id)
+          try {
+            await handleLinkDeletion(link.id)
+          } finally {
+            setActiveLinkId(null)
+          }
+        }
+
         return (
           <SharedLink
             key={link.id}
@@ -80,10 +133,16 @@ export const Success = ({
             points={link.points}
             displayName={displayName}
             commentCount={commentCount}
-            handleUpvoteClick={() => {}}
+            handleUpvoteClick={handleLinkVote}
+            isLinkUpvoteRunning={linkVoteLoading && activeLinkId === link.id}
             activeUser={link.submittedBy.id || null}
             linkVotes={link.linkVotes || []}
             invertColors={true}
+            handleLinkDeletion={handleLinkDelete}
+            isLinkDeletionRunning={
+              linkDeleteLoading && activeLinkId === link.id
+            }
+            showDeleteButton={true}
           />
         )
       })}
