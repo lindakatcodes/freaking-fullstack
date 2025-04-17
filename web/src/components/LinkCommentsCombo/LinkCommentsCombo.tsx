@@ -14,15 +14,18 @@ interface LinkCommentsComboProps {
   isCommentDeletionRunning?: boolean
   handleCommentUpvote: (commentId: string, userId: number) => void
   handleCommentDownvote: (voteId: string) => void
+  isCommentVoteRunning?: boolean
+  isCommentDeleteRunning?: boolean
 }
 
 const LinkCommentsCombo = ({
   commentArray,
   currentUser,
   handleCommentDeletion,
-  isCommentDeletionRunning = false,
   handleCommentUpvote,
   handleCommentDownvote,
+  isCommentVoteRunning,
+  isCommentDeleteRunning,
 }: LinkCommentsComboProps) => {
   const [activeCommentId, setActiveCommentId] = useState<string | null>(null)
 
@@ -54,16 +57,29 @@ const LinkCommentsCombo = ({
             }
           }
 
+          const handleCommentDelete = async () => {
+            setActiveCommentId(comment.id)
+            try {
+              await handleCommentDeletion(comment.id)
+            } finally {
+              setActiveCommentId(null)
+            }
+          }
+
           return (
             <Comment
               comment={comment}
               key={comment.createdAt}
               handleUpvoteClick={handleCommentVote}
-              isUpvoteLogicRunning={activeCommentId === comment.id}
+              isUpvoteLogicRunning={
+                isCommentVoteRunning && activeCommentId === comment.id
+              }
               activeUser={currentUser}
               invertColors={true}
-              isCommentDeletionRunning={isCommentDeletionRunning}
-              handleCommentDeletion={handleCommentDeletion}
+              handleCommentDeletion={handleCommentDelete}
+              isCommentDeletionRunning={
+                isCommentDeleteRunning && activeCommentId === comment.id
+              }
             />
           )
         })}

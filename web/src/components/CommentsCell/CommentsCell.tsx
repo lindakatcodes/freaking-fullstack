@@ -6,13 +6,12 @@ import {
   type CellSuccessProps,
   type CellFailureProps,
   type TypedDocumentNode,
-  useMutation,
 } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import { useCommentDeletion } from 'src/hooks/useCommentDeletion'
 import { useCommentVotes } from 'src/hooks/useCommentVotes'
-import { DELETE_COMMENT } from 'src/mutations'
 
 import Comment from '../Comment/Comment'
 import { QUERY as SharedLinkQuery } from '../SharedLinkCell'
@@ -65,25 +64,24 @@ export const Success = ({
 
   const [activeCommentId, setActiveCommentId] = useState<string | null>(null)
 
-  const { handleCommentUpvote, handleCommentDownvote } = useCommentVotes({
+  const {
+    handleCommentUpvote,
+    handleCommentDownvote,
+    loading: commentVoteLoading,
+  } = useCommentVotes({
     refetchQueries: [
       { query: QUERY, variables: { linkId } },
       { query: SharedLinkQuery, variables: { id: linkId } },
     ],
   })
 
-  const [deleteComment, { loading }] = useMutation(DELETE_COMMENT, {
-    onCompleted: () => {
-      console.log('comment has been deleted')
-    },
-    onError: (error) => {
-      toast(`Sorry, there was an issue deleting this comment: ${error.message}`)
-    },
-    refetchQueries: [
-      { query: QUERY, variables: { linkId } },
-      { query: SharedLinkQuery, variables: { id: linkId } },
-    ],
-  })
+  const { handleCommentDeletion, loading: deleteCommentLoading } =
+    useCommentDeletion({
+      refetchQueries: [
+        { query: QUERY, variables: { linkId } },
+        { query: SharedLinkQuery, variables: { id: linkId } },
+      ],
+    })
 
   if (!currentUser) {
     return (
@@ -123,8 +121,13 @@ export const Success = ({
           }
         }
 
-        const deleteCommentHandler = async (commentId: string) => {
-          deleteComment({ variables: { id: commentId } })
+        const handleCommentDelete = async () => {
+          setActiveCommentId(comment.id)
+          try {
+            await handleCommentDeletion(comment.id)
+          } finally {
+            setActiveCommentId(null)
+          }
         }
 
         return (
@@ -132,10 +135,14 @@ export const Success = ({
             comment={comment}
             key={comment.id}
             handleUpvoteClick={handleCommentVote}
-            isUpvoteLogicRunning={activeCommentId === comment.id}
-            handleCommentDeletion={deleteCommentHandler}
+            isUpvoteLogicRunning={
+              commentVoteLoading && activeCommentId === comment.id
+            }
             activeUser={currentUser.id}
-            isCommentDeletionRunning={loading}
+            handleCommentDeletion={handleCommentDelete}
+            isCommentDeletionRunning={
+              deleteCommentLoading && activeCommentId === comment.id
+            }
           />
         )
       })}

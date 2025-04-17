@@ -4,13 +4,11 @@ import {
   type CellSuccessProps,
   type CellFailureProps,
   type TypedDocumentNode,
-  useMutation,
 } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import { useCommentDeletion } from 'src/hooks/useCommentDeletion'
 import { useCommentVotes } from 'src/hooks/useCommentVotes'
-import { DELETE_COMMENT } from 'src/mutations'
 
 import LinkCommentsCombo from '../LinkCommentsCombo/LinkCommentsCombo'
 
@@ -68,19 +66,18 @@ export const Success = ({
 }: CellSuccessProps<UserComments, UserCommentsVariables>) => {
   const { currentUser } = useAuth()
 
-  const { handleCommentUpvote, handleCommentDownvote } = useCommentVotes({
+  const {
+    handleCommentUpvote,
+    handleCommentDownvote,
+    loading: commentVoteLoading,
+  } = useCommentVotes({
     refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
   })
 
-  const [deleteComment, { loading }] = useMutation(DELETE_COMMENT, {
-    onCompleted: () => {
-      console.log('comment has been deleted')
-    },
-    onError: (error) => {
-      toast(`Sorry, there was an issue deleting this comment: ${error.message}`)
-    },
-    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
-  })
+  const { handleCommentDeletion, loading: deleteCommentLoading } =
+    useCommentDeletion({
+      refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+    })
 
   const commentsByLinkId = user.comments.reduce(
     (acc, comment) => {
@@ -94,10 +91,6 @@ export const Success = ({
     {} as Record<string, typeof user.comments>
   )
 
-  const deleteCommentHandler = async (commentId: string) => {
-    deleteComment({ variables: { id: commentId } })
-  }
-
   return (
     <section className="grid gap-4 pb-4">
       {Object.entries(commentsByLinkId).map(([key, comments]) => (
@@ -105,10 +98,11 @@ export const Success = ({
           key={key}
           commentArray={comments}
           currentUser={currentUser.id}
-          handleCommentDeletion={deleteCommentHandler}
-          isCommentDeletionRunning={loading}
+          handleCommentDeletion={handleCommentDeletion}
           handleCommentUpvote={handleCommentUpvote}
           handleCommentDownvote={handleCommentDownvote}
+          isCommentVoteRunning={commentVoteLoading}
+          isCommentDeleteRunning={deleteCommentLoading}
         />
       ))}
     </section>
