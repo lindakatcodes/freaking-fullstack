@@ -1,8 +1,4 @@
-import type {
-  CommentsQuery,
-  CommentsQueryVariables,
-  CommentUserVote,
-} from 'types/graphql'
+import type { CommentsQuery, CommentsQueryVariables } from 'types/graphql'
 
 import {
   type CellSuccessProps,
@@ -13,11 +9,8 @@ import {
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
-import {
-  CREATE_COMMENT_VOTE,
-  DELETE_COMMENT_VOTE,
-  DELETE_COMMENT,
-} from 'src/mutations'
+import { useCommentVotes } from 'src/hooks/useCommentVotes'
+import { DELETE_COMMENT } from 'src/mutations'
 
 import Comment from '../Comment/Comment'
 import { QUERY as SharedLinkQuery } from '../SharedLinkCell'
@@ -68,20 +61,7 @@ export const Success = ({
 }: CellSuccessProps<CommentsQuery, CommentsQueryVariables>) => {
   const { currentUser } = useAuth()
 
-  const [createCommentUserVote] = useMutation(CREATE_COMMENT_VOTE, {
-    onCompleted: () => {
-      console.log('comment upvoted')
-    },
-    refetchQueries: [
-      { query: QUERY, variables: { linkId } },
-      { query: SharedLinkQuery, variables: { id: linkId } },
-    ],
-  })
-
-  const [deleteCommentUserVote] = useMutation(DELETE_COMMENT_VOTE, {
-    onCompleted: () => {
-      console.log('comment upvote removed')
-    },
+  const { handleCommentUpvote, handleCommentDownvote } = useCommentVotes({
     refetchQueries: [
       { query: QUERY, variables: { linkId } },
       { query: SharedLinkQuery, variables: { id: linkId } },
@@ -122,18 +102,15 @@ export const Success = ({
   return (
     <div className="flex flex-col gap-4">
       {comments.map((comment) => {
-        const handleCommentUpvote = async () => {
-          const userUpvoteStatus: Partial<CommentUserVote> | undefined =
-            comment.commentVotes.find((vote) => vote.userId === currentUser.id)
+        const handleCommentVote = async () => {
+          const userUpvoteStatus = comment.commentVotes.find(
+            (vote) => vote.userId === currentUser.id
+          )
 
           if (!userUpvoteStatus) {
-            const upvote = {
-              commentId: comment.id,
-              userId: currentUser.id,
-            }
-            createCommentUserVote({ variables: { input: upvote } })
+            handleCommentUpvote(comment.id, currentUser.id)
           } else {
-            deleteCommentUserVote({ variables: { id: userUpvoteStatus.id } })
+            handleCommentDownvote(userUpvoteStatus.id)
           }
         }
 
@@ -145,7 +122,7 @@ export const Success = ({
           <Comment
             comment={comment}
             key={comment.id}
-            handleUpvoteClick={handleCommentUpvote}
+            handleUpvoteClick={handleCommentVote}
             handleCommentDeletion={deleteCommentHandler}
             activeUser={currentUser.id}
             isCommentDeletionRunning={loading}

@@ -5,17 +5,23 @@ import { Link, routes } from '@redwoodjs/router'
 import Comment from '../Comment/Comment'
 import RightArrow from '../icons/RightArrow/RightArrow'
 
+interface LinkCommentsComboProps {
+  commentArray: UserComments['user']['comments']
+  currentUser: number
+  handleCommentDeletion: (commentId) => void
+  isCommentDeletionRunning?: boolean
+  handleCommentUpvote: (commentId: string, userId: number) => void
+  handleCommentDownvote: (voteId: string) => void
+}
+
 const LinkCommentsCombo = ({
   commentArray,
   currentUser,
   handleCommentDeletion,
   isCommentDeletionRunning = false,
-}: {
-  commentArray: UserComments['user']['comments']
-  currentUser: number
-  handleCommentDeletion: (commentId) => void
-  isCommentDeletionRunning?: boolean
-}) => {
+  handleCommentUpvote,
+  handleCommentDownvote,
+}: LinkCommentsComboProps) => {
   return (
     <section>
       <Link
@@ -26,17 +32,31 @@ const LinkCommentsCombo = ({
         <RightArrow />
       </Link>
       <ul className="grid gap-2">
-        {commentArray.map((comment) => (
-          <Comment
-            comment={comment}
-            key={comment.createdAt}
-            handleUpvoteClick={() => {}}
-            activeUser={currentUser}
-            invertColors={true}
-            isCommentDeletionRunning={isCommentDeletionRunning}
-            handleCommentDeletion={handleCommentDeletion}
-          />
-        ))}
+        {commentArray.map((comment) => {
+          const handleCommentVote = async () => {
+            const userUpvoteStatus = comment.commentVotes.find(
+              (vote) => vote.userId === currentUser
+            )
+
+            if (!userUpvoteStatus) {
+              handleCommentUpvote(comment.id, currentUser)
+            } else {
+              handleCommentDownvote(userUpvoteStatus.id)
+            }
+          }
+
+          return (
+            <Comment
+              comment={comment}
+              key={comment.createdAt}
+              handleUpvoteClick={handleCommentVote}
+              activeUser={currentUser}
+              invertColors={true}
+              isCommentDeletionRunning={isCommentDeletionRunning}
+              handleCommentDeletion={handleCommentDeletion}
+            />
+          )
+        })}
       </ul>
       <div className="mt-2 border border-yellow" />
     </section>

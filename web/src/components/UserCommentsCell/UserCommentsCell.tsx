@@ -9,6 +9,7 @@ import {
 import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import { useCommentVotes } from 'src/hooks/useCommentVotes'
 import { DELETE_COMMENT } from 'src/mutations'
 
 import LinkCommentsCombo from '../LinkCommentsCombo/LinkCommentsCombo'
@@ -67,6 +68,10 @@ export const Success = ({
 }: CellSuccessProps<UserComments, UserCommentsVariables>) => {
   const { currentUser } = useAuth()
 
+  const { handleCommentUpvote, handleCommentDownvote } = useCommentVotes({
+    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+  })
+
   const [deleteComment, { loading }] = useMutation(DELETE_COMMENT, {
     onCompleted: () => {
       console.log('comment has been deleted')
@@ -102,6 +107,8 @@ export const Success = ({
           currentUser={currentUser.id}
           handleCommentDeletion={deleteCommentHandler}
           isCommentDeletionRunning={loading}
+          handleCommentUpvote={handleCommentUpvote}
+          handleCommentDownvote={handleCommentDownvote}
         />
       ))}
     </section>
