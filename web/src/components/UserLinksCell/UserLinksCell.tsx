@@ -10,6 +10,7 @@ import {
   type CellFailureProps,
   type TypedDocumentNode,
 } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 import { useLinkDeletion } from 'src/hooks/useLinkDeletion'
@@ -97,6 +98,10 @@ export const Success = ({
         const commentCount = link.comments && link.comments.length
 
         const handleLinkVote = async () => {
+          if (!currentUser) {
+            return toast('you must be signed in to vote')
+          }
+
           setActiveLinkId(link.id)
           try {
             const linkToVote = sharedLinksByUser.find(
@@ -137,7 +142,7 @@ export const Success = ({
             commentCount={commentCount}
             handleUpvoteClick={handleLinkVote}
             isLinkUpvoteRunning={linkVoteLoading && activeLinkId === link.id}
-            activeUser={link.submittedBy.id || null}
+            activeUser={(currentUser && currentUser.id) || null}
             linkVotes={link.linkVotes || []}
             invertColors={true}
             handleLinkDeletion={handleLinkDelete}
