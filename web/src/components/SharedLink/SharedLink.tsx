@@ -7,6 +7,7 @@ import UpvoteArrow from '../icons/UpvoteArrow/UpvoteArrow'
 
 interface SharedLinkProps {
   linkId: string
+  submittedById: number
   title: string
   points: number
   displayName: string
@@ -24,6 +25,7 @@ interface SharedLinkProps {
 
 const SharedLink = ({
   linkId,
+  submittedById,
   title,
   points = 0,
   displayName,
@@ -73,7 +75,10 @@ const SharedLink = ({
           <p> • </p>
           <p>
             submitted by{' '}
-            <Link to="#" className="font-bold underline">
+            <Link
+              to={routes.userProfile({ id: submittedById })}
+              className="font-bold underline"
+            >
               {displayName}
             </Link>
           </p>

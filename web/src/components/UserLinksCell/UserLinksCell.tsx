@@ -10,6 +10,7 @@ import {
   type CellFailureProps,
   type TypedDocumentNode,
 } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 import { useLinkDeletion } from 'src/hooks/useLinkDeletion'
@@ -66,6 +67,7 @@ export const Failure = ({
 
 export const Success = ({
   sharedLinksByUser,
+  id,
 }: CellSuccessProps<
   SharedLinksByUserQuery,
   SharedLinksByUserQueryVariables
@@ -79,11 +81,11 @@ export const Success = ({
     handleLinkDownvote,
     loading: linkVoteLoading,
   } = useLinkVotes({
-    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+    refetchQueries: [{ query: QUERY, variables: { id } }],
   })
 
   const { handleLinkDeletion, loading: linkDeleteLoading } = useLinkDeletion({
-    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+    refetchQueries: [{ query: QUERY, variables: { id } }],
   })
 
   return (
@@ -96,6 +98,10 @@ export const Success = ({
         const commentCount = link.comments && link.comments.length
 
         const handleLinkVote = async () => {
+          if (!currentUser) {
+            return toast('you must be signed in to vote')
+          }
+
           setActiveLinkId(link.id)
           try {
             const linkToVote = sharedLinksByUser.find(
@@ -128,6 +134,7 @@ export const Success = ({
           <SharedLink
             key={link.id}
             linkId={link.id}
+            submittedById={link.submittedBy.id}
             title={link.title}
             link={link.url}
             points={link.points}
@@ -135,14 +142,16 @@ export const Success = ({
             commentCount={commentCount}
             handleUpvoteClick={handleLinkVote}
             isLinkUpvoteRunning={linkVoteLoading && activeLinkId === link.id}
-            activeUser={link.submittedBy.id || null}
+            activeUser={(currentUser && currentUser.id) || null}
             linkVotes={link.linkVotes || []}
             invertColors={true}
             handleLinkDeletion={handleLinkDelete}
             isLinkDeletionRunning={
               linkDeleteLoading && activeLinkId === link.id
             }
-            showDeleteButton={true}
+            showDeleteButton={
+              currentUser && currentUser.id === link.submittedBy.id
+            }
           />
         )
       })}

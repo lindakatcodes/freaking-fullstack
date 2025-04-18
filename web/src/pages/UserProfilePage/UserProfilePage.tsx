@@ -1,16 +1,17 @@
 import { Metadata } from '@redwoodjs/web'
 
-import { useAuth } from 'src/auth'
 import UserProfileCell from 'src/components/UserProfileCell'
 
-const UserProfilePage = () => {
-  const { currentUser } = useAuth()
+interface Props {
+  id: number
+}
 
+const UserProfilePage = ({ id }: Props) => {
   return (
     <>
       <Metadata title="User Profile" description="user profile page" />
 
-      <UserProfileCell id={currentUser.id} />
+      <UserProfileCell id={id} />
     </>
   )
 }

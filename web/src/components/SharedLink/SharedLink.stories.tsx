@@ -21,6 +21,7 @@ type Story = StoryObj<typeof SharedLink>
 export const DefaultValues: Story = {
   args: {
     title: 'Story test link',
+    submittedById: 1,
     displayName: 'user1',
     link: 'https://bnn.co/subpage?q=test',
     handleUpvoteClick: () => {},
@@ -35,6 +36,7 @@ export const DefaultValues: Story = {
 export const CustomValues: Story = {
   args: {
     title: 'Story test link that is extra long so it covers multiple lines',
+    submittedById: 1,
     displayName: 'LindaKat',
     link: 'https://bnn.co/subpage?q=test',
     points: 1234,
@@ -51,6 +53,7 @@ export const CustomValues: Story = {
 export const UpvotedLink: Story = {
   args: {
     title: 'So good it got upvoted',
+    submittedById: 1,
     displayName: 'LindaKat',
     link: 'https://bnn.co/subpage?q=test',
     points: 1234,
@@ -66,6 +69,7 @@ export const UpvotedLink: Story = {
 export const LinkWithDelete: Story = {
   args: {
     title: 'The current user submitted this one',
+    submittedById: 1,
     displayName: 'LindaKat',
     link: 'https://bnn.co/subpage?q=test',
     points: 1234,
@@ -82,6 +86,7 @@ export const LinkWithDelete: Story = {
 export const InvertedColors: Story = {
   args: {
     title: 'This is how it looks on user pages',
+    submittedById: 1,
     displayName: 'LindaKat',
     link: 'https://bnn.co/subpage?q=test',
     points: 123,

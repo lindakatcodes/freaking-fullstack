@@ -14,7 +14,7 @@ export const schema = gql`
 
   type Query {
     sharedLinks: [SharedLink!]! @skipAuth
-    sharedLinksByUser(id: Int!): [SharedLink!]! @requireAuth
+    sharedLinksByUser(id: Int!): [SharedLink!]! @skipAuth
     sharedLink(id: String!): SharedLink @skipAuth
   }
 

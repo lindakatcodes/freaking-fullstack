@@ -24,11 +24,11 @@ const Routes = () => {
           <Route path="/submit-link" page={SubmitLinkPage} name="submitLink" />
         </PrivateSet>
       </Set>
-      <PrivateSet unauthenticated="login" wrap={ProfileLayout}>
-        <Route path="/user-links" page={UserLinksPage} name="userLinks" />
-        <Route path="/user-comments" page={UserCommentsPage} name="userComments" />
-        <Route path="/user-profile" page={UserProfilePage} name="userProfile" />
-      </PrivateSet>
+      <Set wrap={ProfileLayout}>
+        <Route path="/user-links/{id:Int}" page={UserLinksPage} name="userLinks" />
+        <Route path="/user-comments/{id:Int}" page={UserCommentsPage} name="userComments" />
+        <Route path="/user-profile/{id:Int}" page={UserProfilePage} name="userProfile" />
+      </Set>
       <Route notfound page={NotFoundPage} />
     </Router>
   )

@@ -1,12 +1,13 @@
 import { Metadata } from '@redwoodjs/web'
 import { Toaster } from '@redwoodjs/web/toast'
 
-import { useAuth } from 'src/auth'
 import UserLinksCell from 'src/components/UserLinksCell'
 
-const UserLinksPage = () => {
-  const { currentUser } = useAuth()
+interface Props {
+  id: number
+}
 
+const UserLinksPage = ({ id }: Props) => {
   return (
     <>
       <Metadata
@@ -14,7 +15,7 @@ const UserLinksPage = () => {
         description="Links shared by the active user"
       />
       <Toaster />
-      <UserLinksCell id={currentUser.id} />
+      <UserLinksCell id={id} />
     </>
   )
 }

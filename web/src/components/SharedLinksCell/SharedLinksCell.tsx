@@ -130,6 +130,7 @@ export const Success = ({
           <SharedLink
             key={link.id}
             linkId={link.id}
+            submittedById={link.submittedBy.id}
             title={link.title}
             link={link.url}
             points={link.points}

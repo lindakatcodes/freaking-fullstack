@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { UserComments } from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
+import { toast } from '@redwoodjs/web/toast'
 
 import Comment from '../Comment/Comment'
 import RightArrow from '../icons/RightArrow/RightArrow'
@@ -41,6 +42,9 @@ const LinkCommentsCombo = ({
       <ul className="grid gap-2">
         {commentArray.map((comment) => {
           const handleCommentVote = async () => {
+            if (!currentUser) {
+              return toast('you must be signed in to vote')
+            }
             setActiveCommentId(comment.id)
             try {
               const userUpvoteStatus = comment.commentVotes.find(

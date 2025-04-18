@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 
-import { useAuth } from 'src/auth'
+import { useParams } from '@redwoodjs/router'
+
 import Header from 'src/components/Header/Header'
 import ProfileNavigation from 'src/components/ProfileNavigation/ProfileNavigation'
+import UserEmailCell from 'src/components/UserEmailCell'
 
 type ProfileLayoutProps = {
   children?: React.ReactNode
@@ -16,22 +18,12 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
     }
   }, [])
 
-  const { currentUser } = useAuth()
-
-  const first = currentUser.email.slice(0, currentUser.email.indexOf('@'))
-  const last = currentUser.email.slice(currentUser.email.indexOf('@'))
+  const { id } = useParams()
 
   return (
     <main className="h-dvh w-dvw px-3 md:px-6">
       <Header />
-      <div className="flex flex-col gap-2 pt-2 md:flex-row">
-        <h2 className="text-outline-white font-serif text-5xl font-bold leading-[0.875] tracking-wider text-black md:text-[clamp(3rem,8vw,9rem)]">
-          {first}
-        </h2>
-        <h2 className="font-serif text-5xl font-bold leading-[0.875] tracking-wider text-blue md:text-[clamp(3rem,8vw,9rem)]">
-          {last}
-        </h2>
-      </div>
+      <UserEmailCell id={Number(id)} />
       <ProfileNavigation />
       {children}
     </main>

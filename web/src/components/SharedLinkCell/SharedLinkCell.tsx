@@ -166,6 +166,7 @@ export const Success = ({
       <div className="mb-8">
         <SharedLink
           linkId={sharedLink.id}
+          submittedById={sharedLink.submittedBy.id}
           title={sharedLink.title}
           link={sharedLink.url}
           points={sharedLink.points}

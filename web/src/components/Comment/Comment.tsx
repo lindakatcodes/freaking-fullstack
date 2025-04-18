@@ -1,6 +1,6 @@
 import type { CommentUserVote } from 'types/graphql'
 
-import { Link } from '@redwoodjs/router'
+import { Link, routes } from '@redwoodjs/router'
 
 import UpvoteArrow from '../icons/UpvoteArrow/UpvoteArrow'
 
@@ -65,7 +65,10 @@ const Comment = ({
 
       <div className="flex flex-col">
         <div className="flex gap-2 text-sm">
-          <Link to="#" className="font-bold underline">
+          <Link
+            to={routes.userProfile({ id: comment.authorId })}
+            className="font-bold underline"
+          >
             {displayName}
           </Link>
           <p> • </p>
