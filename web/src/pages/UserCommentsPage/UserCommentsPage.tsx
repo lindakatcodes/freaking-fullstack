@@ -1,12 +1,13 @@
 import { Metadata } from '@redwoodjs/web'
 import { Toaster } from '@redwoodjs/web/toast'
 
-import { useAuth } from 'src/auth'
 import UserCommentsCell from 'src/components/UserCommentsCell'
 
-const UserCommentsPage = () => {
-  const { currentUser } = useAuth()
+interface Props {
+  id: number
+}
 
+const UserCommentsPage = ({ id }: Props) => {
   return (
     <>
       <Metadata
@@ -14,7 +15,7 @@ const UserCommentsPage = () => {
         description="Comments written by the active user"
       />
       <Toaster />
-      <UserCommentsCell id={currentUser.id} />
+      <UserCommentsCell id={id} />
     </>
   )
 }

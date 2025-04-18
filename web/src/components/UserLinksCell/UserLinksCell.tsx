@@ -128,6 +128,7 @@ export const Success = ({
           <SharedLink
             key={link.id}
             linkId={link.id}
+            submittedById={link.submittedBy.id}
             title={link.title}
             link={link.url}
             points={link.points}
@@ -142,7 +143,9 @@ export const Success = ({
             isLinkDeletionRunning={
               linkDeleteLoading && activeLinkId === link.id
             }
-            showDeleteButton={true}
+            showDeleteButton={
+              currentUser && currentUser.id === link.submittedBy.id
+            }
           />
         )
       })}
