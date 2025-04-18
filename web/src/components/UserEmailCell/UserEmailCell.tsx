@@ -3,7 +3,7 @@ import type { UserProfileInfo, UserProfileInfoVariables } from 'types/graphql'
 import type { CellSuccessProps, TypedDocumentNode } from '@redwoodjs/web'
 
 export const QUERY: TypedDocumentNode<
-  UserProfileInfo,
+  Partial<UserProfileInfo>,
   UserProfileInfoVariables
 > = gql`
   query FindUserEmailQuery($id: Int!) {
@@ -26,7 +26,7 @@ export const Loading = () => (
 
 export const Success = ({
   user,
-}: CellSuccessProps<UserProfileInfo, UserProfileInfoVariables>) => {
+}: CellSuccessProps<Partial<UserProfileInfo>, UserProfileInfoVariables>) => {
   const first = user.email.slice(0, user.email.indexOf('@'))
   const last = user.email.slice(user.email.indexOf('@'))
 

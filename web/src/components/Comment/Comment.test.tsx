@@ -4,9 +4,6 @@ import { render, screen, waitFor } from '@redwoodjs/testing/web'
 
 import Comment from './Comment'
 
-//   Improve this test with help from the Redwood Testing Doc:
-//    https://redwoodjs.com/docs/testing#testing-components
-
 describe('Comment', () => {
   it('renders successfully', () => {
     const testComment = {
@@ -14,21 +11,22 @@ describe('Comment', () => {
       createdAt: '',
       id: '1',
       linkId: '42',
+      authorId: 1,
       author: {
         email: 'test@test.co',
       },
       commentVotes: [],
     }
 
-    const handleClick = jest.fn()
     const activeUser = 1
 
     expect(() => {
       render(
         <Comment
           comment={testComment}
-          handleUpvoteClick={handleClick}
+          handleUpvoteClick={jest.fn()}
           activeUser={activeUser}
+          handleCommentDeletion={jest.fn()}
         />
       )
     }).not.toThrow()
@@ -40,6 +38,7 @@ describe('Comment', () => {
       createdAt: '',
       id: '1',
       linkId: '42',
+      authorId: 2,
       author: {
         email: 'test@test.co',
       },
@@ -54,6 +53,7 @@ describe('Comment', () => {
         comment={testComment}
         handleUpvoteClick={handleClick}
         activeUser={activeUser}
+        handleCommentDeletion={jest.fn()}
       />
     )
 

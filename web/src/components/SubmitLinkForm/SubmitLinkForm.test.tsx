@@ -62,6 +62,4 @@ describe('SubmitLinkForm', () => {
       })
     )
   })
-
-  // also want to add a test to make sure the submit button is disabled when the form is loading (so test loading state) and that the error message is displayed when there is an error, both the quick errors and a form level error
 })
