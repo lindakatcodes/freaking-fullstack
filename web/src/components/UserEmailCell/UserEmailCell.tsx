@@ -14,8 +14,13 @@ export const QUERY: TypedDocumentNode<
 `
 
 export const Loading = () => (
-  <div className="p-6 text-5xl font-bold text-white">
-    Fetching user email...
+  <div className="flex flex-col gap-2 pt-2 md:flex-row">
+    <h2 className="text-outline-white font-serif text-5xl font-bold leading-[0.875] tracking-wider text-black md:text-[clamp(3rem,8vw,9rem)]">
+      fetching
+    </h2>
+    <h2 className="font-serif text-5xl font-bold leading-[0.875] tracking-wider text-blue md:text-[clamp(3rem,8vw,9rem)]">
+      user email...
+    </h2>
   </div>
 )
 
