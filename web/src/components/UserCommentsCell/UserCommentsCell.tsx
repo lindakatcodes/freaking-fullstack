@@ -63,6 +63,7 @@ export const Failure = ({ error }: CellFailureProps<UserCommentsVariables>) => (
 
 export const Success = ({
   user,
+  id,
 }: CellSuccessProps<UserComments, UserCommentsVariables>) => {
   const { currentUser } = useAuth()
 
@@ -71,12 +72,12 @@ export const Success = ({
     handleCommentDownvote,
     loading: commentVoteLoading,
   } = useCommentVotes({
-    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+    refetchQueries: [{ query: QUERY, variables: { id } }],
   })
 
   const { handleCommentDeletion, loading: deleteCommentLoading } =
     useCommentDeletion({
-      refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+      refetchQueries: [{ query: QUERY, variables: { id } }],
     })
 
   const commentsByLinkId = user.comments.reduce(
@@ -97,7 +98,7 @@ export const Success = ({
         <LinkCommentsCombo
           key={key}
           commentArray={comments}
-          currentUser={currentUser.id}
+          currentUser={currentUser ? currentUser.id : 0}
           handleCommentDeletion={handleCommentDeletion}
           handleCommentUpvote={handleCommentUpvote}
           handleCommentDownvote={handleCommentDownvote}

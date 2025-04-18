@@ -66,6 +66,7 @@ export const Failure = ({
 
 export const Success = ({
   sharedLinksByUser,
+  id,
 }: CellSuccessProps<
   SharedLinksByUserQuery,
   SharedLinksByUserQueryVariables
@@ -79,11 +80,11 @@ export const Success = ({
     handleLinkDownvote,
     loading: linkVoteLoading,
   } = useLinkVotes({
-    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+    refetchQueries: [{ query: QUERY, variables: { id } }],
   })
 
   const { handleLinkDeletion, loading: linkDeleteLoading } = useLinkDeletion({
-    refetchQueries: [{ query: QUERY, variables: { id: currentUser.id } }],
+    refetchQueries: [{ query: QUERY, variables: { id } }],
   })
 
   return (
