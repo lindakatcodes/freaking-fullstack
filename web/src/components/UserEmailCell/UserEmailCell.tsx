@@ -13,6 +13,12 @@ export const QUERY: TypedDocumentNode<
   }
 `
 
+export const Loading = () => (
+  <div className="p-6 text-5xl font-bold text-white">
+    Fetching user email...
+  </div>
+)
+
 export const Success = ({
   user,
 }: CellSuccessProps<UserProfileInfo, UserProfileInfoVariables>) => {

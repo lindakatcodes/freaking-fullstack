@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Success } from './UserEmailCell'
+import { Loading, Success } from './UserEmailCell'
 import { standard } from './UserEmailCell.mock'
 
 const meta: Meta = {
@@ -16,6 +16,12 @@ const meta: Meta = {
 }
 
 export default meta
+
+export const loading: StoryObj<typeof Loading> = {
+  render: () => {
+    return Loading ? <Loading /> : <></>
+  },
+}
 
 export const success: StoryObj<typeof Success> = {
   render: (args) => {
