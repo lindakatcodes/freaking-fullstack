@@ -102,6 +102,7 @@ There are some features and abilities that, were I to continue development on th
 | `yarn rw storybook`                   | Starts storybook server at `localhost:7910`      |
 | `yarn rw test <side>`                 | Starts test suite, can specify `web` or `api`    |
 | `yarn redwood generate <type> <name>` | Creates files for components, cells, and more    |
+| `yarn redwood g sdl <model> --force --no-tests` | Regenerates just the sdl file, preserving existing tests |
 | `yarn rw prisma migrate dev`          | Migrates local schema changes to your remote db  |
 | `yarn rw setup auth --help`           | Initial auth scaffolding and setup               |
 | `yarn rw deploy netlify`              | Builds and deploys site                          |
