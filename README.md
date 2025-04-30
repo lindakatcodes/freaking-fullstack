@@ -1,122 +1,111 @@
-# README
+# Brazilian Nut News
 
-Welcome to [RedwoodJS](https://redwoodjs.com)!
+A Hacker News clone built with RedwoodJS.
 
-> **Prerequisites**
->
-> - Redwood requires [Node.js](https://nodejs.org/en/) (=20.x) and [Yarn](https://yarnpkg.com/)
-> - Are you on Windows? For best results, follow our [Windows development setup](https://redwoodjs.com/docs/how-to/windows-development-setup) guide
+The project idea and design are from [Amy Dutton](https://www.linkedin.com/in/amy-dutton/)'s Freaking Fullstack workshop she hosted on October 31, 2024. This was a three hour workshop where we covered the premise, did our project setup, and started to create our first components to get a feel for how Redwood works.
 
-Start by installing dependencies:
+I loved the design and was enjoying exploring Redwood as a potential tool, so decided to finish building out a v1 for the site!
 
-```
-yarn install
-```
+## Site Preview
 
-Then start the development server:
+![Home Page Preview](assets/bnn-home-feed.png)
 
-```
-yarn redwood dev
-```
+## Tech Stack
 
-Your browser should automatically open to [http://localhost:8910](http://localhost:8910) where you'll see the Welcome Page, which links out to many great resources.
+The main tech used for this site is **[RedwoodJS](https://docs.redwoodjs.com/docs/introduction/)**, a full stack framework for building applications. One of the great things with Redwood is that it handles connecting all of these tools together for you, allowing you to get started quickly.
 
-> **The Redwood CLI**
->
-> Congratulations on running your first Redwood CLI command! From dev to deploy, the CLI is with you the whole way. And there's quite a few commands at your disposal:
->
-> ```
-> yarn redwood --help
-> ```
->
-> For all the details, see the [CLI reference](https://redwoodjs.com/docs/cli-commands).
+Under the hood, it uses:
 
-## Prisma and the database
+- **[React](https://react.dev/)** - frontend UI components
+- **[Typescript](https://www.typescriptlang.org/)** - type safety
+- **[Tailwind](https://tailwindcss.com/)** - UI styling
+- **[Storybook](https://storybook.js.org/)** - building components in isolation
+- **[dbAuth](https://redwoodjs.com/docs/authentication#self-hosted-auth-installation-and-setup)** - Redwood's local authentication solution
+- **[Jest](https://jestjs.io/)** - testing library
+- **[Prisma](https://www.prisma.io/)** - database ORM
+- **[Supabase](https://supabase.com)** - PostgresQL database provider
+- **[Yarn](https://yarnpkg.com/)** - build tool
+- **[Netlify](https://www.netlify.com/)** - deployment
 
-Redwood wouldn't be a full-stack framework without a database. It all starts with the schema. Open the [`schema.prisma`](api/db/schema.prisma) file in `api/db` and replace the `UserExample` model with the following `Post` model:
+## Project Structure
 
-```prisma
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  body      String
-  createdAt DateTime @default(now())
-}
-```
+As a fullstack framework, your frontend and backend code all live in the same repository. The top level `api` and `web` folders have their own Jest and Typescript configs, as well as a `package.json` file. Those will extend the root level configs.
 
-Redwood uses [Prisma](https://www.prisma.io/), a next-gen Node.js and TypeScript ORM, to talk to the database. Prisma's schema offers a declarative way of defining your app's data models. And Prisma [Migrate](https://www.prisma.io/migrate) uses that schema to make database migrations hassle-free:
-
-```
-yarn rw prisma migrate dev
-
-# ...
-
-? Enter a name for the new migration: › create posts
-```
-
-> `rw` is short for `redwood`
-
-You'll be prompted for the name of your migration. `create posts` will do.
-
-Now let's generate everything we need to perform all the CRUD (Create, Retrieve, Update, Delete) actions on our `Post` model:
-
-```
-yarn redwood generate scaffold post
-```
-
-Navigate to [http://localhost:8910/posts/new](http://localhost:8910/posts/new), fill in the title and body, and click "Save".
-
-Did we just create a post in the database? Yup! With `yarn rw generate scaffold <model>`, Redwood created all the pages, components, and services necessary to perform all CRUD actions on our posts table.
-
-## Frontend first with Storybook
-
-Don't know what your data models look like? That's more than ok—Redwood integrates Storybook so that you can work on design without worrying about data. Mockup, build, and verify your React components, even in complete isolation from the backend:
-
-```
-yarn rw storybook
+```txt
+/
+├── api/                    # Backend top-level folder
+│   ├── db/                 # Prisma schema and migrations
+│   ├── src/                # Main backend dev folder
+│   │   ├── directives/     # Auth and GraphQL directives
+│   │   ├── functions/      # Auth and GraphQL handler functions
+│   │   ├── graphql/        # SDL files for models
+│   │   ├── lib/            # Auth and DB setup
+│   │   ├── services/       # CRUD operations for models
+│   ├── types/              # GraphQL types, auto-generated
+├── assets/                 # Preview images for README
+├── scripts/                # DB seed and misc global scripts
+├── web/                    # Frontend top-level folder
+│   ├── .storybook/         # Storybook config
+│   ├── config/             # Tailwind config
+│   ├── public/             # Favicon and robots.txt
+│   ├── src/                # Main frontend dev folder
+│   │   ├── components/     # UI components
+│   │   ├── hooks/          # Custom hooks for mutation handling
+│   │   ├── layouts/        # Page layouts
+│   │   ├── pages/          # Pages used in routing
+│   │   ├── App.tsx/        # Entry point for our app
+│   │   ├── index.html/     # The root HTML file
+│   │   ├── mutations.ts/   # GraphQL mutations collection
+│   │   ├── Routes.tsx/     # Routing file
+│   │   ├── index.css/      # Tailwind extended classes
+│   │   ├── scaffold.css/   # CSS reset
+│   ├── types/              # GraphQL types, auto-generated
+├── redwood.toml            # Redwood configuration
 ```
 
-Seeing "Couldn't find any stories"? That's because you need a `*.stories.{tsx,jsx}` file. The Redwood CLI makes getting one easy enough—try generating a [Cell](https://redwoodjs.com/docs/cells), Redwood's data-fetching abstraction:
+## Features
 
-```
-yarn rw generate cell examplePosts
-```
+- Users can sign up, login, and reset their password
+- Users can view the home feed of all links shared, and click the link title to visit the link
+- Users can click the comment count on a link and see the full discussion about that link
+- Authenticated users can submit links to be added to the home feed
+- Authenticated users can leave comments on links
+- Authenticated users can upvote links and comments (and can click the upvote arrow again to remove an upvote)
+- Authenticated users can update their profile information, including a display name and social profile links
+- Users can view user profiles to see that users' social links, the age of their account, and the number of upvotes they've given and received
+- Users can see all the links a user has shared
+- Users can see all the comments a user has left
+- Authenticated users can delete the links or comments they have submitted
 
-The Storybook server should hot reload and now you'll have four stories to work with. They'll probably look a little bland since there's no styling. See if the Redwood CLI's `setup ui` command has your favorite styling library:
+## Future Improvements
 
-```
-yarn rw setup ui --help
-```
+There are some features and abilities that, were I to continue development on this, I'd love to implement. I've split these into features that would improve the user experience, and things that are nice to have from a development perspective.
 
-## Testing with Jest
+### User Improvements
 
-It'd be hard to scale from side project to startup without a few tests. Redwood fully integrates Jest with both the front- and back-ends, and makes it easy to keep your whole app covered by generating test files with all your components and services:
+- The site needs a home button. Ideally this would be the title of the page since that shows on every page, however I needed to do some unique style constraints to match the design and it wasn't possible to achieve this. It would be great to find a better workaround for this or a different way to provide navigation back to the main feed.
+- There's no way for users to delete their account, or to directly change their email or password. Passwords can be reset through the "reset password" page, however having a way for users to modify this directly would be a better experience.
+- On a shared link after the title, the user can see the URL's origin. However clicking this has no effect. This style was part of the provided design and on Hacker News, clicking an origin link will show all of the links shared from that website. I'd love to implement this so it works as expected.
+- The original design had a way for comments to be replied to in a thread. For a v1 this was more complexity than I wanted to implement. However, it is a better experience for directly responding to someone's comment, so would be nice to implement this.
 
-```
-yarn rw test
-```
+### Developer Improvements
 
-To make the integration even more seamless, Redwood augments Jest with database [scenarios](https://redwoodjs.com/docs/testing#scenarios) and [GraphQL mocking](https://redwoodjs.com/docs/testing#mocking-graphql-calls).
+- In Storybook, the profile layout and many of the page stories rely on the site's API server to be running to work. Ideally these would actually use the mock service worker to mock the data they need instead. I attempted to get this working but with minimal experience here and conflicting results from AI tooling, this wasn't possible to fix yet. Would be very beneficial to get this working.
+- I really wanted to figure out how to get my `profileNavigation` story to show the style difference when the link you're on is active, but nothing I tried allowed this to work. I've opened a [discussion on the Redwood forums](https://community.redwoodjs.com/t/how-to-mock-route-in-storybook/7935), but so far no new information has been shared. Would be great to figure this out one day.
 
-## Ship it
+## Development Commands
 
-Redwood is designed for both serverless deploy targets like Netlify and Vercel and serverful deploy targets like Render and AWS:
+| Command                               | Action                                           |
+| :------------------------------------ | :----------------------------------------------- |
+| `yarn install`                        | Installs dependencies                            |
+| `yarn rw dev`                         | Starts local dev server at `localhost:8910`      |
+| `yarn rw storybook`                   | Starts storybook server at `localhost:7910`      |
+| `yarn rw test <side>`                 | Starts test suite, can specify `web` or `api`    |
+| `yarn redwood generate <type> <name>` | Creates files for components, cells, and more    |
+| `yarn rw prisma migrate dev`          | Migrates local schema changes to your remote db  |
+| `yarn rw setup auth --help`           | Initial auth scaffolding and setup               |
+| `yarn rw deploy netlify`              | Builds and deploys site                          |
 
-```
-yarn rw setup deploy --help
-```
+Redwood also provides a GraphiQL explorer for your data when the dev server is running, available at `http://localhost:8911/graphql`.
 
-Don't go live without auth! Lock down your app with Redwood's built-in, database-backed authentication system ([dbAuth](https://redwoodjs.com/docs/authentication#self-hosted-auth-installation-and-setup)), or integrate with nearly a dozen third-party auth providers:
-
-```
-yarn rw setup auth --help
-```
-
-## Next Steps
-
-The best way to learn Redwood is by going through the comprehensive [tutorial](https://redwoodjs.com/docs/tutorial/foreword) and joining the community (via the [Discourse forum](https://community.redwoodjs.com) or the [Discord server](https://discord.gg/redwoodjs)).
-
-## Quick Links
-
-- Stay updated: read [Forum announcements](https://community.redwoodjs.com/c/announcements/5), follow us on [Twitter](https://twitter.com/redwoodjs), and subscribe to the [newsletter](https://redwoodjs.com/newsletter)
-- [Learn how to contribute](https://redwoodjs.com/docs/contributing)
+For specifics on these commands and to see the full suite of commands available, you can visit the [CLI reference](https://redwoodjs.com/docs/cli-commands).
