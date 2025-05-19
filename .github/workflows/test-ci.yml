@@ -3,6 +3,8 @@ name: Run test suites
 on:
   pull_request:
     branches: ['main']
+  schedule:
+    - cron: '16 6 * * 1,4'
 
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
