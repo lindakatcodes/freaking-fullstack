@@ -15,15 +15,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
+      # using npm here so it can use tsx to run the script without adding it to the project since it's only used here
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'yarn'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: yarn install
+        run: npm ci
 
       - name: Run database operations
-        run: yarn tsx scripts/dbKeepAlive.ts
+        run: npx tsx scripts/dbKeepAlive.ts
