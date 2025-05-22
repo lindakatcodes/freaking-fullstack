@@ -1,0 +1,29 @@
+name: Database Keep-Alive
+
+on:
+  schedule:
+    - cron: '16 6 * * 1,4'
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  db-keepalive:
+    runs-on: ubuntu-latest
+
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run database operations
+        run: yarn tsx scripts/dbKeepAlive.ts
