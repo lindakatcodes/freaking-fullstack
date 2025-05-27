@@ -26,7 +26,7 @@ jobs:
         run: yarn install
 
       - name: Generate Prisma client
-        run: prisma generate
+        run: yarn prisma generate
 
       - name: Run database operations
         run: yarn tsx scripts/dbKeepAlive.ts
