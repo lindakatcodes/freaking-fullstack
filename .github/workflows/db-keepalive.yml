@@ -19,11 +19,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'yarn'
 
       - name: Install dependencies
         run: yarn install
+
+      - name: Generate Prisma client
+        run: prisma generate
 
       - name: Run database operations
         run: yarn tsx scripts/dbKeepAlive.ts
